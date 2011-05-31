@@ -10,6 +10,10 @@
 
 class Vector3 {
 public:
+	//the 3 coordinates
+	// [0] = x, [1] = y, [2]=z
+	double coords[3];
+
 	Vector3(double x = 0, double y = 0, double z = 0);
 	virtual ~Vector3();
 
@@ -22,9 +26,11 @@ public:
 	Vector3 operator-(const Vector3 v);
 	void operator-=(const Vector3 v);
 
-	//the 3 coordinates
-	// [0] = x, [1] = y, [2]=z
-	double coords[3];
+	double norm();
+	Vector3 normalized();
+	void normalize();
+
+	double& operator[] ( const int& i );
 };
 
 #endif /* VECTEUR3_H_ */
