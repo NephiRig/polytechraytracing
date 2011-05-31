@@ -24,4 +24,3 @@ public:
 
 #endif /* RAYON_H_ */
 
-//Vecteur2 Vecteur3 Lumiere //Rayon

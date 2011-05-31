@@ -14,7 +14,13 @@ public:
 	virtual ~Vector3();
 
 	Vector3 operator*(double s);
-	Vector3 operator+(Vector3 v);
+	void operator*=(double s);
+
+	Vector3 operator+(const Vector3 v);
+	void operator+=(const Vector3 v);
+
+	Vector3 operator-(const Vector3 v);
+	void operator-=(const Vector3 v);
 
 	//the 3 coordinates
 	// [0] = x, [1] = y, [2]=z

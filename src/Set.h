@@ -28,5 +28,6 @@ public:
 	const T& operator[] (int i);
 
 };
+#include "Set.hpp"
 
 #endif /* SET_H_ */
