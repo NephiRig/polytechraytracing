@@ -8,8 +8,8 @@
 #include "Scene.h"
 
 Scene::Scene() {
-	Set<LightSource> lightSources = Set<LightSource> ();
-	//	shapes =  Set<Shape>();
+	lightSources = Set<LightSource> ();
+	shapes =  Set<Shape>();
 
 }
 
