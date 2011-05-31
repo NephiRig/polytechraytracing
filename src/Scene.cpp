@@ -9,7 +9,7 @@
 
 Scene::Scene() {
 	lightSources = Set<LightSource> ();
-	shapes =  Set<Shape>();
+	shapes =  Set<Shape*>();
 
 }
 
