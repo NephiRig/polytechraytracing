@@ -10,9 +10,12 @@
 
 class Color {
 public:
+	double val[];
+
 	Color ( double r = 0.0, double v = 0.0, double b = 0.0 );
 	virtual ~Color();
-	double val[];
+
+	double& operator[] ( const int& i );
 };
 
 #endif /* COLOR_H_ */

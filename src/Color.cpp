@@ -17,3 +17,8 @@ Color::Color ( double r/*= 0.0*/, double v/*= 0.0*/, double b/*= 0.0*/ )
 Color::~Color() {
 	// TODO Auto-generated destructor stub
 }
+
+double& Color::operator[] ( const int& i )
+{
+	return val[i];
+}
