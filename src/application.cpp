@@ -12,7 +12,7 @@ using namespace std;
 
 int main ( int argc, char **argv )
 {
-	cout << "test" << endl;
+	cout << "test huhu" << endl;
 	return 0;
 } // main ()
 
