@@ -17,8 +17,8 @@ public:
 	Scene();
 	virtual ~Scene();
 
-	//Set<LightSource> lightSources;
-	//Set<Shape> shapes;;
+	Set<LightSource> lightSources;
+	Set<Shape> shapes;;
 };
 
 #endif /* SCENE_H_ */
