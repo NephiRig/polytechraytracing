@@ -23,7 +23,7 @@ public:
 	Screen ( Vector3 _observer, Vector3 _aimedPoint, double _distScreen, double _Rx, double _Ry );
 	virtual ~Screen();
 
-	Vector3 getPixel ( int x, int y );
+	Vector3 getPixel ( int x, int y ); // returns the 3D point where the pixel is
 	Vector3 getPixel ( Vector2 pt );
 };
 
