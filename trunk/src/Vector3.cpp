@@ -19,11 +19,34 @@ Vector3 Vector3::operator*(double s) {
 
 	return strechedVector;
 }
+void Vector3::operator*=(double s) {
+	coords[0]*=s;
+	coords[1]*=s;
+	coords[2]*=s;
+
+}
 
 Vector3 Vector3::operator+(Vector3 v) {
-	Vector3 addedVector = Vector3(coords[0]* v.coords[0],coords[1]* v.coords[1],coords[2]* v.coords[2]);
+	Vector3 addedVector = Vector3(coords[0] + v.coords[0],coords[1] + v.coords[1],coords[2] + v.coords[2]);
 
 	return addedVector;
+}
+
+void Vector3::operator+=(Vector3 v) {
+	coords[0]+=v.coords[0];
+	coords[1]+=v.coords[1];
+	coords[2]+=v.coords[2];
+}
+
+Vector3 Vector3::operator-(Vector3 v) {
+	Vector3 addedVector = Vector3(coords[0] - v.coords[0],coords[1] - v.coords[1],coords[2] - v.coords[2]);
+
+	return addedVector;
+}
+void Vector3::operator-=(Vector3 v) {
+	coords[0]-=v.coords[0];
+	coords[1]-=v.coords[1];
+	coords[2]-=v.coords[2];
 }
 
 
