@@ -22,21 +22,17 @@ Set<Vector3> Sphere::intersect ( const Ray& r ) const {
 
 	Set<Vector3> s = Set<Vector3>(2);
 
-	double a = r.ptD.norm()*r.ptD.norm();
+	double a = dot_product(r.ptD, r.ptD);
+	Vector3 o_c = r.ptO-centre;
 
-	Vector3 d_o_x = r.ptD*(r.ptO-centre);
-	double b = 2*(d_o_x[0]+d_o_x[1]+d_o_x[2]);
+	double b = 2*(dot_product(r.ptD, o_c));
 	cout << " a=";
 	cout << a;
 	cout << " b=";
 	cout << b;
 
-	Vector3 o_c = r.ptO*centre;
 	//TODO real function for pow
-	double c = centre.norm()*centre.norm()
-			+ r.ptO.norm()*r.ptO.norm()
-			- 2*(o_c[0]+o_c[1]+o_c[2])
-			- radius*radius;
+	double c = dot_product(r.ptO-centre, r.ptO-centre);
 
 	cout << " c=";
 	cout << c;
