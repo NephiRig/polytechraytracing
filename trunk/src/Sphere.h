@@ -17,6 +17,7 @@ public:
 	double radius;
 	Sphere ( Vector3 _centre, double _radius );
 	Vector3 intersect(const Ray r);
+  Vector3 normal ( const Vector3& pt  ) const;
 	virtual ~Sphere();
 
 };
