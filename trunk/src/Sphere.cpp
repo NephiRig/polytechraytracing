@@ -16,9 +16,11 @@ Sphere::Sphere(Vector3 _centre, double _radius) :
 
 
 /*
- *	Calculate the first intersection of a ray with a spehere
+ *	Calculate the intersections of a ray with a sphere
  */
-Vector3 Sphere::intersect(const Ray r) {
+Set<Vector3> Sphere::intersect ( const Ray& r ) const {
+
+	Set<Vector3> s = Set<Vector3>(2);
 
 	double a = r.ptD.norm();
 
@@ -43,14 +45,27 @@ Vector3 Sphere::intersect(const Ray r) {
 	double d= b*b - 4*a*c; //the term in the root
 
 	if(d < 0) { //We have no intersection
-		return Vector3(0,0,0); //FIXME return specific null value
+		Vector3 null = Vector3(0,0,0);
+		s.add(null); //FIXME return specific null value
 	} else {
-		//FIXME: In a first step we only care about the smaller t (i.e. the first intersection)
-		double t = (- b - sqrt(d))/(2*a);
-		cout << " t=";
-		cout << t;
-		return r.getPoint(t);
+		double t1 = (- b - sqrt(d))/(2*a);
+		double t2 = (- b + sqrt(d))/(2*a);
+		cout << " t1=";
+		cout << t1;
+		cout << " t2=";
+		cout << t2;
+
+		s.add(r.getPoint(t1));
+		if (t2 != t1) {
+			s.add(r.getPoint(t2));
+		}
 	}
+	return s;
+}
+
+
+Vector3 Sphere::normal ( const Vector3& pt  ) const {
+	return Vector3(0,0,0);
 }
 
 Sphere::~Sphere() {

@@ -25,7 +25,8 @@ public:
 	int length ();
 	int size ();
 	bool empty ();
-	const T& operator[] (int i);
+	//const T& operator[] (int i);
+	T get (int i) const;
 
 };
 #include "Set.hpp"
