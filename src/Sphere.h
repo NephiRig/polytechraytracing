@@ -9,13 +9,16 @@
 #define SPHERE_H_
 
 #include "Shape.h"
+#include "Material.h"
 
 class Sphere : public Shape {
 public:
 	Vector3 centre;
 	double radius;
 	Sphere ( Vector3 _centre, double _radius );
+	Vector3 intersect(const Ray r);
 	virtual ~Sphere();
+
 };
 
 #endif /* SPHERE_H_ */

@@ -19,7 +19,13 @@ Vector3::~Vector3() {
 	// TODO Auto-generated destructor stub
 }
 
-Vector3 Vector3::operator*(double s) {
+Vector3 Vector3::operator*(Vector3 v) const {
+	Vector3 strechedVector = Vector3(coords[0]*v[0],coords[1]*v[1],coords[2]*v[2]);
+
+	return strechedVector;
+}
+
+Vector3 Vector3::operator*(double s) const {
 	Vector3 strechedVector = Vector3(coords[0]*s,coords[1]*s,coords[2]*s);
 
 	return strechedVector;
@@ -31,7 +37,7 @@ void Vector3::operator*=(double s) {
 
 }
 
-Vector3 Vector3::operator+(Vector3 v) {
+Vector3 Vector3::operator+(Vector3 v) const {
 	Vector3 addedVector = Vector3(coords[0] + v.coords[0],coords[1] + v.coords[1],coords[2] + v.coords[2]);
 
 	return addedVector;
@@ -43,7 +49,7 @@ void Vector3::operator+=(Vector3 v) {
 	coords[2]+=v.coords[2];
 }
 
-Vector3 Vector3::operator-(Vector3 v) {
+Vector3 Vector3::operator-(Vector3 v) const {
 	Vector3 addedVector = Vector3(coords[0] - v.coords[0],coords[1] - v.coords[1],coords[2] - v.coords[2]);
 
 	return addedVector;
@@ -54,7 +60,7 @@ void Vector3::operator-=(Vector3 v) {
 	coords[2]-=v.coords[2];
 }
 
-double Vector3::norm ()
+double Vector3::norm () const
 {
 	return sqrt ( coords[0]*coords[0] + coords[1]*coords[1] + coords[2]*coords[2] );
 }

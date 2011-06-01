@@ -15,8 +15,8 @@ Ray::Ray(Vector3 p1, Vector3 p2) {
 }
 
 	//returns the point on the ray corresponding t
-	Vector3 Ray::getPoint(double t) {
-		return ptO + ptD*t;
+	Vector3 Ray::getPoint(double t) const {
+		return ptO + (ptD*t);
 	}
 
 Ray::~Ray() {
