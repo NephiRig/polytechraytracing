@@ -30,7 +30,7 @@ bool Set<T>::add ( T item ) // always added to the end
 {
 	if ( used >= sz )
 	{
-		size *= 2;
+		sz *= 2;
 		T* temp = data;
 		if ( !(data = new T[sz]) )
 			return false;
@@ -82,11 +82,17 @@ bool Set<T>::empty ()
 	return used == 0;
 }
 
-template <class T>
-const T& Set<T>::operator[] (int i)
-{
+//template <class T>
+//const T& Set<T>::operator[] (int i) const
+//{
 	/*if ( i < 0 || i >= used )
 		return data[0];*/
+//	return data[i];
+//}
+
+
+template <class T>
+T Set<T>::get (int i) const
+{
 	return data[i];
 }
-

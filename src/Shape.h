@@ -20,8 +20,8 @@ public:
 	Shape();
 	virtual ~Shape();
 	// Material material;
-	// virtual Vector3 normal ( const Vector3& pt  ) const = 0;
-	// virtual Set<Vector3> intersect ( const Ray& r ) const = 0;
+	virtual Vector3 normal ( const Vector3& pt  ) const = 0;
+	virtual Set<Vector3> intersect ( const Ray& r ) const = 0;
 };
 
 #endif /* SHAPE_H_ */
