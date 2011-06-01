@@ -22,7 +22,7 @@ Set<Vector3> Sphere::intersect ( const Ray& r ) const {
 
 	Set<Vector3> s = Set<Vector3>(2);
 
-	double a = r.ptD.norm();
+	double a = r.ptD.norm()*r.ptD.norm();
 
 	Vector3 d_o_x = r.ptD*(r.ptO-centre);
 	double b = 2*(d_o_x[0]+d_o_x[1]+d_o_x[2]);
