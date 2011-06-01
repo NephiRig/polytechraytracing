@@ -10,7 +10,7 @@
 
 class Color {
 public:
-	double val[];
+	double val[3];
 
 	Color ( double r = 0.0, double v = 0.0, double b = 0.0 );
 	virtual ~Color();

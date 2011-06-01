@@ -11,8 +11,8 @@ class Image
 public:
 
    Image() {}
-   Image(int w, int h);
-   Image(int w, int h , Color c);
+   Image(int _w, int _h);
+   Image(int _w, int _h , Color c);
    void safeSetPixel(int x, int y, Color c)
    {
       if (x >= 0 && x < w && y >= 0 && y < h)

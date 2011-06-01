@@ -18,10 +18,10 @@ Sphere::Sphere(Vector3 _centre, double _radius) :
 /*
  *	Calculate the intersections of a ray with a sphere
  */
+
 Set<Vector3> Sphere::intersect ( const Ray& r ) const {
 
 	Set<Vector3> s = Set<Vector3>(2);
-
 	double a = dot_product(r.ptD, r.ptD);
 	Vector3 o_c = r.ptO-centre;
 
