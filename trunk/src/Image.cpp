@@ -2,6 +2,8 @@
 #include <cmath>
 #include <fstream>
 #include <string>
+#include <iostream> // debug
+#include <cassert>
 
 Image::Image(int w_, int h_ ) : w(w_), h(h_) {
     //assert(w > 0 && h > 0);
@@ -13,16 +15,23 @@ Image::Image(int w_, int h_ ) : w(w_), h(h_) {
     }
 }
 
-Image::Image(int w_, int h_ , Color c) : w(w_), h(h_) {
-    //(w > 0 && h > 0);
-    data = new Color*[w];
-    //assert(data != 0);
-    for (int i = 0; i < w; i++) {
-        data[i] = new Color[h];
-        //assert(data[i]);
-        for (int j = 0; j < h; j++)
-            data[i][j] = c;
+Image::Image(int _w, int _h, Color c)
+{
+	this->w = _w;
+	this->h = _h;
+	//std::cerr << "params à la construction : _w" << _w << ";_h" << _h << std::endl;
+	//std::cerr << "à la construction : w" << this->w << ";h" << this->h << std::endl;
+    assert (this->w > 0 && this->h > 0);
+	this->data = new Color*[this->w];
+    assert(this->data != 0);
+    for (int i = 0; i < this->w; i++) {
+    	this->data[i] = new Color[this->h];
+        assert(data[i]);
+        for (int j = 0; j < this->h; j++)
+        	this->data[i][j] = c;
     }
+    //std::cerr << "apres la construction : w" << this->w << ";h" << this->h << std::endl;
+    //std::cerr << "2 apres la construction : _w" << _w << ";_h" << _h << std::endl;
 }
 /*
 void Image::readPPM (char* file_name)
@@ -88,8 +97,9 @@ void Image::readPPM (char* file_name)
 }
 */
 void Image::writePPM(std::ostream& s) const {
-      s << "P6\n" << w << " " << h << "\n255\n";
-
+	//std::cerr << "AAAALLLLOOOO" << std::endl;
+    s << "P6\n" << w << " " << h << "\n255\n";
+    //std::cerr << "P6\n" << w << " " << h << "\n255\n";
     unsigned int i;
     for (int y = h-1; y >= 0; y--) 
         for (int x = 0; x < w; x++) {
