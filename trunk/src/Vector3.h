@@ -2,7 +2,7 @@
  * Vecteur3.h
  *
  *  Created on: 31.05.2011
- *      Author: nb-gyglim
+ *      Author: nb-gyglim, Michelet Valentin
  */
 
 #ifndef VECTEUR3_H_
@@ -14,24 +14,73 @@ public:
 	// [0] = x, [1] = y, [2]=z
 	double coords[3];
 
+	Vector3() {
+	}
 	Vector3(double x = 0, double y = 0, double z = 0);
+	Vector3(const Vector3 &v1);
 	virtual ~Vector3();
 
-	Vector3 operator*(Vector3 v) const;
-	Vector3 operator*(double s) const;
-	void operator*=(double s);
+	double get_x() const;
+	double get_y() const;
+	double get_z() const;
 
-	Vector3 operator+(const Vector3 v) const;
-	void operator+=(const Vector3 v);
+	void set_x(double x);
+	void set_y(double y);
+	void set_z(double z);
 
-	Vector3 operator-(const Vector3 v) const;
-	void operator-=(const Vector3 v);
+	double operator[](int i) const;
+	double& operator[](int i);
+
+	friend bool operator==(const Vector3 &v1, const Vector3 &v2);
+	friend bool operator!=(const Vector3 &v1, const Vector3 &v2);
+
+	Vector3 operator+() const;
+	Vector3 operator-() const;
+
+	Vector3& operator=(const Vector3 &v);
+
+	friend Vector3 operator+(const Vector3 &v1, const Vector3 &v2);
+	friend Vector3 operator-(const Vector3 &v1, const Vector3 &v2);
+	friend Vector3 operator*(const Vector3 &v, const double k);
+	friend Vector3 operator*(const double k, const Vector3 &v);
+	friend Vector3 operator/(const double k, const Vector3 &v);
+
+	Vector3& operator*=(const double k);
+	Vector3& operator/=(const double k);
+	Vector3& operator+=(const Vector3 &v);
+	Vector3& operator-=(const Vector3 &v);
+
+	friend double dot_product();
+	friend Vector3 cross_product();
 
 	double norm() const;
+	double squared_norm() const;
+
+	void make_unit_vector();
+
+	double min_coord() const;
+	double max_coord() const;
+	double min_abs_coord() const;
+	double max_abs_coord() const;
+	int index_min_coord() const;
+	int index_max_coord() const;
+	int index_min_abs_coord() const;
+	int index_max_abs_coord() const;
+
+
+
+
+
+
+
+
+
+
+
+
 	Vector3 normalized();
 	void normalize();
 
-	double& operator[] ( const int& i );
 };
 
 #endif /* VECTEUR3_H_ */

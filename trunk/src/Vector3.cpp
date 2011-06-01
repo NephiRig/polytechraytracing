@@ -2,7 +2,7 @@
  * Vecteur3.cpp
  *
  *  Created on: 31.05.2011
- *      Author: nb-gyglim
+ *      Author: nb-gyglim, Michelet Valentin
  */
 
 #include "Vector3.h"
@@ -12,80 +12,209 @@ Vector3::Vector3(double x, double y, double z) {
 	coords[0] = x;
 	coords[1] = y;
 	coords[2] = z;
+}
 
+Vector3::Vector3(const Vector &v1) {
+	*this = v1;
 }
 
 Vector3::~Vector3() {
 	// TODO Auto-generated destructor stub
 }
 
-Vector3 Vector3::operator*(Vector3 v) const {
-	Vector3 strechedVector = Vector3(coords[0]*v[0],coords[1]*v[1],coords[2]*v[2]);
 
-	return strechedVector;
+double Vector3::get_x() const {
+	return coords[0];
 }
 
-Vector3 Vector3::operator*(double s) const {
-	Vector3 strechedVector = Vector3(coords[0]*s,coords[1]*s,coords[2]*s);
-
-	return strechedVector;
-}
-void Vector3::operator*=(double s) {
-	coords[0]*=s;
-	coords[1]*=s;
-	coords[2]*=s;
-
+double Vector3::get_y() const {
+	return coords[1];
 }
 
-Vector3 Vector3::operator+(Vector3 v) const {
-	Vector3 addedVector = Vector3(coords[0] + v.coords[0],coords[1] + v.coords[1],coords[2] + v.coords[2]);
-
-	return addedVector;
+double Vector3::get_z() const {
+	return coords[2];
 }
 
-void Vector3::operator+=(Vector3 v) {
-	coords[0]+=v.coords[0];
-	coords[1]+=v.coords[1];
-	coords[2]+=v.coords[2];
+
+void Vector3::set_x(double x) {
+	coords[0] = x;
 }
 
-Vector3 Vector3::operator-(Vector3 v) const {
-	Vector3 addedVector = Vector3(coords[0] - v.coords[0],coords[1] - v.coords[1],coords[2] - v.coords[2]);
-
-	return addedVector;
-}
-void Vector3::operator-=(Vector3 v) {
-	coords[0]-=v.coords[0];
-	coords[1]-=v.coords[1];
-	coords[2]-=v.coords[2];
+void Vector3::set_y(double y) {
+	coords[1] = y;
 }
 
-double Vector3::norm () const
-{
-	return sqrt ( coords[0]*coords[0] + coords[1]*coords[1] + coords[2]*coords[2] );
+void Vector3::set_z(double z) {
+	coords[2] = z;
 }
 
-Vector3 Vector3::normalized ()
-{
-	Vector3 res;
-	double ni = 1.0 / norm ();
-	res[0] *= ni;
-	res[1] *= ni;
-	res[2] *= ni;
-	return res;
+
+double operator[](int i) const {
+	return coords[i];
 }
 
-void Vector3::normalize ()
-{
-	double ni = 1.0 / norm ();
-	coords[0] *= ni;
-	coords[1] *= ni;
-	coords[2] *= ni;
-}
-
-double& Vector3::operator[] ( const int& i )
-{
+double& operator[](int i) {
 	return coords[i];
 }
 
 
+bool operator==(const Vector3 &v1, const Vector3 &v2) {
+	return v1[0] == v2[0] && v1[1] == v2[1] && v1[2] == v2[2];
+}
+
+bool operator!=(const Vector3 &v1, const Vector3 &v2) {
+	return !(v1 == v2);
+}
+
+
+const Vector3& Vector3::operator+() const {
+	return *this;
+}
+
+Vector3 Vector3::operator-() const {
+	return Vector3(-coords[0], -coords[1], -coords[2]);
+}
+
+
+Vector3& operator=(const Vector3 &v) {
+	coords[0] = v[0];
+	coords[1] = v[1];
+	coords[2] = v[2];
+}
+
+
+Vector3 operator*(const Vector3& v, const double k) const {
+	return Vector3(v[0] * k, v[1] * k, v[2] * k);
+}
+
+Vector3 operator*(const double k, const Vector3& v) const {
+	return Vector3(v[0] * k, v[1] * k, v[2] * k);
+}
+
+Vector3 operator/(const double k, const Vector3& v) {
+	return Vector3(v[0] / k, v[1] / k, v[2] / k);
+}
+
+Vector3 operator+(const Vector3& v1, const Vector3& v2) const {
+	return Vector3(v1[0] + v2[0], v1[1] + v2[1], v1[2] + v2[2]);
+}
+
+Vector3 operator-(const Vector3& v1, const Vector3& v2) const {
+	return Vector3(v1[0] - v2[0], v1[1] - v2[1], v1[2] - v2[2]);
+}
+
+
+Vector3& Vector3::operator*=(const double k) {
+	return *this = (*this * k);
+}
+
+Vector3& Vector3::operator/=(const double k) {
+	return *this = (*this / k);
+}
+
+Vector3& Vector3::operator+=(const Vector3& v) {
+	return *this = (*this + v);
+}
+
+Vector3& Vector3::operator-=(const Vector3& v) {
+	return *this = (*this - v);
+}
+
+
+double dot_product(const Vector3& v1, const Vector3& v2) const {
+	return v1[0] * v2[0] + v1[1] * v2[1] + v1[2] * v2[2];
+}
+
+Vector3 cross_product(const Vector3& v1, const Vector3& v2) const {
+	return Vector3(
+			v1[1] * v2[2] - v1[2] * v2[1],
+			v1[2] * v2[0] - v1[0] * v2[2],
+			v1[0] * v2[1] - v1[1] * v2[0]
+	);
+}
+
+
+double Vector3::norm() const {
+	return sqrt(coords[0] * coords[0] + coords[1] * coords[1] + coords[2] * coords[2]);
+}
+
+double Vector3::squared_norm() const {
+	return (coords[0] * coords[0] + coords[1] * coords[1] + coords[2] * coords[2]);
+}
+
+void Vector3::make_unit_vector() {
+	*this = *this / (*this).norm();
+}
+
+
+double Vector3::min_coord() const {
+	double tmp = coords[0];
+	if (tmp > coords[1]) tmp = coords[1];
+	if (tmp > coords[2]) tmp = coords[2];
+	return tmp;
+}
+
+double Vector3::max_coord() const {
+	double tmp = coords[0];
+	if (tmp < coords[1]) tmp = coords[1];
+	if (tmp < coords[2]) tmp = coords[2];
+	return tmp;
+}
+
+double Vector3::min_abs_coord() const{
+	double tmp = fabs(coords[0]);
+	if (tmp > fabs(coords[1])) tmp = fabs(coords[1]);
+	if (tmp > fabs(coords[2])) tmp = fabs(coords[2]);
+	return tmp;
+}
+
+double Vector3::max_abs_coord() const{
+	double tmp = fabs(coords[0]);
+	if (tmp < fabs(coords[1])) tmp = fabs(coords[1]);
+	if (tmp < fabs(coords[2])) tmp = fabs(coords[2]);
+	return tmp;
+}
+
+int Vector3::index_min_coord() const {
+	int index = 0;
+	double tmp = coords[0];
+	if (tmp > coords[1]) {
+		tmp = coords[1];
+		index = 1;
+	}
+	if (tmp > coords[2]) index = 2;
+	return index;
+}
+
+int Vector3::index_max_coord() const {
+	int index = 0;
+	double tmp = coords[0];
+	if (tmp < coords[1]) {
+		tmp = coords[1];
+		index = 1;
+	}
+	if (tmp < coords[2]) index = 2;
+	return index;
+}
+
+int Vector3::index_min_abs_coord() const {
+	int index = 0;
+	double tmp = fabs(coords[0]);
+	if (tmp > fabs(coords[1])) {
+		tmp = fabs(coords[1]);
+		index = 1;
+	}
+	if (tmp > fabs(coords[2])) index = 2;
+	return index;
+}
+
+int Vector3::index_min_abs_coord() const {
+	int index = 0;
+	double tmp = fabs(coords[0]);
+	if (tmp < fabs(coords[1])) {
+		tmp = fabs(coords[1]);
+		index = 1;
+	}
+	if (tmp < fabs(coords[2])) index = 2;
+	return index;
+}
