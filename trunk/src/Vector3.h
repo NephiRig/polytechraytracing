@@ -17,16 +17,17 @@ public:
 	Vector3(double x = 0, double y = 0, double z = 0);
 	virtual ~Vector3();
 
-	Vector3 operator*(double s);
+	Vector3 operator*(Vector3 v) const;
+	Vector3 operator*(double s) const;
 	void operator*=(double s);
 
-	Vector3 operator+(const Vector3 v);
+	Vector3 operator+(const Vector3 v) const;
 	void operator+=(const Vector3 v);
 
-	Vector3 operator-(const Vector3 v);
+	Vector3 operator-(const Vector3 v) const;
 	void operator-=(const Vector3 v);
 
-	double norm();
+	double norm() const;
 	Vector3 normalized();
 	void normalize();
 

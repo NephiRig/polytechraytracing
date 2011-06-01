@@ -11,15 +11,15 @@
 #include "Vector3.h"
 
 class Ray {
-private:
-	Vector3 ptO;
-	Vector3 ptD;
 
 public:
 	Ray(Vector3 p1, Vector3 p2);
 	virtual ~Ray();
 
-	Vector3 getPoint(double t);
+	Vector3 getPoint(double t) const;
+
+	Vector3 ptD;
+	Vector3 ptO;
 };
 
 #endif /* RAYON_H_ */
