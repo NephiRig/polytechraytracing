@@ -134,6 +134,10 @@ Vector3 cross_product(const Vector3& v1, const Vector3& v2) {
 	);
 }
 
+double triple_product(const Vector3& v1, const Vector3& v2, const Vector3& v3) {
+	return dot_product(cross_product(v1, v2), v3);
+}
+
 
 double Vector3::norm() const {
 	return sqrt(coords[0] * coords[0] + coords[1] * coords[1] + coords[2] * coords[2]);
@@ -149,6 +153,10 @@ void Vector3::normalize() {
 
 Vector3 Vector3::normalized() {
 	return *this / (*this).norm();
+}
+
+Vector3 unitVector(const Vector3 &v) {
+	return v / v.norm();
 }
 
 
@@ -222,4 +230,30 @@ int Vector3::index_max_abs_coord() const {
 	}
 	if (tmp < fabs(coords[2])) index = 2;
 	return index;
+}
+
+
+Vector3 minVect(const Vector3& v1, const Vector3& v2) {
+	Vector3 v(v1);
+	if (v2[0] < v1[0]) v.set_x(v2[0]);
+	if (v2[1] < v1[1]) v.set_y(v2[1]);
+	if (v2[2] < v1[2]) v.set_z(v2[2]);
+	return v;
+}
+
+Vector3 maxVect(const Vector3& v1, const Vector3& v2) {
+	Vector3 v(v1);
+	if (v2[0] > v1[0]) v.set_x(v2[0]);
+	if (v2[1] > v1[1]) v.set_y(v2[1]);
+	if (v2[2] > v1[2]) v.set_z(v2[2]);
+	return v;
+}
+
+
+ostream& operator<<(ostream &os, const Vector3 &v) {
+	return os << "(" << v[0] << "; " << v[1] << "; " << v[2] << ")";
+}
+
+istream& operator>>(istream &is, Vector3 &v) {
+	return is >> v.coords[0] >> v.coords[1] >> v.coords[2];
 }

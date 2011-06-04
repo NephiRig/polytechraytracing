@@ -8,6 +8,10 @@
 #ifndef VECTEUR3_H_
 #define VECTEUR3_H_
 
+#include <iostream>
+
+using namespace std;
+
 class Vector3 {
 public:
 	//the 3 coordinates
@@ -50,12 +54,13 @@ public:
 
 	friend double dot_product(const Vector3& v1, const Vector3& v2);
 	friend Vector3 cross_product(const Vector3& v1, const Vector3& v2);
+	friend double triple_product(const Vector3& v1, const Vector3& v2, const Vector3& v3);
 
 	double norm() const;
 	double squared_norm() const;
-
 	Vector3 normalized();
 	void normalize();
+	friend Vector3 unitVector(const Vector3 &v);
 
 	double min_coord() const;
 	double max_coord() const;
@@ -66,20 +71,11 @@ public:
 	int index_min_abs_coord() const;
 	int index_max_abs_coord() const;
 
+	friend Vector3 minVect(const Vector3& v1, const Vector3& v2);
+	friend Vector3 maxVect(const Vector3& v1, const Vector3& v2);
 
-
-
-
-
-
-
-
-
-
-
-
-
-
+	friend ostream& operator<<(ostream &os, const Vector3 &v);
+	friend istream& operator>>(istream &is, Vector3 &v);
 };
 
 #endif /* VECTEUR3_H_ */
