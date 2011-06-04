@@ -17,7 +17,7 @@
 
 using namespace std;
 
-
+//*
 int main ( int argc, char **argv )
 {
 	cerr << "test huhu" << endl;
@@ -35,7 +35,7 @@ int main ( int argc, char **argv )
 	cerr << "apres construction2: u" << w << ";h" << h << endl;
 
 	//TEST: Intersect sample sphere:
-	/*Ray ray = Ray(Vector3(0,0,0),Vector3(1,0,0));
+	Ray ray = Ray(Vector3(0,0,0),Vector3(1,0,0));
 	Sphere sphere = Sphere(Vector3(20,0,0),10);
 	Set<Vector3> ip = sphere.intersect(ray);
 	cout << "Intersectionpoint: 1";
@@ -53,7 +53,6 @@ int main ( int argc, char **argv )
 	cout << ip.get(1)[1];
 	cout << " z=";
 	cout <<  ip.get(1)[2];
-	 */
 	// TODO: lancer le rayon
 	cerr << "a" << endl;
 	for ( int y = 0; y < h; ++y )
@@ -77,4 +76,4 @@ int main ( int argc, char **argv )
 
 	return 0;
 } // main ()
-
+//*/
