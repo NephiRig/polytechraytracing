@@ -85,9 +85,3 @@ template<class T>
 T& Set<T>::operator[](const int &i) {
 	return data[i];
 }
-
-//FIXME Controler les indices
-template<class T>
-T Set<T>::get(int i) const {
-	return data[i];
-}

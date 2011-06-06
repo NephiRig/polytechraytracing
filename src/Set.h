@@ -28,8 +28,6 @@ public:
 	T operator[](int i) const;
 	T& operator[](const int &i);
 
-	T get(int i) const;
-
 };
 #include "Set.hpp"
 
