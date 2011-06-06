@@ -30,44 +30,59 @@ int main(int argc, char **argv) {
 	cerr << "apres construction: u" << w << ";h" << h << endl;
 	cerr << "apres construction2: u" << w << ";h" << h << endl;
 
-	//TEST: Intersect sample sphere:
-	Ray ray = Ray(Vector3(0, 0, 0), Vector3(1, 0, 0));
-	Sphere sphere = Sphere(Vector3(20, 0, 0), 10, Color(.5, .5, .5));
+	/*
+	 * CODE GYGLIM
+	 * TEST: Intersect sample sphere
+	 */
+	Ray ray = Ray(Vector3(0,0,0),Vector3(1,0,10));
+	Sphere sphere = Sphere(Vector3(0,0,250),20, Color(255,0,0));
 	Set<Vector3> ip = sphere.intersect(ray);
-	cout << "Intersectionpoint: 1" << endl;
+	cout << "Intersectionpoint: 1";
 	cout << "x=";
-	cout << ip[0][0] << endl;
-	cout << "y=";
-	cout << ip[0][1] << endl;
-	cout << "z=";
-	cout << ip[0][2] << endl;
+	cout << ip[0][0];
+	cout << " y=";
+	cout << ip[0][1];
+	cout << " z=";
+	cout <<  ip[0][2];
 
-	cout << "Intersectionpoint: 2" << endl;
+	cout << "Intersectionpoint: 2";
 	cout << "x=";
-	cout << ip[1][0] << endl;
-	cout << "y=";
-	cout << ip[1][1] << endl;
-	cout << "z=";
-	cout << ip[1][2] << endl;
+	cout << ip[0][0];
+	cout << " y=";
+	cout << ip[0][1];
+	cout << " z=";
+	cout <<  ip[0][2];
 
 	// TODO: lancer le rayon
 	cerr << "a" << endl;
-	for (int y = 0; y < h; ++y) {
-		for (int x = 0; x < w; ++x) {
-			//r = s.getPixel ( x, y ) - obs;
+	for ( int y = 0; y < h; ++y )
+	{
+		for ( int x = 0; x < w; ++x )
+		{
+			Ray r2 = Ray(obs,Vector3(x-w/2,y-h/2,400) - obs);
 			//img.setPixel ( x, y, Color(0.5,0.5,0.5) );
-			img.setPixel(x, y, Color(x * 1.0 / w, y * 1.0 / h, 0.5));
+			Set<Vector3> intersections = sphere.intersect(r2);
+			if (!intersections.empty()) {
+				img.setPixel ( x, y, sphere.color);
+			} else {
+				img.setPixel ( x, y, Color(0,0,0));
+			}
 		}
 	}
 	cerr << "b" << endl;
 	ofstream myfile;
-	myfile.open("img.ppm");
+	myfile.open ("img.ppm");
 	cerr << "on tente le writePPM" << endl;
-	img.writePPM(myfile);
+	img.writePPM ( myfile );
 	cerr << "fin du writePPM" << endl;
 	//img.writePPM ( cerr );
 	cerr << endl;
-	myfile.close();
+	myfile.close ();
+
+	return 0;
+	/*
+	 * END CODE GYGLIM
+	 */
 
 //*/
 /*

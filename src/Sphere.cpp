@@ -35,26 +35,18 @@ Set<Vector3> Sphere::intersect(const Ray& r) const {
 
 	Vector3 d_o_x = dot_product(r.get_direction(),(r.get_origin() - centre));
 	double b = 2 * (d_o_x[0] + d_o_x[1] + d_o_x[2]);
-	cout << " a=";
-	cout << a;
-	cout << " b=";
-	cout << b;
 
 	Vector3 o_c = dot_product(r.get_origin(),centre);
 	//TODO real function for pow
 	double c = centre.norm() * centre.norm() + r.get_origin().norm() * r.get_origin().norm() - 2
 			* (o_c[0] + o_c[1] + o_c[2]) - radius * radius;
 
-	cout << " c=";
-	cout << c;
 
 	//Apply solve function (-b +- sqrt(b^2-4ac))/2a
 	double d = b * b - 4 * a * c; //the term in the root
 
 
 	if (d < 0) { //We have no intersection
-		Vector3 null = Vector3(0, 0, 0);
-		s.add(null); //FIXME return specific null value
 	} else {
 		double t1 = (-b - sqrt(d)) / (2 * a);
 		double t2 = (-b + sqrt(d)) / (2 * a);
