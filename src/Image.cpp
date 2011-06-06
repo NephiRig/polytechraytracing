@@ -137,7 +137,7 @@ void Image::writePPM(ostream &s) const {
 	unsigned int i;
 	for (int y = h - 1; y >= 0; y--)
 		for (int x = 0; x < w; x++) {
-			float gamma = 1.0 / 2.2;
+			double gamma = 1.0 / 2.2;
 			data[x][y] = Color(pow(data[x][y][0], gamma), pow(data[x][y][1],
 					gamma), pow(data[x][y][2], gamma));
 			i = (unsigned int) (256.0 * data[x][y][0]);
