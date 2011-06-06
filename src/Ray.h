@@ -16,18 +16,19 @@ using namespace std;
 class Ray {
 
 public:
-	Vector3 ptD;
-	Vector3 ptO;
+	//the 3 coordinates
+	// [0] = x, [1] = y, [2]=z
+	Vector3 coords[2];
 
-	Ray(const Vector3 &v1 = Vector3(), const Vector3 &v2 = Vector3());
+	Ray(const Vector3 &origin = Vector3(), const Vector3 &direction = Vector3());
 	Ray(const Ray &r);
 	virtual ~Ray();
 
-	Vector3 get_ptD() const;
-	Vector3 get_ptO() const;
+	Vector3 get_origin() const;
+	Vector3 get_direction() const;
 
-	void setptD(const Vector3 &v_ptD);
-	void setptO(const Vector3 &v_ptO);
+	void set_origin(const Vector3 &new_origin);
+	void set_direction(const Vector3 &new_direction);
 
 	/**
 	 * \fn Vector3 getPoint(double t) const
@@ -40,7 +41,10 @@ public:
 	 */
 	Vector3 getPoint(double t) const;
 
-	friend ostream& operator<<(ostream &os, const Ray &v);
+	Vector3 operator[](int i) const;
+	Vector3& operator[](const int &i);
+
+	friend ostream& operator<<(ostream &os, const Ray &r);
 };
 
 #endif /* RAYON_H_ */

@@ -1,5 +1,5 @@
 /*
- * Forme.h
+ * Shape.h
  *
  *  Created on: 31 mai 2011
  *      Author: quentin
@@ -9,19 +9,26 @@
 #define SHAPE_H_
 
 #include "Vector3.h"
+#include "Color.h"
 #include "Ray.h"
 //#include "Intersection.h"
 #include "Set.h"
 
 class Intersection;
 
+struct HitRecord {
+	float t;
+	Vector3 normal;
+	Color color;
+};
+
 class Shape {
 public:
 	Shape();
 	virtual ~Shape();
 	// Material material;
-	virtual Vector3 normal ( const Vector3& pt  ) const = 0;
-	virtual Set<Vector3> intersect ( const Ray& r ) const = 0;
+	virtual Vector3 normal(const Vector3& pt) const = 0;
+	virtual Set<Vector3> intersect(const Ray& r) const = 0;
 };
 
 #endif /* SHAPE_H_ */

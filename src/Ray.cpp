@@ -7,9 +7,9 @@
 
 #include "Ray.h"
 
-Ray::Ray(const Vector3 &p1, const Vector3 &p2) {
-	ptO = p1;
-	ptD = p2;
+Ray::Ray(const Vector3 &origin, const Vector3 &direction) {
+	coords[0] = origin;
+	coords[1] = direction;
 }
 
 Ray::Ray(const Ray &r) {
@@ -21,28 +21,37 @@ Ray::~Ray() {
 }
 
 
-Vector3 Ray::get_ptD() const {
-	return ptD;
+Vector3 Ray::get_origin() const {
+	return coords[0];
 }
 
-Vector3 Ray::get_ptO() const {
-	return ptO;
+Vector3 Ray::get_direction() const {
+	return coords[1];
 }
 
-void Ray::setptD(const Vector3 &v_ptD) {
-	ptD = v_ptD;
+void Ray::set_origin(const Vector3 &new_origin) {
+	coords[0] = new_origin;
 }
 
-void Ray::setptO(const Vector3 &v_ptO) {
-	ptO = v_ptO;
+void Ray::set_direction(const Vector3 &new_direction) {
+	coords[1] = new_direction;
 }
 
 
 Vector3 Ray::getPoint(double t) const {
-	return ptO + (ptD * t);
+	return coords[0] + (t * coords[1]);
 }
 
 
-ostream& operator<<(ostream &os, const Ray &v) {
-	return os << v.get_ptO() << " + t*" << v.get_ptO() << endl;
+Vector3 Ray::operator[](int i) const {
+	return coords[i];
+}
+
+Vector3& Ray::operator[](const int &i) {
+	return coords[i];
+}
+
+
+ostream& operator<<(ostream &os, const Ray &r) {
+	return os << r.get_origin() << " + t*" << r.get_direction() << endl;
 }
