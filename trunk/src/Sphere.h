@@ -22,8 +22,6 @@ public:
 	Sphere (const Vector3 &_centre, double _radius, const Color &_color);
 	virtual ~Sphere();
 
-	bool intersect(const Ray &r, float tmin, float tmax/*, HitRecord *record*/) const;
-
 	Vector3 normal (const Vector3& pt) const;
 
 	Set<Vector3> intersect ( const Ray& r ) const;

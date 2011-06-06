@@ -19,11 +19,6 @@ Sphere::~Sphere() {
 	// TODO Auto-generated destructor stub
 }
 
-bool Sphere::intersect(const Ray &r, float tmin, float tmax/*, HitRecord *record*/) const {
-
-	return false;
-}
-
 /*
  *	Calculate the intersections of a ray with a sphere
  */
