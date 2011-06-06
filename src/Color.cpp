@@ -7,7 +7,7 @@
 
 #include "Color.h"
 
-Color::Color(double r/*= 0.0*/, double g/*= 0.0*/, double b/*= 0.0*/ ) {
+inline Color::Color(double r/*= 0.0*/, double g/*= 0.0*/, double b/*= 0.0*/ ) {
 	val[0] = r;
 	val[1] = g;
 	val[2] = b;
@@ -57,11 +57,11 @@ double Color::operator[] (unsigned i) const {
 }
 
 
-bool operator==(const Color &c1, const Color &c2) {
+inline bool operator==(const Color &c1, const Color &c2) {
 	return c1[0] == c2[0] && c1[1] == c2[1] && c1[2] == c2[2];
 }
 
-bool operator!=(const Color &c1, const Color &c2) {
+inline bool operator!=(const Color &c1, const Color &c2) {
 	return !(c1 == c2);
 }
 
@@ -75,7 +75,7 @@ Color Color::operator-() const {
 }
 
 
-Color& Color::operator=(const Color &c) {
+inline Color& Color::operator=(const Color &c) {
 	val[0] = c[0];
 	val[1] = c[1];
 	val[2] = c[2];
@@ -83,53 +83,53 @@ Color& Color::operator=(const Color &c) {
 }
 
 
-Color operator+(const Color &c1, const Color &c2) {
+inline Color operator+(const Color &c1, const Color &c2) {
 	return Color(c1[0] + c2[0], c1[1] + c2[1], c1[2] + c2[2]);
 }
 
-Color operator*(const Color &c1, const Color &c2) {
+inline Color operator*(const Color &c1, const Color &c2) {
 	return Color(c1[0] * c2[0], c1[1] * c2[1], c1[2] * c2[2]);
 }
 
-Color operator/(const Color &c1, const Color &c2) {
+inline Color operator/(const Color &c1, const Color &c2) {
 	return Color(c1[0] / c2[0], c1[1] / c2[1], c1[2] / c2[2]);
 }
 
-Color operator*(const double k, const Color &c) {
+inline Color operator*(const double k, const Color &c) {
 	return Color(c[0] * k, c[1] * k, c[2] * k);
 }
 
-Color operator*(const Color &c, const double k) {
+inline Color operator*(const Color &c, const double k) {
 	return Color(c[0] * k, c[1] * k, c[2] * k);
 }
 
-Color operator/(const Color &c, const double k) {
+inline Color operator/(const Color &c, const double k) {
 	return Color(c[0] / k, c[1] / k, c[2] / k);
 }
 
 
-Color& Color::operator+=(const Color &c) {
+inline Color& Color::operator+=(const Color &c) {
 	return *this = *this + c;
 }
 
-Color& Color::operator*=(const Color &c) {
+inline Color& Color::operator*=(const Color &c) {
 	return *this = *this * c;
 }
 
-Color& Color::operator/=(const Color &c) {
+inline Color& Color::operator/=(const Color &c) {
 	return *this = *this / c;
 }
 
-Color& Color::operator*=(const double k) {
+inline Color& Color::operator*=(const double k) {
 	return *this = *this * k;
 }
 
-Color& Color::operator/=(const double k) {
+inline Color& Color::operator/=(const double k) {
 	return *this = *this / k;
 }
 
 
-void Color::clamp() {
+inline void Color::clamp() {
 	if (val[0] < 0) val[0] = 0;
 	if (val[1] < 0) val[1] = 0;
 	if (val[2] < 0) val[2] = 0;
@@ -140,7 +140,7 @@ void Color::clamp() {
 }
 
 
-ostream& operator<<(ostream &os, const Color &c) {
+inline ostream& operator<<(ostream &os, const Color &c) {
 	os << "rgb(" << c[0] << ", " << c[1] << ", " << c[2] << ")";
 	return os;
 }
