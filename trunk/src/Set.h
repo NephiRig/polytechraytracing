@@ -26,6 +26,7 @@ public:
 	bool empty();
 
 	T operator[](int i) const;
+	T get(int i) const;
 	T& operator[](const int &i);
 
 };
