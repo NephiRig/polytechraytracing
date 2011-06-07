@@ -18,6 +18,8 @@ public:
 	double distScreen;
 	double Rx;
 	double Ry;
+	Vector3 w;
+	Vector3 h;
 	Vector3 ptI;
 
 	Screen ( Vector3 _observer, Vector3 _aimedPoint, double _distScreen, double _Rx, double _Ry );

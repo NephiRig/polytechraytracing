@@ -7,9 +7,9 @@
 
 #include "LightSource.h"
 
-LightSource::LightSource(double intens/*, Vector3 pos*/) {
+LightSource::LightSource(double intens, Vector3 pos) {
 	intensity = intens;
-	//position = pos;
+	position = pos;
 
 }
 
