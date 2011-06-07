@@ -147,17 +147,19 @@ double Vector3::squared_norm() const {
 	return (coords[0] * coords[0] + coords[1] * coords[1] + coords[2] * coords[2]);
 }
 
-void Vector3::normalize() {
-	*this = *this / (*this).norm();
+Vector3 &Vector3::normalize() {
+	return (*this = *this / (*this).norm());
 }
 
-Vector3 Vector3::normalized() {
+Vector3 Vector3::normalized() const {
 	return *this / (*this).norm();
 }
 
+/* OBSOLETE
 Vector3 unitVector(const Vector3 &v) {
 	return v / v.norm();
 }
+*/
 
 
 double Vector3::min_coord() const {

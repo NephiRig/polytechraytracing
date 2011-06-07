@@ -58,9 +58,9 @@ public:
 
 	double norm() const;
 	double squared_norm() const;
-	Vector3 normalized();
-	void normalize();
-	friend Vector3 unitVector(const Vector3 &v);
+	Vector3 &normalize();
+	Vector3 normalized() const;
+	//friend Vector3 unitVector(const Vector3 &v); OBSOLETE
 
 	double min_coord() const;
 	double max_coord() const;
