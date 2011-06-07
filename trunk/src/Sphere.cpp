@@ -45,10 +45,10 @@ Set<Vector3> Sphere::intersect(const Ray& r) const {
 	} else {
 		double t1 = (-b - sqrt(d)) / (2 * a);
 		double t2 = (-b + sqrt(d)) / (2 * a);
-		cout << " t1=";
+		/*cout << " t1=";
 		cout << t1;
 		cout << " t2=";
-		cout << t2;
+		cout << t2;*/
 
 		s.add(r.getPoint(t1));
 		if (t2 != t1) {

@@ -14,9 +14,17 @@ Screen::Screen ( Vector3 _observer, Vector3 _aimedPoint, double _distScreen, dou
 	Vector3 OA = aimedPoint - observer;
 	Vector3 a = OA.normalized ();
 	a *= distScreen;
-	ptI[0] = a[0] - Rx / 2.0;
-	ptI[1] = a[1];
-	ptI[2] = a[2] + Ry / 2.0;
+	cout << "\n a: x=" << a[0] << ";y=" << a[1] << ";z=" << a[2] << "\n";
+	w = Vector3(1,a.coords[0]/a.coords[2]);
+	w.normalize();
+	cout << "w: " << w;
+
+	h = cross_product(a,w);
+	h.normalize();
+	cout << "h: " << h;
+
+	ptI= a - w*Rx/2 - h*Ry/2;
+	cout << "ptI: x=" << ptI[0] << ";y=" << ptI[1] << ";z=" << ptI[2] << "\n";
 }
 
 Screen::~Screen()
@@ -26,9 +34,10 @@ Screen::~Screen()
 Vector3 Screen::getPixel ( int x, int y )
 {
 	Vector3 res;
-	res[0] = ptI[0] + x * 1.0 / Rx;
-	res[1] = ptI[1];
-	res[2] = ptI[2] + y * 1.0 / Ry;
+	res = ptI + x*w + y*h;
+	if ((x ==Rx-1 | x==0) && (y==Ry-1 | y==0)) {
+		cout << "\n x=" << res[0] << ";y=" << res[1] << ";z=" << res[2];
+	}
 	return res;
 }
 

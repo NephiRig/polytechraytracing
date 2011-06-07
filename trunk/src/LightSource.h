@@ -12,7 +12,7 @@
 
 class LightSource {
 public:
-	LightSource(double intens = 0 /*, Vector3 pos = 0*/);
+	LightSource(double intens = 0 , Vector3 pos = 0);
 	virtual ~LightSource();
 
 	double intensity;
