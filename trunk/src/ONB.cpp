@@ -38,7 +38,7 @@ void ONB::set(const Vector3 &a, const Vector3 &b, const Vector3 &c) {
 void ONB::initFromU(const Vector3 &u) {
 	Vector3 n(1.0f, 0.0f, 0.0f);
 	Vector3 m(0.0f, 1.0f, 0.0f);
-	U = unitVector(u);
+	U = u.normalized();
 	V = cross_product(U, n);
 	if (V.norm() < ONB_EPSILON)
 		V = cross_product(U, m);
@@ -48,7 +48,7 @@ void ONB::initFromU(const Vector3 &u) {
 void ONB::initFromV(const Vector3 &v) {
 	Vector3 n(1.0f, 0.0f, 0.0f);
 	Vector3 m(0.0f, 1.0f, 0.0f);
-	V = unitVector(v);
+	V = v.normalized();
 	U = cross_product(V, n);
 	if (U.norm() < ONB_EPSILON)
 		U = cross_product(V, m);
@@ -58,7 +58,7 @@ void ONB::initFromV(const Vector3 &v) {
 void ONB::initFromW(const Vector3 &w) {
 	Vector3 n(1.0f, 0.0f, 0.0f);
 	Vector3 m(0.0f, 1.0f, 0.0f);
-	W = unitVector(w);
+	W = w.normalized();
 	U = cross_product(W, n);
 	if (U.norm() < ONB_EPSILON)
 		U = cross_product(W, m);
@@ -67,40 +67,40 @@ void ONB::initFromW(const Vector3 &w) {
 
 
 void ONB::initFromUV(const Vector3 &u, const Vector3 &v) {
-	U = unitVector(u);
-	W = unitVector(cross_product(u, v));
+	U = u.normalized();
+	W = (cross_product(u, v)).normalize();
 	V = cross_product(W, U);
 }
 
 void ONB::initFromVU(const Vector3 &v, const Vector3 &u) {
-	V = unitVector(v);
-	W = unitVector(cross_product(u, v));
+	V = v.normalized();
+	W = (cross_product(u, v)).normalize();
 	U = cross_product(V, W);
 }
 
 
 void ONB::initFromUW(const Vector3 &u, const Vector3 &w) {
-	U = unitVector(u);
-	V = unitVector(cross_product(w, u));
+	U = u.normalized();
+	V = (cross_product(w, u)).normalize();
 	W = cross_product(U, V);
 }
 
 void ONB::initFromWU(const Vector3 &w, const Vector3 &u) {
-	W = unitVector(w);
-	V = unitVector(cross_product(w, u));
+	W = w.normalized();
+	V = (cross_product(w, u)).normalize();
 	U = cross_product(V, W);
 }
 
 
 void ONB::initFromVW(const Vector3 &v, const Vector3 &w) {
-	V = unitVector(v);
-	U = unitVector(cross_product(v, w));
+	V = v.normalized();
+	U = (cross_product(v, w)).normalize();
 	W = cross_product(U, V);
 }
 
 void ONB::initFromWV(const Vector3 &w, const Vector3 &v) {
-	W = unitVector(w);
-	U = unitVector(cross_product(v, w));
+	W = w.normalized();
+	U = (cross_product(v, w)).normalize();
 	V = cross_product(W, U);
 }
 

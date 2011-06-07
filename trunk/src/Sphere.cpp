@@ -58,6 +58,6 @@ Set<Vector3> Sphere::intersect(const Ray& r) const {
 	return s;
 }
 
-Vector3 Sphere::normal(const Vector3& pt) const {
-	return Vector3(0, 0, 0);
+Vector3 Sphere::normal(const Vector3& pt_intersect) const {
+	return (centre - pt_intersect).normalize();
 }

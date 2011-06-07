@@ -12,7 +12,7 @@
 #include "Sphere.h"
 #include "Ray.h"
 #include "Image.h"
-
+/*
 using namespace std;
 
 int main(int argc, char **argv) {
@@ -33,7 +33,7 @@ int main(int argc, char **argv) {
 	/*
 	 * CODE GYGLIM
 	 * TEST: Intersect sample sphere
-	 */
+	 *//*
 	Ray ray = Ray(Vector3(0,0,0),Vector3(1,0,10));
 	Sphere sphere = Sphere(Vector3(0,0,250),20, Color(255,0,0));
 	Set<Vector3> ip = sphere.intersect(ray);
@@ -103,7 +103,7 @@ int main(int argc, char **argv) {
 	myfile.open("sphere.ppm");
 	img.writePPM(myfile);
 	myfile.close();
-//*/
+//*//*
 	return 0;
 } // main ()
 //*/

@@ -22,9 +22,9 @@ public:
 	Sphere (const Vector3 &_centre, double _radius, const Color &_color);
 	virtual ~Sphere();
 
-	Vector3 normal (const Vector3& pt) const;
+	Set<Vector3> intersect (const Ray& r) const;
 
-	Set<Vector3> intersect ( const Ray& r ) const;
+	Vector3 normal (const Vector3& pt_intersect) const;
 };
 
 #endif /* SPHERE_H_ */
