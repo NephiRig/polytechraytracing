@@ -22,6 +22,6 @@ Vector3 Shape::normal(const Vector3& pt) {
 	return Vector3(0,0,0);
 }
 
-Color Shape::GetColor(const Vector& pt) {
+Color Shape::get_color(const Vector3& pt) {
 	return color;
 }

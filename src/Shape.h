@@ -35,7 +35,7 @@ public:
 	virtual Vector3 normal(const Vector3& pt);
 	virtual Set<Vector3> intersect(const Ray& r);
 
-	virtual Color GetColor(const Vector3& pt);
+	virtual Color get_color(const Vector3& pt);
 };
 
 #endif /* SHAPE_H_ */
