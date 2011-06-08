@@ -6,6 +6,7 @@
  */
 
 #include "Color.h"
+#include <stdint.h>
 
 Color::Color(double r/*= 0.0*/, double g/*= 0.0*/, double b/*= 0.0*/ ) {
 	val[0] = r;
@@ -144,14 +145,3 @@ ostream& operator<<(ostream &os, const Color &c) {
 	os << "rgb(" << c[0] << ", " << c[1] << ", " << c[2] << ")";
 	return os;
 }
-
-
-uint32_t Color::getRGB () const
-{
-	uint32_t res = 0;
-	res |= (int(val[0]*255) & 0xff) << 16;
-	res |= (int(val[1]*255) & 0xff) << 8;
-	res |= (int(val[2]*255) & 0xff);
-	return res;
-}
-

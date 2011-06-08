@@ -18,7 +18,6 @@
 #include "Rectangle.h"
 #include "Scene.h"
 #include "LightSource.h"
-#include "LambertModel.h"
 #include "PhongModel.h"
 #include "Color.h"
 

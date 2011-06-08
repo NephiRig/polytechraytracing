@@ -3,6 +3,7 @@
  *
  *  Created on: 08.06.2011
  *      Author: nb-gyglim
+ *
  */
 
 #ifndef PHONGMODEL_H_
@@ -10,6 +11,9 @@
 
 #include "LightModel.h"
 
+/*
+ * See http://en.wikipedia.org/wiki/Phong_reflection_model for more information
+ */
 class PhongModel : public LightModel{
 public:
 	PhongModel();

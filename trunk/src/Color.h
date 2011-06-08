@@ -10,12 +10,6 @@
 
 #include <iostream>
 
-#ifdef _MSC_VER
-   #include "stdint.h"
-#else
-   #include <cstdint>
-#endif
-
 
 using namespace std;
 /*
@@ -68,7 +62,6 @@ public:
 	void clamp();
 	friend ostream& operator<<(ostream &os, const Color &c);
 
-	uint32_t getRGB () const;
 };
 
 #endif /* COLOR_H_ */
