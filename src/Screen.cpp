@@ -11,6 +11,9 @@
 Screen::Screen ( Vector3 _observer, Vector3 _aimedPoint, double _distScreen, double _Rx, double _Ry )
 	: observer(_observer), aimedPoint(_aimedPoint), distScreen(_distScreen), Rx(_Rx), Ry(_Ry)
 {
+	/*
+	 * FIXME gyglim change formula to have (0,0) at the upper left
+	 */
 	Vector3 OA = aimedPoint - observer;
 	Vector3 a = OA.normalized ();
 	a *= distScreen;
