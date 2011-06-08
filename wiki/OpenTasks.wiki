@@ -1,0 +1,11 @@
+= Documentation =
+
+1) update UML 
+
+= Code =
+
+1) Extend Material class with k_a, k_d, k_s, n_s
+
+2) Write calculateColor and isHidden in class Raytracer
+
+3) Rectangle class
