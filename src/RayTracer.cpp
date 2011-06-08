@@ -21,8 +21,9 @@ void RayTracer::raytrace(Image* img) {
 	Vector3 obs(0, 0, 0.0);
 	Vector3 aimedPoint(0, 0, 250.0);
 	double distScreen = 150.0;
-
-	Screen s = Screen(obs, aimedPoint, distScreen, double(img->width()), double(img->height()));
+	int w = img->width();
+	int h = img->height();
+	Screen s = Screen(obs, aimedPoint, distScreen, double(w), double(h));
 	Sphere sphere = Sphere(Vector3(0, 0, 200), 100, Color(1, 0, 0));
 	Sphere sphere2 = Sphere(Vector3(70, 70, 80), 2, Color(1, 1, 0.5));
 	Rectangle rect = Rectangle(100, Vector3(1, 0, 0), Color(0, 0, 1));
@@ -32,7 +33,10 @@ void RayTracer::raytrace(Image* img) {
 	//shapes.add(rect);
 	LightSource source = LightSource(1, Vector3(70, 70, 80), Color(1, 1, 0.5));
 	Vector3 r;
-
+	cerr << "avant construction: w" << w << ";h" << h << endl;
+	//Image* img = new Image(w, h, Color(0.0, 0.0, 0.0));
+	cerr << "apres construction: u" << w << ";h" << h << endl;
+	cerr << "apres construction2: u" << w << ";h" << h << endl;
 
 	/*
 	 * CODE GYGLIM
