@@ -16,7 +16,6 @@ RayTracer::~RayTracer() {
 	// TODO Auto-generated destructor stub
 }
 
-
 void RayTracer::raytrace(Image* img) {
 	Vector3 obs(0, 0, 0.0);
 	Vector3 aimedPoint(0, 0, 250.0);
@@ -27,10 +26,10 @@ void RayTracer::raytrace(Image* img) {
 	Sphere sphere = Sphere(Vector3(0, 0, 200), 100, Color(1, 0, 0));
 	Sphere sphere2 = Sphere(Vector3(70, 70, 80), 2, Color(1, 1, 0.5));
 	Rectangle rect = Rectangle(100, Vector3(1, 0, 0), Color(0, 0, 1));
-	Set<Shape> shapes = Set<Shape> (3);
+	/*Set<Shape> shapes = Set<Shape> (3);
 	shapes.add(sphere);
 	shapes.add(sphere2);
-	//shapes.add(rect);
+	shapes.add(rect);*/
 	LightSource source = LightSource(1, Vector3(70, 70, 80), Color(1, 1, 0.5));
 	Vector3 r;
 	cerr << "avant construction: w" << w << ";h" << h << endl;
@@ -66,41 +65,29 @@ void RayTracer::raytrace(Image* img) {
 	for (int y = 0; y < h; ++y) {
 		for (int x = 0; x < w; ++x) {
 			Ray r2 = Ray(obs, s.getPixel(x, y) - obs);
-			for (int i = 0; i < shapes.length(); i++) {
-				Shape s = shapes.get(i);
-				Set<Vector3> intersections = s.intersect(r2);
-				if (!intersections.empty()) {
-					Vector3 n = s.normal(intersections[0]);
-					Ray normal = Ray(intersections[0], n);
+			Set<Vector3> intersections = sphere.intersect(r2);
+			if (!intersections.empty()) {
+				Vector3 n = sphere.normal(intersections[0]);
+				Ray normal = Ray(intersections[0], n);
 
-					Ray reflected = Ray(
-							intersections[0],
-							2 * n * dot_product(n, r2.get_direction())
-									- r2.get_direction());
-					Color c = Color(s.color);
-					double ambient = lm.getAmbient();
-					double diffuse = lm.getDiffuse(normal, source);
-					double specular = lm.getSpecular(reflected, source);
-					img->setPixel(x, y,
-							ambient * c + diffuse * c + specular * source.color);
-				} else {
-					//img.setPixel(x, y, Color(0, 0, 0));
-				}
-/*
-				Set<Vector3> intersections2 = sphere2.intersect(r2);
-				if (!intersections2.empty()) {
-					img.setPixel(x, y, sphere2.color);
-				}*/
+				Ray reflected = Ray(
+						intersections[0],
+						2 * n * dot_product(n, r2.get_direction())
+								- r2.get_direction());
+				Color c = sphere.color;
+				double ambient = lm.getAmbient();
+				double diffuse = lm.getDiffuse(normal, source);
+				double specular = lm.getSpecular(reflected, source);
+				img->setPixel(x, y,
+						ambient * c + diffuse * c + specular * source.color);
+			} else {
+				//img->setPixel(x, y, Color(0, 0, 0));
+			}
+
+			Set<Vector3> intersections2 = sphere2.intersect(r2);
+			if (!intersections2.empty()) {
+				img->setPixel(x, y, sphere2.color);
 			}
 		}
 	}
-	/*cerr << "b" << endl;
-	ofstream myfile;
-	myfile.open("img8.ppm");
-	cerr << "on tente le writePPM" << endl;
-	img.writePPM(myfile);
-	cerr << "fin du writePPM" << endl;
-	//img.writePPM ( cerr );
-	cerr << endl;
-	myfile.close();*/
 }
