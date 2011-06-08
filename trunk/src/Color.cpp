@@ -121,9 +121,7 @@ Color& Color::operator/=(const Color &c) {
 }
 
 Color& Color::operator*=(const double k) {
-	//return *this = *this * k;
-	Color c = Color(val[0]*k,val[1]*k,val[2]*k);
-	return c;
+	return *this = *this * k;
 }
 
 Color& Color::operator/=(const double k) {

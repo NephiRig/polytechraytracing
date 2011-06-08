@@ -9,7 +9,6 @@
 
 Shape::Shape() {
 	// TODO Auto-generated constructor stub
-
 }
 
 Shape::~Shape() {
@@ -21,4 +20,8 @@ Set<Vector3> Shape::intersect(const Ray& r) {
 }
 Vector3 Shape::normal(const Vector3& pt) {
 	return Vector3(0,0,0);
+}
+
+Color Shape::GetColor(const Vector& pt) {
+	return color;
 }

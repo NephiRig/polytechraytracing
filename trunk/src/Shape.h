@@ -25,13 +25,17 @@ struct HitRecord {
 
 class Shape {
 public:
+	Color color;
+
 	Shape();
 	virtual ~Shape();
+
 	// Material material;
+
 	virtual Vector3 normal(const Vector3& pt);
 	virtual Set<Vector3> intersect(const Ray& r);
 
-	Color color;
+	virtual Color GetColor(const Vector3& pt);
 };
 
 #endif /* SHAPE_H_ */
