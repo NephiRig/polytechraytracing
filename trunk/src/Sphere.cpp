@@ -13,7 +13,7 @@ using namespace std;
 
 Sphere::Sphere(const Vector3 &_centre, double _radius, const Color &_color) :
 	centre(_centre), radius(_radius) {
-	this->color = color;
+	this->color = _color;
 }
 
 Sphere::~Sphere() {
