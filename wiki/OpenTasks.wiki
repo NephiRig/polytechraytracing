@@ -15,6 +15,8 @@
 
 5) Write a special Shape class that is itself a Set of Shapes. It's intersect function returns the first [or all, in an ordered way] intersections which any Shape
 
+6) LightSource: add intensity: How do we use this??
+
 = Optional =
 
 1) Transparancy / Refraction
