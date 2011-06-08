@@ -8,15 +8,59 @@
 
 2) Write calculateColor and isHidden in class Raytracer
 
-3) Rectangle class
+3) Damier class (Valentin)
 
 4) Define the comporment of the lightsource and the shape color
 --> Are the diffuse and specular light colors entirely defined by the lightsource?
+
+bounding box d'un objet connu (marche difficilement pour une surface paramétrée) pour accélérer le traitement
 
 5) Write a special Shape class that is itself a Set of Shapes. It's intersect function returns the first [or all, in an ordered way] intersections which any Shape
 
 6) LightSource: add intensity: How do we use this??
 
+7) ne plus passer par un fichier image (SDL_Surface à gérer)
+
+interaction avec le clavier qui entraine un rafraichissement de l'image dans l'application
+
+déplacement d'objets dans la scène ou mouvement de caméra
+
+
+
+
 = Optional =
 
 1) Transparancy / Refraction
+
+animation vidéo
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+= coté mam =
+
+installer eclipse
+
+faire marcher votre eclipse avec les libs de lapack et itpp (c'est le meme principe que pour faire marcher la lib SDL)
+
+structures de données pour les polynomes
+
+intersections
+
+
+
+
+
