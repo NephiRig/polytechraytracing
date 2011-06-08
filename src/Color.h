@@ -9,7 +9,12 @@
 #define COLOR_H_
 
 #include <iostream>
-#include <cstdint>
+
+#ifdef _MSC_VER
+   #include "stdint.h"
+#else
+   #include <cstdint>
+#endif
 
 
 using namespace std;

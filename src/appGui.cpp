@@ -7,7 +7,13 @@
 
 #include <iostream>
 #include <fstream> // ofstream
-#include <cstdint>
+
+#ifdef _MSC_VER
+   #include "stdint.h"
+#else
+   #include <cstdint>
+#endif
+
 #include "SDL/SDL.h"
 #include "SDL/SDL_image.h"
 
