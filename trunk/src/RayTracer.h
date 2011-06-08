@@ -27,7 +27,7 @@ public:
 	RayTracer();
 	virtual ~RayTracer();
 
-	virtual Image* raytrace();
+	virtual void raytrace(Image* img);
 };
 
 #endif /* RAYTRACER_H_ */
