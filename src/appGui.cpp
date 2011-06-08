@@ -207,7 +207,7 @@ int main (int argc, char **argv)
 
 }
 */
-int main(int argc, char **argv)
+int main2(int argc, char **argv)
 {
 	cerr << "test huhu" << endl;
 
@@ -233,8 +233,8 @@ int main(int argc, char **argv)
 	int w = SCREEN_WIDTH;
 	int h = SCREEN_HEIGHT;
 	Image img(w, h, Color(0.0, 0.0, 0.0));
-	RayTracer rt = RayTracer ();
-	rt.raytrace(&img);
+	//RayTracer rt = RayTracer ();
+	//rt.raytrace(&img);
 
 	ofstream myfile;
 	myfile.open("img.ppm");

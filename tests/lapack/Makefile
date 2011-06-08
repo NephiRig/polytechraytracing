@@ -1,10 +1,12 @@
 #LAPACK_PATH = /usr/lib/atlas
 
 #FLAGS_DEBUG = `$(HOME)/Desktop/ProjetMAM4/itpp-4.2/bin/itpp-config --debug --cflags`
-FLAGS_OPT   = `$(HOME)/Desktop/ProjetMAM4/itpp-4.2/itpp-config --cflags`
+#FLAGS_OPT   = `$(HOME)/Desktop/ProjetMAM4/itpp-4.2/itpp-config --cflags`
+FLAGS_OPT   = `/usr/bin/itpp-config --cflags`
 
 #LIBS_DEBUG  = `$(HOME)/Desktop/ProjetMAM4/itpp-4.2/bin/itpp-config --debug --static --libs`
-LIBS_OPT    = `$(HOME)/Desktop/ProjetMAM4/itpp-4.2/itpp-config --static --libs`
+#LIBS_OPT    = `$(HOME)/Desktop/ProjetMAM4/itpp-4.2/itpp-config --static --libs`
+LIBS_OPT   = `/usr/bin/itpp-config --static --libs`
 
 #all: testlapack testzlapack test3 testzlapack2
 all: testlapack test3 testzlapack2 hope
