@@ -35,9 +35,9 @@ Vector3 Screen::getPixel ( int x, int y )
 {
 	Vector3 res;
 	res = ptI + x*w + y*h;
-	if ((x ==Rx-1 | x==0) && (y==Ry-1 | y==0)) {
+	/*if ((x ==Rx-1 || x==0) && (y==Ry-1 || y==0)) {
 		cout << "\n x=" << res[0] << ";y=" << res[1] << ";z=" << res[2];
-	}
+	}*/
 	return res;
 }
 
