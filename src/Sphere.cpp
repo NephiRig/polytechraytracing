@@ -12,7 +12,8 @@
 using namespace std;
 
 Sphere::Sphere(const Vector3 &_centre, double _radius, const Color &_color) :
-	centre(_centre), radius(_radius), color(_color) {
+	centre(_centre), radius(_radius) {
+	this->color = color;
 }
 
 Sphere::~Sphere() {
@@ -59,5 +60,5 @@ Set<Vector3> Sphere::intersect(const Ray& r) const {
 }
 
 Vector3 Sphere::normal(const Vector3& pt_intersect) const {
-	return (centre - pt_intersect).normalize();
+	return (pt_intersect-centre).normalize();
 }

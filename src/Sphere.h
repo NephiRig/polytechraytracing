@@ -11,13 +11,11 @@
 #include "Shape.h"
 #include "Material.h"
 #include "Vector3.h"
-#include "Color.h"
 
 class Sphere : public Shape {
 public:
 	Vector3 centre;
 	double radius;
-	Color color;
 
 	Sphere (const Vector3 &_centre, double _radius, const Color &_color);
 	virtual ~Sphere();

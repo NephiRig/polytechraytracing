@@ -15,3 +15,10 @@ Shape::Shape() {
 Shape::~Shape() {
 	// TODO Auto-generated destructor stub
 }
+
+Set<Vector3> Shape::intersect(const Ray& r) {
+	return Set<Vector3>(0);
+}
+Vector3 Shape::normal(const Vector3& pt) {
+	return Vector3(0,0,0);
+}
