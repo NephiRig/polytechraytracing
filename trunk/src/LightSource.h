@@ -9,13 +9,15 @@
 #define LIGHTSOURCE_H_
 
 #include "Vector3.h"
+#include "Color.h"
 
 class LightSource {
 public:
-	LightSource(double intens = 0 , Vector3 pos = 0);
+	LightSource(double intens = 0 , Vector3 pos = 0, Color c = 0);
 	virtual ~LightSource();
 
 	double intensity;
+	Color color;
 	Vector3 position;
 };
 
