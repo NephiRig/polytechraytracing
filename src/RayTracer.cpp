@@ -17,7 +17,7 @@ RayTracer::~RayTracer() {
 }
 
 
-void RayTracer::raytrace() {
+Image* RayTracer::raytrace() {
 	Vector3 obs(0, 0, 0.0);
 	Vector3 aimedPoint(0, 0, 250.0);
 	double distScreen = 150.0;
@@ -34,7 +34,7 @@ void RayTracer::raytrace() {
 	LightSource source = LightSource(1, Vector3(70, 70, 80), Color(1, 1, 0.5));
 	Vector3 r;
 	cerr << "avant construction: w" << w << ";h" << h << endl;
-	Image img(w, h, Color(0.0, 0.0, 0.0));
+	Image* img = new Image(w, h, Color(0.0, 0.0, 0.0));
 	cerr << "apres construction: u" << w << ";h" << h << endl;
 	cerr << "apres construction2: u" << w << ";h" << h << endl;
 
@@ -81,7 +81,7 @@ void RayTracer::raytrace() {
 					double ambient = lm.getAmbient();
 					double diffuse = lm.getDiffuse(normal, source);
 					double specular = lm.getSpecular(reflected, source);
-					img.setPixel(x, y,
+					img->setPixel(x, y,
 							ambient * c + diffuse * c + specular * source.color);
 				} else {
 					//img.setPixel(x, y, Color(0, 0, 0));
@@ -94,7 +94,7 @@ void RayTracer::raytrace() {
 			}
 		}
 	}
-	cerr << "b" << endl;
+	/*cerr << "b" << endl;
 	ofstream myfile;
 	myfile.open("img8.ppm");
 	cerr << "on tente le writePPM" << endl;
@@ -102,5 +102,6 @@ void RayTracer::raytrace() {
 	cerr << "fin du writePPM" << endl;
 	//img.writePPM ( cerr );
 	cerr << endl;
-	myfile.close();
+	myfile.close();*/
+	return img;
 }
