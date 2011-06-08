@@ -16,7 +16,8 @@
 #include "Ray.h"
 #include "Image.h"
 #include "Rectangle.h"
-
+#include "Scene.h"
+#include "LightSource.h"
 #include "LambertModel.h"
 #include "PhongModel.h"
 #include "Color.h"
@@ -24,10 +25,14 @@
 
 class RayTracer {
 public:
-	RayTracer();
+	RayTracer(Scene s);
 	virtual ~RayTracer();
 
 	virtual void raytrace(Image* img);
+private:
+	Scene scene;
+	virtual Color calculateColor(Ray r, int recursions);
+	virtual bool isHidden(LightSource lightSource, Vector3 point);
 };
 
 #endif /* RAYTRACER_H_ */

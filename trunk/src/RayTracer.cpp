@@ -7,8 +7,8 @@
 
 #include "RayTracer.h"
 
-RayTracer::RayTracer() {
-	// TODO Auto-generated constructor stub
+RayTracer::RayTracer(Scene s) {
+	scene = s;
 
 }
 
@@ -16,6 +16,10 @@ RayTracer::~RayTracer() {
 	// TODO Auto-generated destructor stub
 }
 
+/**
+ * TODO: - Iterate over all the pixels of the screen
+ *		 - Call calculateColor
+ */
 void RayTracer::raytrace(Image* img) {
 	Vector3 obs(0, 0, 0.0);
 	Vector3 aimedPoint(0, 0, 250.0);
@@ -27,39 +31,12 @@ void RayTracer::raytrace(Image* img) {
 	Sphere sphere2 = Sphere(Vector3(70, 70, 80), 2, Color(1, 1, 0.5));
 	Rectangle rect = Rectangle(100, Vector3(1, 0, 0), Color(0, 0, 1));
 	/*Set<Shape> shapes = Set<Shape> (3);
-	shapes.add(sphere);
-	shapes.add(sphere2);
-	shapes.add(rect);*/
+	 shapes.add(sphere);
+	 shapes.add(sphere2);
+	 shapes.add(rect);*/
 	LightSource source = LightSource(1, Vector3(70, 70, 80), Color(1, 1, 0.5));
 	Vector3 r;
-	cerr << "avant construction: w" << w << ";h" << h << endl;
-	//Image* img = new Image(w, h, Color(0.0, 0.0, 0.0));
-	cerr << "apres construction: u" << w << ";h" << h << endl;
-	cerr << "apres construction2: u" << w << ";h" << h << endl;
 
-	/*
-	 * CODE GYGLIM
-	 * TEST: Intersect sample sphere
-	 */
-	Ray ray = Ray(Vector3(0, 0, 0), Vector3(1, 0, 10));
-	Set<Vector3> ip = sphere.intersect(ray);
-	cout << "Intersectionpoint: 1";
-	cout << "x=";
-	cout << ip[0][0];
-	cout << " y=";
-	cout << ip[0][1];
-	cout << " z=";
-	cout << ip[0][2];
-
-	cout << "Intersectionpoint: 2";
-	cout << "x=";
-	cout << ip[0][0];
-	cout << " y=";
-	cout << ip[0][1];
-	cout << " z=";
-	cout << ip[0][2];
-
-	// TODO: lancer le rayon
 	PhongModel lm = PhongModel();
 	cerr << "a" << endl;
 	for (int y = 0; y < h; ++y) {
@@ -91,3 +68,22 @@ void RayTracer::raytrace(Image* img) {
 		}
 	}
 }
+
+/**
+ * TODO: Implement Algorithm given on P65 of the Script
+ * 		 (With the discussed modifications)
+ */
+Color RayTracer::calculateColor(Ray r, int recursions) {
+	//TODO Programm
+	return Color(0, 0, 0);
+}
+
+/**
+ * TODO: Implement Algorithm to test, weather there are objects inbetween a point
+ * 		 and our lightsource
+ */
+bool RayTracer::isHidden(LightSource lightSource, Vector3 point) {
+	//TODO Programm
+	return false;
+}
+
