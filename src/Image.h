@@ -25,7 +25,7 @@ public:
 	void writePPM(ostream &s) const;
 	void readPPM (string file_name);
 
-private:
+public:
 	Color **data;
 	int w, h;
 };

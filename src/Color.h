@@ -9,6 +9,8 @@
 #define COLOR_H_
 
 #include <iostream>
+#include <cstdint>
+
 
 using namespace std;
 /*
@@ -60,6 +62,8 @@ public:
 
 	void clamp();
 	friend ostream& operator<<(ostream &os, const Color &c);
+
+	uint32_t getRGB () const;
 };
 
 #endif /* COLOR_H_ */
