@@ -49,7 +49,7 @@ public:
 	friend Color operator*(const Color &c1, const Color &c2);
 	friend Color operator/(const Color &c1, const Color &c2);
 	friend Color operator*(const double k, const Color &c);
-	friend Color operator*(Color &c, double k);
+	friend Color operator*(const Color &c, const double k);
 	friend Color operator/(const Color &c, const double k);
 
 	Color& operator+=(const Color &c);
