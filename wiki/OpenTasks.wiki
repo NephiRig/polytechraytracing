@@ -13,6 +13,8 @@
 4) Define the comporment of the lightsource and the shape color
 --> Are the diffuse and specular light colors entirely defined by the lightsource?
 
+5) Write a special Shape class that is itself a Set of Shapes. It's intersect function returns the first [or all, in an ordered way] intersections which any Shape
+
 = Optional =
 
 1) Transparancy / Refraction
