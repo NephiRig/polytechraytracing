@@ -16,9 +16,9 @@ public:
 	LightModel();
 	virtual ~LightModel();
 
-	virtual double getAmbient() const = 0;
-	virtual double getDiffuse(Ray normal, LightSource source) const = 0;
-	virtual double getSpecular(Ray refracted, LightSource source) const = 0;
+	virtual double getAmbient() const;
+	virtual double getDiffuse(Ray &normal, LightSource &source) const;
+	virtual double getSpecular(Ray &refracted, LightSource &source) const;
 };
 
 #endif /* LIGHTMODEL_H_ */

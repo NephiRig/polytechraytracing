@@ -14,6 +14,7 @@
 //#include "Intersection.h"
 #include "Set.h"
 #include "Color.h"
+#include "Material.h"
 
 class Intersection;
 
@@ -26,14 +27,15 @@ struct HitRecord {
 class Shape {
 public:
 	Color color;
+	Material material;
 
 	Shape();
 	virtual ~Shape();
 
 	// Material material;
 
-	virtual Vector3 normal(const Vector3& pt);
-	virtual Set<Vector3> intersect(const Ray& r);
+	virtual Vector3 normal(const Vector3& pt)  const=0;
+	virtual Set<double> intersect(const Ray& r) const=0;
 
 	virtual Color get_color(const Vector3& pt);
 };

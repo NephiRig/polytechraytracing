@@ -10,8 +10,10 @@
 
 class Material {
 public:
-	Material();
+	Material(double k_a = 0, double k_d = 0, double k_s = 0, double n_s = 0);
 	virtual ~Material();
+
+	double k_a, k_d, k_s, n_s;
 };
 
 #endif /* MATERIAL_H_ */

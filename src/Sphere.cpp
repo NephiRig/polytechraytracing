@@ -14,6 +14,7 @@ using namespace std;
 Sphere::Sphere(const Vector3 &_centre, double _radius, const Color &_color) :
 	centre(_centre), radius(_radius) {
 	this->color = _color;
+	material=Material(0.1,0.4,0.5,20); //FIXME Take into constructor
 }
 
 Sphere::~Sphere() {
@@ -23,9 +24,9 @@ Sphere::~Sphere() {
 /*
  *	Calculate the intersections of a ray with a sphere
  */
-Set<Vector3> Sphere::intersect(const Ray& r) const {
+Set<double> Sphere::intersect(const Ray& r) const {
 
-	Set<Vector3> s = Set<Vector3> (2);
+	Set<double> s = Set<double> (2);
 
 	double a = r.get_direction().norm() * r.get_direction().norm();
 
@@ -42,14 +43,13 @@ Set<Vector3> Sphere::intersect(const Ray& r) const {
 	double d = b * b - 4 * a * c; //the term in the root
 
 
-	if (d < 0) { //We have no intersection
-	} else {
+	if (d > 0) { //We have an intersection
 		double t1 = (-b - sqrt(d)) / (2 * a);
 		double t2 = (-b + sqrt(d)) / (2 * a);
 
-		s.add(r.getPoint(t1));
+		s.add(t1);
 		if (t2 != t1) {
-			s.add(r.getPoint(t2));
+			s.add(t2);
 		}
 	}
 	return s;
