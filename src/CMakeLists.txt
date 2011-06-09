@@ -3,25 +3,12 @@
 ## Author: Jean-Christophe Lombardo
 ## Copyright (C) 2011 - Jean-Christophe Lombardo, Inria
 ## Created: Thu Jun  9 10:33:56 2011
-## Last-Updated:  Thu Jun  9 11:22:49 2011
+## Last-Updated:  Thu Jun  9 17:25:07 2011
 ##           By: Jean-Christophe Lombardo
 ##
 ######################################################################
 
-cmake_minimum_required(VERSION 2.8)
-
 project(prt)
-
-find_package(SDL REQUIRED)
-if(SDL_FOUND)
-    include_directories(${SDL_INCLUDE_DIR}/..)
-endif(SDL_FOUND)
-
-find_package(SDL_image REQUIRED)
-if(SDLIMAGE_FOUND)
-    include_directories(${SDLIMAGE_INCLUDE_DIR}/..)
-endif(SDLIMAGE_FOUND)
-
 
 set(${PROJECT_NAME}_HEADERS
     Color.h
@@ -76,6 +63,7 @@ add_executable(${PROJECT_NAME}
 target_link_libraries(${PROJECT_NAME}
         ${SDL_LIBRARY}
         ${SDLIMAGE_LIBRARY}
+        ${ITPP_LIBRARY}
 )
 
 ## -*- tab-width: 4; indent-tabs-mode: nil c-basic-offset: 4 -*-
