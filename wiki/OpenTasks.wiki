@@ -5,8 +5,11 @@
 = Code =
 
 1) Extend Material class with doubles for k_a, k_d, k_s, n_s
+--> Michael
 
-2) Write calculateColor and isHidden in class Raytracer
+2) Write calculateColor --> Michael
+
+and isHidden in class Raytracer --> ???
 
 3) Damier class (Valentin)
 
@@ -59,8 +62,6 @@ faire marcher votre eclipse avec les libs de lapack et itpp (c'est le meme princ
 structures de données pour les polynomes
 
 intersections
-
-
 
 
 
