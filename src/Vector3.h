@@ -10,7 +10,6 @@
 
 #include <iostream>
 
-using namespace std;
 
 class Vector3 {
 public:
@@ -74,8 +73,8 @@ public:
 	friend Vector3 minVect(const Vector3& v1, const Vector3& v2);
 	friend Vector3 maxVect(const Vector3& v1, const Vector3& v2);
 
-	friend ostream& operator<<(ostream &os, const Vector3 &v);
-	friend istream& operator>>(istream &is, Vector3 &v);
+	friend std::ostream& operator<<(std::ostream &os, const Vector3 &v);
+	friend std::istream& operator>>(std::istream &is, Vector3 &v);
 };
 
 #endif /* VECTEUR3_H_ */

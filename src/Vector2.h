@@ -10,7 +10,6 @@
 
 #include <iostream>
 
-using namespace std;
 
 class Vector2 {
 public:
@@ -58,8 +57,8 @@ public:
 	void normalize();
 	friend Vector2 unitVector(const Vector2 &v);
 
-	friend ostream& operator<<(ostream &os, const Vector2 &v);
-	friend istream& operator>>(istream &is, Vector2 &v);
+	friend std::ostream& operator<<(std::ostream &os, const Vector2 &v);
+	friend std::istream& operator>>(std::istream &is, Vector2 &v);
 };
 
 #endif /* VECTEUR2_H_ */

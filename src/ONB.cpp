@@ -105,15 +105,15 @@ void ONB::initFromWV(const Vector3 &w, const Vector3 &v) {
 }
 
 
-istream &operator>>(istream &is, ONB &onb) {
+std::istream &operator>>(std::istream &is, ONB &onb) {
 	Vector3 new_u, new_v, new_w;
 	is >> new_u >> new_v >> new_w;
 	onb.initFromUV(new_u, new_v);
 	return is;
 }
 
-ostream &operator<<(ostream &os, const ONB &onb) {
-	return os << "(" << onb.get_u() << "; " << onb.get_v() << "; " << onb.get_w() << ")" << endl;
+std::ostream &operator<<(std::ostream &os, const ONB &onb) {
+	return os << "(" << onb.get_u() << "; " << onb.get_v() << "; " << onb.get_w() << ")" << std::endl;
 }
 
 

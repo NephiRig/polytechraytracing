@@ -132,7 +132,7 @@ void Image::readPPM(string file_name) {
 	}
 }
 //*/
-void Image::writePPM(ostream &s) const {
+void Image::writePPM(std::ostream &s) const {
 	s << "P6\n" << w << " " << h << "\n255\n";
 	unsigned int i;
 	for (int y = h - 1; y >= 0; y--)
@@ -155,11 +155,11 @@ void Image::writePPM(ostream &s) const {
 		}
 }
 
-void Image::readPPM(string file_name) {
-	ifstream in;
+void Image::readPPM(std::string file_name) {
+    std::ifstream in;
 	in.open(file_name.c_str());
 	if (!in.is_open()) {
-		cerr << "Can't open file \'" << file_name << "\'.\n";
+        std::cerr << "Can't open file \'" << file_name << "\'.\n";
 		exit(-1);
 	}
 

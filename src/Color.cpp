@@ -141,7 +141,7 @@ void Color::clamp() {
 }
 
 
-ostream& operator<<(ostream &os, const Color &c) {
+std::ostream& operator<<(std::ostream &os, const Color &c) {
 	os << "rgb(" << c[0] << ", " << c[1] << ", " << c[2] << ")";
 	return os;
 }

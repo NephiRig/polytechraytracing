@@ -14,8 +14,8 @@
    #include <cstdint>
 #endif
 
-#include "SDL/SDL.h"
-#include "SDL/SDL_image.h"
+#include <SDL/SDL.h>
+#include <SDL/SDL_image.h>
 
 #include "Vector3.h"
 #include "Screen.h"

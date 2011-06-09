@@ -11,8 +11,6 @@
 #include "Vector3.h"
 #include <iostream>
 
-using namespace std;
-
 class Ray {
 
 public:
@@ -44,7 +42,7 @@ public:
 	Vector3 operator[](int i) const;
 	Vector3& operator[](const int &i);
 
-	friend ostream& operator<<(ostream &os, const Ray &r);
+	friend std::ostream& operator<<(std::ostream &os, const Ray &r);
 };
 
 #endif /* RAYON_H_ */

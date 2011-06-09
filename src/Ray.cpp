@@ -52,6 +52,6 @@ Vector3& Ray::operator[](const int &i) {
 }
 
 
-ostream& operator<<(ostream &os, const Ray &r) {
-	return os << r.get_origin() << " + t*" << r.get_direction() << endl;
+std::ostream& operator<<(std::ostream &os, const Ray &r) {
+	return os << r.get_origin() << " + t*" << r.get_direction() << std::endl;
 }
