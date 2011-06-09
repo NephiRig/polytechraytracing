@@ -10,15 +10,11 @@
 
 using namespace std;
 
-/*RayTracer::RayTracer(Scene s, LightModel _lm) {
- scene = s;
- lm = _lm;
-
- }*/
 
 RayTracer::RayTracer(const Set<Shape*> &sp, PhongModel &_lm) {
 	lm = _lm;
 	shapes = sp;
+	l_length =2;
 }
 
 RayTracer::~RayTracer() {
@@ -65,7 +61,6 @@ void RayTracer::raytrace(Image* img) {
 
 			//Set the pixel accoring to the calculated Color/Light
 			img->setPixel(x, y, calculateColor(r, 15));
-			cout << count << "; ";
 		}
 
 	}
@@ -130,6 +125,7 @@ Color RayTracer::calculateColor(Ray &r, int recursions) {
 		//Ambient color
 		//FIXME: Take L_a of scene instead of 1
 		c = 1 * closestShape->material.k_a * closestShape->color;
+
 
 		for (int i = 0; i < l_length; i++) {
 			LightSource l = light[i];

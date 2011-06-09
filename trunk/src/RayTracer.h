@@ -31,11 +31,10 @@ public:
 	virtual void raytrace(Image* img);
 private:
 	/*Scene scene;*/
-
+	PhongModel lm;
 	virtual Color calculateColor(Ray &r, int recursions);
 	virtual bool isHidden(LightSource lightSource, Vector3 point);
 
-	PhongModel lm;
 	Set<Shape*> shapes;
 	LightSource light[2];
 	int l_length;
