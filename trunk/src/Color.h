@@ -10,8 +10,6 @@
 
 #include <iostream>
 
-
-using namespace std;
 /*
  * set(CMAKE_CXX_FLAGS "-Wall -g")
  *
@@ -60,7 +58,7 @@ public:
 	Color& operator/=(const double k);
 
 	void clamp();
-	friend ostream& operator<<(ostream &os, const Color &c);
+	friend std::ostream& operator<<(std::ostream &os, const Color &c);
 
 };
 

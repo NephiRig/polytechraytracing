@@ -17,17 +17,17 @@ Screen::Screen ( Vector3 _observer, Vector3 _aimedPoint, double _distScreen, dou
 	Vector3 OA = aimedPoint - observer;
 	Vector3 a = OA.normalized ();
 	a *= distScreen;
-	cout << "\n a: x=" << a[0] << ";y=" << a[1] << ";z=" << a[2] << "\n";
+    std::cout << "\n a: x=" << a[0] << ";y=" << a[1] << ";z=" << a[2] << "\n";
 	w = Vector3(1,a.coords[0]/a.coords[2]);
 	w.normalize();
-	cout << "w: " << w;
+    std::cout << "w: " << w;
 
 	h = cross_product(a,w);
 	h.normalize();
-	cout << "h: " << h;
+    std::cout << "h: " << h;
 
 	ptI= a - w*Rx/2 - h*Ry/2;
-	cout << "ptI: x=" << ptI[0] << ";y=" << ptI[1] << ";z=" << ptI[2] << "\n";
+    std::cout << "ptI: x=" << ptI[0] << ";y=" << ptI[1] << ";z=" << ptI[2] << "\n";
 }
 
 Screen::~Screen()

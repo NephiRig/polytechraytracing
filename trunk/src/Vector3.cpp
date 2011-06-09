@@ -252,10 +252,10 @@ Vector3 maxVect(const Vector3& v1, const Vector3& v2) {
 }
 
 
-ostream& operator<<(ostream &os, const Vector3 &v) {
+std::ostream& operator<<(std::ostream &os, const Vector3 &v) {
 	return os << "(" << v[0] << "; " << v[1] << "; " << v[2] << ")";
 }
 
-istream& operator>>(istream &is, Vector3 &v) {
+std::istream& operator>>(std::istream &is, Vector3 &v) {
 	return is >> v.coords[0] >> v.coords[1] >> v.coords[2];
 }

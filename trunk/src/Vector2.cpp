@@ -146,10 +146,10 @@ Vector2 unitVector(const Vector2 &v) {
 }
 
 
-ostream& operator<<(ostream &os, const Vector2 &v) {
+std::ostream& operator<<(std::ostream &os, const Vector2 &v) {
 	return os << "(" << v[0] << "; " << v[1] << ")";
 }
 
-istream& operator>>(istream &is, Vector2 &v) {
+std::istream& operator>>(std::istream &is, Vector2 &v) {
 	return is >> v.coords[0] >> v.coords[1];
 }

@@ -11,8 +11,6 @@
 #include "Vector3.h"
 #include <iostream>
 
-using namespace std;
-
 class ONB {
 public:
 	Vector3 U, V, W;
@@ -39,8 +37,8 @@ public:
 	void initFromVW(const Vector3 &v, const Vector3 &w);
 	void initFromWV(const Vector3 &w, const Vector3 &v);
 
-	friend istream &operator>>(istream &is, ONB &onb);
-	friend ostream &operator<<(ostream &os, const ONB &onb);
+	friend std::istream &operator>>(std::istream &is, ONB &onb);
+	friend std::ostream &operator<<(std::ostream &os, const ONB &onb);
 
 	friend bool operator==(const ONB &onb1, const ONB &onb2);
 
