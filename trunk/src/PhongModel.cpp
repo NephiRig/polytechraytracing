@@ -9,9 +9,9 @@
 #include <cmath>
 
 PhongModel::PhongModel() {
-	k_a=0.4;
-	k_d=0.4;
-	k_s=0.2;
+	k_a=1;
+	k_d=1;
+	k_s=1;
 	n_s=20;
 
 }
@@ -27,7 +27,7 @@ double PhongModel::getAmbient() const {
  * Calculate the diffuse light. This depends on the angle between the normal and the
  * vector passing through a lightsource from the point of intersection)
  */
-double PhongModel::getDiffuse(Ray normal, LightSource source) const {
+double PhongModel::getDiffuse(Ray &normal, LightSource &source) const {
 	//Get the vector which passes from the point on the shape thourgh the lightsource
 	Vector3 intersect_lightSource = source.position-normal.get_origin();
 
@@ -49,7 +49,7 @@ double PhongModel::getDiffuse(Ray normal, LightSource source) const {
  * the reflected ray and the vector passing through a lightsource
  * (from the point of intersection)
  */
-double PhongModel::getSpecular(Ray refracted, LightSource source) const {
+double PhongModel::getSpecular(Ray &refracted, LightSource &source) const {
 	//Get the vector which passes from the point on the shape thourgh the lightsource
 	Vector3 intersect_lightSource = source.position-refracted.get_origin();
 

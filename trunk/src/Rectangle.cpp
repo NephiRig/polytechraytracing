@@ -20,7 +20,7 @@ Rectangle::~Rectangle() {
 
 
 
-Set<Vector3> Rectangle::intersect (const Ray& r) const {
+Set<double> Rectangle::intersect (const Ray& r) const {
 	Vector3 d = r.get_direction();
 	Vector3 source = r.get_direction();
 	double t = distance/(dot_product(n,source)*(d[0]+d[1]+d[2]));

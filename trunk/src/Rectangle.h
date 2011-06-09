@@ -16,7 +16,7 @@ public:
 	virtual ~Rectangle();
 
 
-	Set<Vector3> intersect (const Ray& r) const;
+	Set<double> intersect (const Ray& r) const;
 
 	Vector3 normal (const Vector3& pt_intersect) const;
 

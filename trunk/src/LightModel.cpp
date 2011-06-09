@@ -15,3 +15,17 @@ LightModel::LightModel() {
 LightModel::~LightModel() {
 	// TODO Auto-generated destructor stub
 }
+
+double LightModel::getAmbient() const {
+	return 1;
+}
+
+double LightModel::getDiffuse(Ray &normal, LightSource &source) const {
+	return 0;
+}
+
+double LightModel::getSpecular(Ray &refracted, LightSource &source) const {
+	return 0;
+}
+
+

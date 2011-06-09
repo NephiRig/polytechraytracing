@@ -20,8 +20,8 @@ public:
 	virtual ~PhongModel();
 
 	virtual double getAmbient() const;
-	virtual double getDiffuse(Ray normal, LightSource source) const;
-	virtual double getSpecular(Ray refracted, LightSource source) const;
+	virtual double getDiffuse(Ray &normal, LightSource &source) const;
+	virtual double getSpecular(Ray &refracted, LightSource &source) const;
 private:
 	double k_a;
 	double k_d;

@@ -6,6 +6,9 @@
  */
 
 #include "Shape.h"
+#include <iostream>
+
+using namespace std;
 
 Shape::Shape() {
 	// TODO Auto-generated constructor stub
@@ -15,10 +18,11 @@ Shape::~Shape() {
 	// TODO Auto-generated destructor stub
 }
 
-Set<Vector3> Shape::intersect(const Ray& r) {
-	return Set<Vector3>(0);
+Set<double> Shape::intersect(const Ray& r) const {
+	cerr << "ERROR, call of Shape intersect!";
+	return Set<double>(0);
 }
-Vector3 Shape::normal(const Vector3& pt) {
+Vector3 Shape::normal(const Vector3& pt) const {
 	return Vector3(0,0,0);
 }
 

@@ -7,8 +7,11 @@
 
 #include "Material.h"
 
-Material::Material() {
-	// TODO Auto-generated constructor stub
+Material::Material(double k_a, double k_d, double k_s, double n_s) {
+	this->k_a = k_a;
+	this->k_d = k_d;
+	this->k_s = k_s;
+	this->n_s = n_s;
 
 }
 

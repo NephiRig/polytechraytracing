@@ -17,10 +17,10 @@ public:
 	Vector3 centre;
 	double radius;
 
-	Sphere (const Vector3 &_centre, double _radius, const Color &_color);
+	Sphere (const Vector3 &_centre = 0, double _radius = 0, const Color &_color=0);
 	virtual ~Sphere();
 
-	Set<Vector3> intersect (const Ray& r) const;
+	Set<double> intersect (const Ray& r) const;
 
 	Vector3 normal (const Vector3& pt_intersect) const;
 };
