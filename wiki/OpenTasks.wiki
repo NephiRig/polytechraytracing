@@ -1,28 +1,20 @@
 = Documentation =
 
-1) update UML 
-
 = Code =
 
-1) Extend Material class with doubles for k_a, k_d, k_s, n_s
---> Michael
+*Screen: Talk about coorinates!!
 
-2) Write calculateColor --> Michael
+* isHidden in class Raytracer
 
-and isHidden in class Raytracer --> ???
+* Damier class (Valentin)
 
-3) Damier class (Valentin)
-
-4) Define the comporment of the lightsource and the shape color
+* Define the comportment of the lightsource and the shape color
 --> Are the diffuse and specular light colors entirely defined by the lightsource?
 
 bounding box d'un objet connu (marche difficilement pour une surface paramétrée) pour accélérer le traitement
 
-5) Write a special Shape class that is itself a Set of Shapes. It's intersect function returns the first [or all, in an ordered way] intersections which any Shape
 
-6) LightSource: add intensity: How do we use this??
-
-7) ne plus passer par un fichier image (SDL_Surface à gérer)
+* ne plus passer par un fichier image (SDL_Surface à gérer)
 
 interaction avec le clavier qui entraine un rafraichissement de l'image dans l'application
 
@@ -33,7 +25,7 @@ déplacement d'objets dans la scène ou mouvement de caméra
 
 = Optional =
 
-1) Transparancy / Refraction
+* Transparancy / Refraction
 
 animation vidéo
 
@@ -62,6 +54,4 @@ faire marcher votre eclipse avec les libs de lapack et itpp (c'est le meme princ
 structures de données pour les polynomes
 
 intersections
-
-
 
