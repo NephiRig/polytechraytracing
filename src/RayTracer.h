@@ -24,7 +24,7 @@
 
 class RayTracer {
 public:
-	RayTracer(Scene &sc = 0, PhongModel &_lm =0);
+	RayTracer(Scene &sc , PhongModel &_lm );
 	virtual ~RayTracer();
 
 	virtual void raytrace(Image* img);
