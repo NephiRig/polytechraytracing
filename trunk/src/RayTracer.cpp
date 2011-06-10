@@ -50,7 +50,7 @@ void RayTracer::raytrace(Image* img) {
 			Ray r = Ray(scene.observer, s.getPixel(x, y) - scene.observer);
 
 			//Set the pixel accoring to the calculated Color/Light
-			img->setPixel(x, y, calculateColor(r, 1));
+			img->setPixel(x, y, calculateColor(r,1));
 		}
 
 	}
@@ -93,7 +93,8 @@ Color RayTracer::calculateColor(Ray &r, int recursions) {
 
 		//The normal at the point of intersection
 		Vector3 n = closestShape->normal(intersection);
-		Vector3 V = r.coords[0] - intersection; //V := PA : from the intersection to the observer
+		Vector3 V = r.get_origin() - intersection; //V := PA : from the intersection to the observer
+		V.normalize ();
 		//Make sure the normal points into the right direction
 		//FIXME is this correct??
 		if (dot_product(-r.get_direction(), n) < 0) {
@@ -135,7 +136,7 @@ Color RayTracer::calculateColor(Ray &r, int recursions) {
 		//Recursive call
 		if (recursions > 0) {
 			//FIXME Define factor (in material for example: reflectiv index...)
-			c += 0.5 * calculateColor(reflected, --recursions);
+			c += 1 * calculateColor(reflected, --recursions);
 		}
 	}
 	return c;
