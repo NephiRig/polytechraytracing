@@ -146,7 +146,47 @@ Color RayTracer::calculateColor(Ray &r, int recursions) {
  * 		 and our lightsource
  */
 bool RayTracer::isHidden(LightSource* &lightSource, Vector3 &point) {
+
 	//TODO Programm
+	//Create the ray between intersection point and light source
+	Ray r = Ray(point, (lightSource->position - point));
+
+	//Get the first intersection with any shape
+	Shape* closestShape = scene.shapes.get(0);
+	double closestIP;
+	bool hasIntersection = false;
+
+//*
+	for (int i = 0; i < scene.shapes.length(); i++) {
+		Set<double> intersections = scene.shapes.get(i)->intersect(r);
+
+		if (!hasIntersection && !intersections.empty()) {
+			closestShape = scene.shapes.get(i);
+			closestIP = intersections[0];
+			hasIntersection = true;
+		} else if (hasIntersection && !intersections.empty() && intersections[0] < closestIP) {
+			closestShape = scene.shapes.get(i);
+			closestIP = intersections[0];
+			hasIntersection = true;
+
+		}
+	}
+
+	//if there are any intersections
+	if (hasIntersection) {
+		//Get the Point of the first intersection
+		Vector3 intersection = r.getPoint(closestIP);
+
+		//Create a vector between the two object intersections
+		Vector3 point_intersection = intersection - point;
+
+		//Create a vector between object intersection and light source
+		Vector3 point_light = lightSource->position - point;
+
+		//If |point_light| > |point_intersection.norm| there is shadow
+		cout << "true" << endl;
+		return point_light.norm() > point_intersection.norm();
+	}
+//*/
 	return false;
 }
-
