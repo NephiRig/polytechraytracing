@@ -4,7 +4,7 @@
  *  Created on: 31 mai 2011
  *      Author: Marion & Sandra
  */
-
+/*
 #include "ParamSurf.h"
 
 
@@ -22,9 +22,9 @@ ParamSurf::ParamSurf(const Color &_color,mat M0, mat M1, mat M2, mat M3) :
 ParamSurf::~ParamSurf() {
 }
 
-/*
+/ *
  *	Calculate the pencil of a parametric surface
- */
+ * /
 Set<mat> ParamSurf::make_pencil(const Ray& r) const {
 
 
@@ -44,7 +44,7 @@ Set<mat> ParamSurf::make_pencil(const Ray& r) const {
 	
 	mat A = xd*M1+yd*M2+zd*M3;
 	mat B = x0*M1+y0*M2+z0*M3+M0;
-/*
+/ *
 	double [][] A;
 	double [][] B;
 
@@ -54,16 +54,16 @@ Set<mat> ParamSurf::make_pencil(const Ray& r) const {
 			B[i][j] =  M1[i][j]*x0+M2[i][j]*y0+M3[i][j]*z0+M0[i][j];
 		}
 	}
-*/
+* /
 	pencil.add(A);
 	pencil.add(B);
 
 	return pencil;
 }
 
-/*
+/ *
  *	Calculate the intersections of a ray with a parametric surface
- */
+ * /
 Set<double> ParamSurf::intersect(const Ray& r) const {
 
 	Set<mat> pencil = make_pencil(r);
@@ -112,13 +112,13 @@ Vector3 ParamSurf::normal(const Vector3& pt_intersection) const {
 
 
 int main(){
-	/*mat M0 = "-1,0,0,0,0,-2; 0,-2,0,0,0,0; 0,0,0,0,-2,0; 0,0,0,0,0,0; 0,0,0,0,0,0; -4,0,0,0,-8,-8";
+	/ *mat M0 = "-1,0,0,0,0,-2; 0,-2,0,0,0,0; 0,0,0,0,-2,0; 0,0,0,0,0,0; 0,0,0,0,0,0; -4,0,0,0,-8,-8";
 	mat M1 = "-1,0,1,0,0,-1; 0,0,0,0,0,0; 0,0,0,0,0,0; 0,0,0,0,0,0; 0,0,0,0,0,0; -4,0,0,0,0,-4";
 	mat M2 = "0,0,0,0,0,0; -1,0,1,0,0,-1; 0,0,0,0,0,0; 0,0,0,0,0,-2; 0,0,0,-2,0,0; 0,4,0,0,0,0";
 	mat M3 = "0,0,0,0,0,0; 0,0,0,0,0,0; -1,0,1,0,0,-1; 0,0,0,2,0,0; 2,0,0,0,0,0; 0,0,0,0,6,0";
 	
 	ParamSurf* paramSurf1 = new ParamSurf(Color(0,1,0),M0,M1,M2,M3);
 	Vector3 origin= Vector3(2,1,2) const Vector3 &direction
-	paramSurf1.intersect(*/
+	paramSurf1.intersect(* /
 }
-
+*/
