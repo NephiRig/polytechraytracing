@@ -157,7 +157,7 @@ bool RayTracer::isHidden(LightSource* &lightSource, Vector3 &point) {
 	double closestIP;
 	bool hasIntersection = false;
 
-//*
+/*
 	for (int i = 0; i < scene.shapes.length(); i++) {
 		Set<double> intersections = scene.shapes.get(i)->intersect(r);
 
