@@ -23,6 +23,7 @@ public:
 	bool truncate(); // make size = used
 	void clear();
 	int length();
+	int size();
 	bool empty();
 
 	T operator[](int i) const;
