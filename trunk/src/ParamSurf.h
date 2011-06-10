@@ -7,7 +7,7 @@
 
 #ifndef PARAMSURF_H_
 #define PARAMSURF_H_
-
+/*
 #include "Shape.h"
 #include "Material.h"
 #include "Vector3.h"
@@ -36,5 +36,5 @@ public:
 	Set<mat> make_pencil (const Ray& r) const;
 
 };
-
+*/
 #endif /* PARAMSURF_H_ */

@@ -329,15 +329,13 @@ int main(int argc, char **argv)
 	shapes.add ( (Shape*)sphere5 );
 
 	Vector3 obs ( 0.0, 0.0, -10.0 );
-	rayonCamera = (obs - posSphere).norm();
+	rayonCamera = (obs - posSphere).norm ();
 	cerr << "rayon camera : " << rayonCamera << endl;
 
 	Vector3 aimedPoint = posSphere;
-	//Distance to the screen from the observer point
-	double distScreen = 700.0;
+	double distScreen = 700.0; // distance to the screen from the observer point
 	Scene s = Scene ( shapes, lights, obs, aimedPoint, distScreen );
 	PhongModel lm = PhongModel ();
-	//RayTracer rayTracer = RayTracer(s, lm);
 	rt = new RayTracer ( s, lm );
 
 
