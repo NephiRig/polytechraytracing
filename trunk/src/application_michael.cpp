@@ -85,7 +85,6 @@ int main(int argc, char **argv) {
 	myfile.close();
 
 	//Remove pointers
-	shapes.clear();
 	delete(sphere);
 	delete(sphere2);
 	delete(sphere3);
