@@ -24,6 +24,7 @@
 
 class RayTracer {
 public:
+
 	Scene scene;
 	PhongModel lm;
 
@@ -34,6 +35,9 @@ public:
 private:
 	virtual Color calculateColor(Ray &r, int recursions);
 	virtual bool isHidden(LightSource* &lightSource, Vector3 &point);
+
+	int NB_OF_INTERATIONS;
+
 
 };
 

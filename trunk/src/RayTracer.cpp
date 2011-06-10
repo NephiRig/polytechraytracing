@@ -13,6 +13,7 @@ using namespace std;
 RayTracer::RayTracer(Scene &sc, PhongModel &_lm) {
 	lm = _lm;
 	scene = sc;
+	NB_OF_INTERATIONS = 1;
 	cout << "\n # of Shapes: " << scene.shapes.length();
 	cout << "\n # of Lights: " << scene.lightSources.length() << "\n";
 
@@ -50,7 +51,7 @@ void RayTracer::raytrace(Image* img) {
 			Ray r = Ray(scene.observer, s.getPixel(x, y) - scene.observer);
 
 			//Set the pixel accoring to the calculated Color/Light
-			img->setPixel(x, y, calculateColor(r,1));
+			img->setPixel(x, y, calculateColor(r, NB_OF_INTERATIONS));
 		}
 
 	}
@@ -71,30 +72,32 @@ Color RayTracer::calculateColor(Ray &r, int recursions) {
 	double closestIP;
 	bool hasIntersection = false;
 
+	Ray r_moved = Ray(r.getPoint(1),r.get_direction());
 	for (int i = 0; i < scene.shapes.length(); i++) {
-		Set<double> intersections = scene.shapes.get(i)->intersect(r);
+		Set<double> intersections = scene.shapes.get(i)->intersect(r_moved);
 
 		if (!hasIntersection && !intersections.empty()) {
 			closestShape = scene.shapes.get(i);
+			cout << "t1: " << intersections[0] << " t2: " << intersections[1];
 			closestIP = intersections[0];
 			hasIntersection = true;
 		} else if (hasIntersection && !intersections.empty() && intersections[0] < closestIP) {
 			closestShape = scene.shapes.get(i);
 			closestIP = intersections[0];
+			cout << "t1: " << intersections[0] << " t2: " << intersections[1];
 			hasIntersection = true;
-
 		}
+
 	}
 
 	//if there are any intersections
 	if (hasIntersection) {
 		//Get the Point of the first intersection
-		Vector3 intersection = r.getPoint(closestIP); //P := intersection
+		Vector3 intersection = r_moved.getPoint(closestIP); //P := intersection
 
 		//The normal at the point of intersection
 		Vector3 n = closestShape->normal(intersection);
-		Vector3 V = r.get_origin() - intersection; //V := PA : from the intersection to the observer
-		V.normalize ();
+
 		//Make sure the normal points into the right direction
 		//FIXME is this correct??
 		if (dot_product(-r.get_direction(), n) < 0) {
@@ -106,8 +109,7 @@ Color RayTracer::calculateColor(Ray &r, int recursions) {
 		//The reflected ray at the point of intersection
 		//FIXME Move to the shape class, as it is the same for all the shapes
 		Ray reflected =
-				Ray(
-						intersection,
+				Ray(intersection,
 						2 * n * (dot_product(n, r.get_direction()))
 								- r.get_direction());
 
@@ -188,6 +190,6 @@ bool RayTracer::isHidden(LightSource* &lightSource, Vector3 &point) {
 		cout << "true" << endl;
 		return point_light.norm() > point_intersection.norm();
 	}
-//*/
+*/
 	return false;
 }
