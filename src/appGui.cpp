@@ -251,7 +251,7 @@ void handle_events(SDL_Event& event)
 
 	if ( refresh == true )
 	{
-		rt->raytrace(img);
+		rt->raytrace ( img );
 		refreshDisplay ();
 	}
 }
@@ -259,21 +259,7 @@ void handle_events(SDL_Event& event)
 void dispUint32 ( uint32_t v )
 {
 	for ( int i = 31; i >= 0; --i )
-	{
 		cerr << ((v & (1 << i)) >> i);
-	}
-}
-
-int main (int argc, char **argv)
-{
-	Color c ( 0.0, 1.0, 0.0 );
-	uint32_t res = 0;
-	cerr << res << endl;
-	res |= (int(c.val[0]*255) & 0xff) << 16;
-	res |= (int(c.val[1]*255) & 0xff) << 8;
-	res |= (int(c.val[2]*255) & 0xff);
-	dispUint32 ( res );
-
 }
 */
 int main(int argc, char **argv)
@@ -297,7 +283,7 @@ int main(int argc, char **argv)
 		cerr << SDL_GetError() << endl;
 		exit(1);
 	}
-	SDL_WM_SetCaption("kikou", NULL);
+	SDL_WM_SetCaption("Polytech Ray Tracing qui rox du poney", NULL);
 
 
 
@@ -338,72 +324,9 @@ int main(int argc, char **argv)
 	PhongModel lm = PhongModel ();
 	rt = new RayTracer ( s, lm );
 
+	img = new Image ( SCREEN_WIDTH, SCREEN_HEIGHT, Color ( 0.0, 0.0, 0.0 ) );
 
-	/*
-	// create scene
-	Set<Shape*> shapes = Set<Shape*>();
-
-	//Create the shapes
-	//Vector3 posSphere = Vector3(0, 20, 150);
-	posSphere = Vector3(0, 20, 150);
-	Sphere* sphere = new Sphere(posSphere, 20, Color(1, 0, 0));
-	Sphere* sphere2 = new Sphere(Vector3(0, 20, 100), 20, Color(0.01, 1.0, 0.01));
-	sphere2->material.k_a = 0.2;
-	sphere2->material.k_d = 0;
-	sphere2->material.k_s = 0.8;
-	sphere2->material.n_s = 30;
-
-	Sphere* sphere3 = new Sphere(Vector3(70, 70, 80), 4, Color(1, 1, 0));
-	Sphere* sphere4 = new Sphere(Vector3(-70, -70, 80), 4, Color(1, 1, 1));
-
-	shapes.add((Shape*)sphere);
-	shapes.add((Shape*)sphere2);
-	//shapes.add((Shape*)sphere3);
-	//shapes.add((Shape*)sphere4);
-
-	// light sources
-	Vector3 position1 = Vector3(70, 70, 80);
-	Color c1 =  Color(1, 1, 0.5);
-	LightSource* source1 = new LightSource(1, position1, c1);
-
-	Vector3 position2 = Vector3(-70, -70, 60);
-	Color c2 = Color(1, 1, 1);
-	LightSource* source2 = new LightSource(1, position2, c2);
-
-	Set<LightSource*> lights = Set<LightSource*>();
-	lights.add(source1);
-	lights.add(source2);
-
-	Vector3 obs(0, 200, 0.0);
-
-	rayonCamera = (obs - posSphere).norm();
-	cout << "rayon camera : " << rayonCamera << endl;
-
-	//Vector3 aimedPoint(0, 0, 200);
-	Vector3 aimedPoint = posSphere;
-
-	//Distance to the screen from the observer point
-	double distScreen = 700.0;
-
-	Scene s = Scene(shapes,lights,obs,aimedPoint, distScreen);
-
-	PhongModel lm = PhongModel();
-	//RayTracer rayTracer = RayTracer(s, lm);
-	rt = new RayTracer(s, lm);
-	*/
-
-
-
-	//int w = SCREEN_WIDTH;
-	//int h = SCREEN_HEIGHT;
-	//Image img(w, h, Color(0.0, 0.0, 0.0));
-	//RayTracer rt = RayTracer ();
-	//rt.raytrace(&img);
-
-	//Image img(500, 500, Color(0.0, 0.0, 0.0));
-	img = new Image ( SCREEN_WIDTH, SCREEN_HEIGHT, Color( 0.0, 0.0, 0.0 ) );
-
-	rt->raytrace(img);
+	rt->raytrace ( img );
 	refreshDisplay ();
 
 

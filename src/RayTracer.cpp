@@ -78,13 +78,13 @@ Color RayTracer::calculateColor(Ray &r, int recursions) {
 
 		if (!hasIntersection && !intersections.empty()) {
 			closestShape = scene.shapes.get(i);
-			cout << "t1: " << intersections[0] << " t2: " << intersections[1];
+			//cout << "t1: " << intersections[0] << " t2: " << intersections[1];
 			closestIP = intersections[0];
 			hasIntersection = true;
 		} else if (hasIntersection && !intersections.empty() && intersections[0] < closestIP) {
 			closestShape = scene.shapes.get(i);
 			closestIP = intersections[0];
-			cout << "t1: " << intersections[0] << " t2: " << intersections[1];
+			//cout << "t1: " << intersections[0] << " t2: " << intersections[1];
 			hasIntersection = true;
 		}
 
