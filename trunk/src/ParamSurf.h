@@ -24,16 +24,16 @@ using namespace std;
 class ParamSurf : public Shape {
 public:
 	Color color;
-	cmat M0, M1, M2, M3;
+	mat M0, M1, M2, M3;
 
-	ParamSurf (const Color &_color, cmat M0, cmat M1, cmat M2, cmat M3);
+	ParamSurf (const Color &_color, mat M0, mat M1, mat M2, mat M3);
 	virtual ~ParamSurf();
 
 	Vector3 normal (const Vector3& pt) const;
 
-	cvec intersect ( const Ray& r ) const;
+	Set<double> intersect ( const Ray& r ) const;
 	
-	Set<cmat> make_pencil (const Ray& r) const;
+	Set<mat> make_pencil (const Ray& r) const;
 
 };
 
