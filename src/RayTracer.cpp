@@ -96,7 +96,7 @@ Color RayTracer::calculateColor(Ray &r, int recursions) {
 		Vector3 V = r.coords[0] - intersection; //V := PA : from the intersection to the observer
 		//Make sure the normal points into the right direction
 		//FIXME is this correct??
-		if (dot_product(r.get_direction(), n) < 0) {
+		if (dot_product(-r.get_direction(), n) < 0) {
 		//if (dot_product(V, n) < 0) {
 			n = -n;
 		}
