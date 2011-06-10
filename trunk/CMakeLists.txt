@@ -75,7 +75,7 @@ endif(SDLIMAGE_FOUND)
 ## Build our project
 ## #################################################################
 
-add_definitions(-std=c++0x)
+#add_definitions(-std=c++0x)
 
 add_subdirectory(src)
 

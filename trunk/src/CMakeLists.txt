@@ -18,6 +18,7 @@ set(${PROJECT_NAME}_HEADERS
     LightSource.h
     Material.h
     ONB.h
+    ParamSurf.h
     PhongModel.h
     Ray.h
     RayTracer.h
@@ -40,6 +41,7 @@ set(${PROJECT_NAME}_SOURCES
     LightSource.cpp
     Material.cpp
     ONB.cpp
+    ParamSurf.cpp
     PhongModel.cpp
     Ray.cpp
     RayTracer.cpp
@@ -52,10 +54,10 @@ set(${PROJECT_NAME}_SOURCES
     Vector3.cpp
 )
 
-add_definitions(-std=c++0x)
+#add_definitions(-std=c++0x)
 
 add_executable(${PROJECT_NAME}
-        appGui.cpp
+        ParamSurf.cpp
         ${${PROJECT_NAME}_SOURCES}
         ${${PROJECT_NAME}_HEADERS}
     )
