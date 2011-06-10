@@ -83,13 +83,14 @@ Color RayTracer::calculateColor(Ray &r, int recursions) {
 	//if there are any intersections
 	if (hasIntersection) {
 		//Get the Point of the first intersection
-		Vector3 intersection = r.getPoint(closestIP);
+		Vector3 intersection = r.getPoint(closestIP); //P := intersection
 
 		//The normal at the point of intersection
 		Vector3 n = closestShape->normal(intersection);
-
+		Vector3 V = r.coords[0] - intersection; //V := PA : from the intersection to the observer
 		//Make sure the normal points into the right direction
 		if (dot_product(r.get_direction(), n) < 0) {
+		//if (dot_product(V, n) < 0) {
 			n = -n;
 		}
 		Ray normal = Ray(intersection, n);

@@ -207,7 +207,7 @@ int main (int argc, char **argv)
 
 }
 */
-int main(int argc, char **argv)
+int main222(int argc, char **argv)
 {
 	cerr << "test huhu" << endl;
 

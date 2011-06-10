@@ -14,8 +14,8 @@
 class Ray {
 
 public:
-	//the 3 coordinates
-	// [0] = x, [1] = y, [2]=z
+	// coords[0] is the origin point of the vector
+	// coords[1] is the vector's direction from its origin
 	Vector3 coords[2];
 
 	Ray(const Vector3 &origin = Vector3(), const Vector3 &direction = Vector3());
