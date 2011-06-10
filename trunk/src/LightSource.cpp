@@ -7,7 +7,7 @@
 
 #include "LightSource.h"
 
-LightSource::LightSource(double intens, Vector3 &pos, Color &c) {
+LightSource::LightSource(double intens, const Vector3 &pos, const Color &c) {
 	intensity = intens;
 	position = pos;
 	if (c != 0){

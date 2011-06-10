@@ -39,6 +39,9 @@ bool mouse_down = false;
 RayTracer *rt = NULL;
 Image *img = NULL;
 SDL_Surface* screen = NULL;
+double camera_t = 0.0;
+Vector3 posSphere;
+double rayonCamera = 1.0;
 
 SDL_Surface *
 load_image(std::string filename)
@@ -227,6 +230,20 @@ void handle_events(SDL_Event& event)
 				refresh = true;
 			break;
 
+			case SDLK_d:
+				camera_t -= .1;
+				rt->scene.observer[0] = posSphere[0] + cos(camera_t)*rayonCamera;
+				rt->scene.observer[2] = posSphere[2] + sin(camera_t)*rayonCamera;
+				refresh = true;
+			break;
+
+			case SDLK_q:
+				camera_t += .1;
+				rt->scene.observer[0] = posSphere[0] + cos(camera_t)*rayonCamera;
+				rt->scene.observer[2] = posSphere[2] + sin(camera_t)*rayonCamera;
+				refresh = true;
+			break;
+
 			default:
 			break;
 		}
@@ -283,11 +300,54 @@ int main(int argc, char **argv)
 	SDL_WM_SetCaption("kikou", NULL);
 
 
+
+
+	Set<Shape*> shapes = Set<Shape*> (); // create scene
+	// shapes
+	posSphere = Vector3 ( 0.0, 0.0, 20.0 );
+	Sphere* sphere1 = new Sphere ( posSphere, 4.0, Color ( 0.0, 0.0, 1.0 ) );
+	Sphere* sphere2 = new Sphere ( Vector3 ( 10.0, 0.0, 20.0 ), 4.0, Color ( 1.0, 0.0, 0.0 ) );
+	sphere2->material.k_a = 0.2;
+	sphere2->material.k_d = 0;
+	sphere2->material.k_s = 0.8;
+	sphere2->material.n_s = 30;
+	Sphere* sphere3 = new Sphere ( Vector3 ( 0.0, 0.0, 30.0 ), 4.0, Color ( 0.0, 1.0, 0.0 ) );
+	shapes.add ( (Shape*)sphere1 );
+	shapes.add ( (Shape*)sphere2 );
+	shapes.add ( (Shape*)sphere3 );
+	// light sources
+	Set<LightSource*> lights = Set<LightSource*> ();
+	Vector3 posLight1 = Vector3 ( 0.0, 10.0, 20.0 );
+	Vector3 posLight2 = Vector3 ( 20.0, 0.0, 20.0 );
+	LightSource* source1 = new LightSource ( 1.0, posLight1, Color ( 1.0, 1.0, 0.5 ) );
+	LightSource* source2 = new LightSource ( 1.0, posLight2, Color ( 1.0, 1.0, 1.0 ) );
+	lights.add ( source1 );
+	lights.add ( source2 );
+	Sphere* sphere4 = new Sphere ( posLight1, 2.0, Color ( 1.0, 1.0, 0.5 ) );
+	Sphere* sphere5 = new Sphere ( posLight2, 2.0, Color ( 1.0, 1.0, 1.0 ) );
+	shapes.add ( (Shape*)sphere4 );
+	shapes.add ( (Shape*)sphere5 );
+
+	Vector3 obs ( 0.0, 0.0, -10.0 );
+	rayonCamera = (obs - posSphere).norm();
+	cerr << "rayon camera : " << rayonCamera << endl;
+
+	Vector3 aimedPoint = posSphere;
+	//Distance to the screen from the observer point
+	double distScreen = 700.0;
+	Scene s = Scene ( shapes, lights, obs, aimedPoint, distScreen );
+	PhongModel lm = PhongModel ();
+	//RayTracer rayTracer = RayTracer(s, lm);
+	rt = new RayTracer ( s, lm );
+
+
+	/*
 	// create scene
 	Set<Shape*> shapes = Set<Shape*>();
 
 	//Create the shapes
-	Vector3 posSphere = Vector3(0, 20, 150);
+	//Vector3 posSphere = Vector3(0, 20, 150);
+	posSphere = Vector3(0, 20, 150);
 	Sphere* sphere = new Sphere(posSphere, 20, Color(1, 0, 0));
 	Sphere* sphere2 = new Sphere(Vector3(0, 20, 100), 20, Color(0.01, 1.0, 0.01));
 	sphere2->material.k_a = 0.2;
@@ -318,6 +378,9 @@ int main(int argc, char **argv)
 
 	Vector3 obs(0, 200, 0.0);
 
+	rayonCamera = (obs - posSphere).norm();
+	cout << "rayon camera : " << rayonCamera << endl;
+
 	//Vector3 aimedPoint(0, 0, 200);
 	Vector3 aimedPoint = posSphere;
 
@@ -329,7 +392,7 @@ int main(int argc, char **argv)
 	PhongModel lm = PhongModel();
 	//RayTracer rayTracer = RayTracer(s, lm);
 	rt = new RayTracer(s, lm);
-
+	*/
 
 
 
@@ -340,7 +403,7 @@ int main(int argc, char **argv)
 	//rt.raytrace(&img);
 
 	//Image img(500, 500, Color(0.0, 0.0, 0.0));
-	img = new Image (500, 500, Color(0.0, 0.0, 0.0));
+	img = new Image ( SCREEN_WIDTH, SCREEN_HEIGHT, Color( 0.0, 0.0, 0.0 ) );
 
 	rt->raytrace(img);
 	refreshDisplay ();
