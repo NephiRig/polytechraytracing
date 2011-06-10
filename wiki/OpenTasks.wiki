@@ -2,39 +2,34 @@
 
 = Code =
 
-*Screen: Talk about coorinates!!
+ * Screen: Talk about coorinates!!
 
-* isHidden in class Raytracer
+ * isHidden in class Raytracer
 
-* Damier class (Valentin)
+ * Damier class (Valentin)
 
-* Define the comportment of the lightsource and the shape color
+ * Define the comportment of the lightsource and the shape color
 --> Are the diffuse and specular light colors entirely defined by the lightsource?
 
-bounding box d'un objet connu (marche difficilement pour une surface paramétrée) pour accélérer le traitement
 
 
-* ne plus passer par un fichier image (SDL_Surface à gérer)
+ * bounding box d'un objet connu (marche difficilement pour une surface paramétrée) pour accélérer le traitement
 
-interaction avec le clavier qui entraine un rafraichissement de l'image dans l'application
 
-déplacement d'objets dans la scène ou mouvement de caméra
+ * ne plus passer par un fichier image (SDL_Surface à gérer)
+
+ * interaction avec le clavier qui entraine un rafraichissement de l'image dans l'application
+
+ * déplacement d'objets dans la scène ou mouvement de caméra
 
 
 
 
 = Optional =
 
-* Transparancy / Refraction
+ * Transparancy / Refraction
 
-animation vidéo
-
-
-
-
-
-
-
+ * animation vidéo
 
 
 
@@ -54,4 +49,3 @@ faire marcher votre eclipse avec les libs de lapack et itpp (c'est le meme princ
 structures de données pour les polynomes
 
 intersections
-
