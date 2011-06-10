@@ -7,9 +7,16 @@
 
 #include "Scene.h"
 
-Scene::Scene() {
-	lightSources = Set<LightSource> ();
-	shapes =  Set<Shape*>();
+Scene::Scene (Set<Shape*> &sh, Set<LightSource*> &ls, Vector3 &obs, Vector3 &ap, double dist){
+	lightSources = ls;
+	shapes = sh;
+	observer = obs;
+	aimedPoint = ap;
+	distScreen = dist;
+
+}
+
+Scene::Scene (){
 
 }
 

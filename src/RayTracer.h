@@ -24,20 +24,19 @@
 
 class RayTracer {
 public:
-	/*RayTracer(Scene s =0, LightModel _lm =0);*/
-	RayTracer(const Set<Shape*> &sp, PhongModel &_lm =0 );
+	RayTracer(Scene &sc = 0, PhongModel &_lm =0);
 	virtual ~RayTracer();
 
 	virtual void raytrace(Image* img);
 private:
-	/*Scene scene;*/
-	PhongModel lm;
-	virtual Color calculateColor(Ray &r, int recursions);
-	virtual bool isHidden(LightSource lightSource, Vector3 point);
 
-	Set<Shape*> shapes;
-	LightSource light[2];
-	int l_length;
+
+	virtual Color calculateColor(Ray &r, int recursions);
+	virtual bool isHidden(LightSource* &lightSource, Vector3 &point);
+
+	Scene scene;
+	PhongModel lm;
+
 
 };
 

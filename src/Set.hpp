@@ -58,7 +58,13 @@ void Set<T>::clear() {
 
 template<class T>
 int Set<T>::length() {
-	return sz;
+	return used;
+}
+
+
+template<class T>
+int Set<T>::size() {
+	return used;
 }
 
 template<class T>

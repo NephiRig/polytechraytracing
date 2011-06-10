@@ -27,9 +27,9 @@ double PhongModel::getAmbient() const {
  * Calculate the diffuse light. This depends on the angle between the normal and the
  * vector passing through a lightsource from the point of intersection)
  */
-double PhongModel::getDiffuse(Ray &normal, LightSource &source) const {
+double PhongModel::getDiffuse(Ray &normal, LightSource* &source) const {
 	//Get the vector which passes from the point on the shape thourgh the lightsource
-	Vector3 intersect_lightSource = source.position-normal.get_origin();
+	Vector3 intersect_lightSource = source->position-normal.get_origin();
 
 	//Calculate the cosine of the angle between the normal and the vector above
 	//The diffuse light is defined by this quantity
@@ -49,14 +49,15 @@ double PhongModel::getDiffuse(Ray &normal, LightSource &source) const {
  * the reflected ray and the vector passing through a lightsource
  * (from the point of intersection)
  */
-double PhongModel::getSpecular(Ray &refracted, LightSource &source) const {
+double PhongModel::getSpecular(Ray &refracted, LightSource* &source) const {
 	//Get the vector which passes from the point on the shape thourgh the lightsource
-	Vector3 intersect_lightSource = source.position-refracted.get_origin();
+	Vector3 intersect_lightSource = source->position - refracted.get_origin();
 
 
 	//Calculate the cosine of the angle between the reflected ray and the vector above
 	//The specular light is defined by this quantity
 	double a_times_b = -dot_product(refracted.get_direction().normalize(),intersect_lightSource.normalize());
+
 
 	//the cosine is positive if our angle 0 <= alpha <= 180, i.e. the vector to the
 	// lightsource is not on the other side of the shape
