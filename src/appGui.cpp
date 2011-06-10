@@ -36,7 +36,8 @@ int mouse_clicked_y;
 int mouse_pos_x;
 int mouse_pos_y;
 bool mouse_down = false;
-
+RayTracer *rt = NULL;
+Image *img = NULL;
 SDL_Surface* screen = NULL;
 
 SDL_Surface *
@@ -147,8 +148,25 @@ void fillSurfaceNoFile(SDL_Surface *surface, Image* img)
     }
 }
 
+void refreshDisplay ()
+{
+	ofstream myfile;
+	myfile.open("img.ppm");
+	//cerr << "on tente le writePPM" << endl;
+	img->writePPM(myfile);
+	//cerr << "fin du writePPM" << endl;
+	//img->writePPM ( cerr );
+	//cerr << endl;
+	myfile.close();
+
+	//fillSurfaceNoFile ( screen, img );
+	fillSurfaceFromFile ( screen, img );
+	SDL_Flip( screen );
+}
+
 void handle_events(SDL_Event& event)
 {
+	bool refresh = false;
 	// SDL_MOUSEMOTION
 	// SDL_MOUSEBUTTONDOWN
 
@@ -185,6 +203,40 @@ void handle_events(SDL_Event& event)
 			mouse_down = false;
 		}
 	}
+	else if ( event.type == SDL_KEYDOWN )
+	{
+		switch(event.key.keysym.sym)
+		{
+			case SDLK_LEFT:
+				rt->scene.observer[0] -= 10.0;
+				refresh = true;
+			break;
+
+			case SDLK_RIGHT:
+				rt->scene.observer[0] += 10.0;
+				refresh = true;
+			break;
+
+			case SDLK_UP:
+				rt->scene.observer[2] += 10.0;
+				refresh = true;
+			break;
+
+			case SDLK_DOWN:
+				rt->scene.observer[2] -= 10.0;
+				refresh = true;
+			break;
+
+			default:
+			break;
+		}
+	}
+
+	if ( refresh == true )
+	{
+		rt->raytrace(img);
+		refreshDisplay ();
+	}
 }
 /*
 void dispUint32 ( uint32_t v )
@@ -207,7 +259,7 @@ int main (int argc, char **argv)
 
 }
 */
-int main222(int argc, char **argv)
+int main(int argc, char **argv)
 {
 	cerr << "test huhu" << endl;
 
@@ -230,24 +282,78 @@ int main222(int argc, char **argv)
 	}
 	SDL_WM_SetCaption("kikou", NULL);
 
-	int w = SCREEN_WIDTH;
-	int h = SCREEN_HEIGHT;
-	Image img(w, h, Color(0.0, 0.0, 0.0));
+
+	// create scene
+	Set<Shape*> shapes = Set<Shape*>();
+
+	//Create the shapes
+	Vector3 posSphere = Vector3(0, 20, 150);
+	Sphere* sphere = new Sphere(posSphere, 20, Color(1, 0, 0));
+	Sphere* sphere2 = new Sphere(Vector3(0, 20, 100), 20, Color(0.01, 1.0, 0.01));
+	sphere2->material.k_a = 0.2;
+	sphere2->material.k_d = 0;
+	sphere2->material.k_s = 0.8;
+	sphere2->material.n_s = 30;
+
+	Sphere* sphere3 = new Sphere(Vector3(70, 70, 80), 4, Color(1, 1, 0));
+	Sphere* sphere4 = new Sphere(Vector3(-70, -70, 80), 4, Color(1, 1, 1));
+
+	shapes.add((Shape*)sphere);
+	shapes.add((Shape*)sphere2);
+	//shapes.add((Shape*)sphere3);
+	//shapes.add((Shape*)sphere4);
+
+	// light sources
+	Vector3 position1 = Vector3(70, 70, 80);
+	Color c1 =  Color(1, 1, 0.5);
+	LightSource* source1 = new LightSource(1, position1, c1);
+
+	Vector3 position2 = Vector3(-70, -70, 60);
+	Color c2 = Color(1, 1, 1);
+	LightSource* source2 = new LightSource(1, position2, c2);
+
+	Set<LightSource*> lights = Set<LightSource*>();
+	lights.add(source1);
+	lights.add(source2);
+
+	Vector3 obs(0, 200, 0.0);
+
+	//Vector3 aimedPoint(0, 0, 200);
+	Vector3 aimedPoint = posSphere;
+
+	//Distance to the screen from the observer point
+	double distScreen = 700.0;
+
+	Scene s = Scene(shapes,lights,obs,aimedPoint, distScreen);
+
+	PhongModel lm = PhongModel();
+	//RayTracer rayTracer = RayTracer(s, lm);
+	rt = new RayTracer(s, lm);
+
+
+
+
+	//int w = SCREEN_WIDTH;
+	//int h = SCREEN_HEIGHT;
+	//Image img(w, h, Color(0.0, 0.0, 0.0));
 	//RayTracer rt = RayTracer ();
 	//rt.raytrace(&img);
 
-	ofstream myfile;
-	myfile.open("img.ppm");
-	cerr << "on tente le writePPM" << endl;
-	img.writePPM(myfile);
-	cerr << "fin du writePPM" << endl;
-	//img.writePPM ( cerr );
-	cerr << endl;
-	myfile.close();
+	//Image img(500, 500, Color(0.0, 0.0, 0.0));
+	img = new Image (500, 500, Color(0.0, 0.0, 0.0));
 
-	//fillSurfaceNoFile ( screen, &img );
-	fillSurfaceFromFile ( screen, &img );
-	SDL_Flip( screen );
+	rt->raytrace(img);
+	refreshDisplay ();
+
+
+
+
+
+
+
+
+
+
 
 
 	//While the user hasn't quit
