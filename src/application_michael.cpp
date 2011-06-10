@@ -46,15 +46,15 @@ int main(int argc, char **argv) {
 	// light sources
 	Vector3 position1 = Vector3(70, 70, 80);
 	Color c1 =  Color(1, 1, 0.5);
-	LightSource* source1 = new LightSource(0.5, position1, c1);
+	LightSource* source1 = new LightSource(1, position1, c1);
 
-	/*Vector3 position2 = Vector3(-70, -70, 60);
+	Vector3 position2 = Vector3(-70, -70, 60);
 	Color c2 = Color(1, 1, 1);
-	LightSource* source2 = new LightSource(0.5, 3), position2, c2);*/
+	LightSource* source2 = new LightSource(1, position2, c2);
 
 	Set<LightSource*> lights = Set<LightSource*>();
 	lights.add(source1);
-	//lights.add(source2);
+	lights.add(source2);
 
 
 	//The observer point
