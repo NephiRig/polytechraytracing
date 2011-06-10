@@ -10,12 +10,17 @@
 
 using namespace std;
 
-
 RayTracer::RayTracer(Scene &sc, PhongModel &_lm) {
 	lm = _lm;
 	scene = sc;
 	cout << "\n # of Shapes: " << scene.shapes.length();
 	cout << "\n # of Lights: " << scene.lightSources.length() << "\n";
+
+	for (int i = 0; i < scene.shapes.length(); i++) {
+		Color c = scene.shapes.get(i)->color;
+		cout << "Color " << i << " R: ";
+		cout << c[0] << "; G: " << c[1] << "; B:" << c[2] << "\n";
+	}
 }
 
 RayTracer::~RayTracer() {
@@ -33,7 +38,8 @@ void RayTracer::raytrace(Image* img) {
 	int h = img->height();
 
 	//With the given values we create an according screen
-	Screen s = Screen(scene.observer, scene.aimedPoint, scene.distScreen, double(w), double(h));
+	Screen s = Screen(scene.observer, scene.aimedPoint, scene.distScreen,
+			double(w), double(h));
 
 	//Iterate over all the pixels of the screen/image
 	int count = 0;
@@ -44,7 +50,7 @@ void RayTracer::raytrace(Image* img) {
 			Ray r = Ray(scene.observer, s.getPixel(x, y) - scene.observer);
 
 			//Set the pixel accoring to the calculated Color/Light
-			img->setPixel(x, y, calculateColor(r, 15));
+			img->setPixel(x, y, calculateColor(r, 1));
 		}
 
 	}
@@ -72,7 +78,7 @@ Color RayTracer::calculateColor(Ray &r, int recursions) {
 			closestShape = scene.shapes.get(i);
 			closestIP = intersections[0];
 			hasIntersection = true;
-		} else if (hasIntersection && intersections[0] < closestIP) {
+		} else if (hasIntersection && !intersections.empty() && intersections[0] < closestIP) {
 			closestShape = scene.shapes.get(i);
 			closestIP = intersections[0];
 			hasIntersection = true;
@@ -89,6 +95,7 @@ Color RayTracer::calculateColor(Ray &r, int recursions) {
 		Vector3 n = closestShape->normal(intersection);
 		Vector3 V = r.coords[0] - intersection; //V := PA : from the intersection to the observer
 		//Make sure the normal points into the right direction
+		//FIXME is this correct??
 		if (dot_product(r.get_direction(), n) < 0) {
 		//if (dot_product(V, n) < 0) {
 			n = -n;
@@ -111,15 +118,16 @@ Color RayTracer::calculateColor(Ray &r, int recursions) {
 		//FIXME: Take L_a of scene instead of 1
 		c = 1 * closestShape->material.k_a * closestShape->color;
 
-
 		for (int i = 0; i < scene.lightSources.length(); i++) {
 			LightSource* l = scene.lightSources.get(i);
 			if (!isHidden(l, intersection)) {
 
 				double diffuse = lm.getDiffuse(normal, l);
 				double specular = lm.getSpecular(reflected, l);
-				c += closestShape->material.k_d * diffuse  * closestShape->color * l->intensity;
-				c += closestShape->material.k_s * specular * l->color             * l->intensity;
+				c += closestShape->material.k_d * diffuse * closestShape->color
+						* l->intensity;
+				c += closestShape->material.k_s * specular * l->color
+						* l->intensity;
 
 			}
 		}
@@ -127,7 +135,7 @@ Color RayTracer::calculateColor(Ray &r, int recursions) {
 		//Recursive call
 		if (recursions > 0) {
 			//FIXME Define factor (in material for example: reflectiv index...)
-			c += 0.5*calculateColor(reflected, --recursions);
+			c += 0.5 * calculateColor(reflected, --recursions);
 		}
 	}
 	return c;
