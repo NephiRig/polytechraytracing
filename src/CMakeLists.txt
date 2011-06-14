@@ -56,7 +56,7 @@ set(${PROJECT_NAME}_SOURCES
     ScreenV2.cpp
 )
 
-add_definitions(-std=c++0x)
+#add_definitions(-std=c++0x)
 
 add_executable(${PROJECT_NAME}
         appGui.cpp

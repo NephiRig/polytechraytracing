@@ -59,6 +59,9 @@ public:
 
 	void clamp();
 	friend std::ostream& operator<<(std::ostream &os, const Color &c);
+	
+	
+	//uint32_t getRGB () const;
 
 };
 
