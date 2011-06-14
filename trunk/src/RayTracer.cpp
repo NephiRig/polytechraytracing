@@ -13,7 +13,7 @@ using namespace std;
 RayTracer::RayTracer(Scene &sc, PhongModel &_lm) {
 	lm = _lm;
 	scene = sc;
-	NB_OF_INTERATIONS = 15;
+	NB_OF_INTERATIONS = 1;
 	cout << "\n # of Shapes: " << scene.shapes.length();
 	cout << "\n # of Lights: " << scene.lightSources.length() << "\n";
 
@@ -82,14 +82,11 @@ Color RayTracer::calculateColor(Ray &r, int recursions) {
 
 		if (!hasIntersection && !intersections.empty()) {
 			closestShape = scene.shapes.get(i);
-			//cout << "t1: " << intersections[0] << " t2: " << intersections[1]  << endl;
-
-			closestIP = intersections[0];
+	closestIP = intersections[0];
 			hasIntersection = true;
 		} else if (hasIntersection && !intersections.empty() && intersections[0] < closestIP) {
 			closestShape = scene.shapes.get(i);
 			closestIP = intersections[0];
-			cout << "t1: " << intersections[0] << " t2: " << intersections[1] << endl;;
 			hasIntersection = true;
 		}
 
@@ -154,19 +151,16 @@ Color RayTracer::calculateColor(Ray &r, int recursions) {
  * 		 and our lightsource
  */
 bool RayTracer::isHidden(LightSource* &lightSource, Vector3 &point) {
-
-	//TODO Programm
 	//Create the ray between intersection point and light source
-	Ray r = Ray(point, (lightSource->position - point));
+	Ray ray = Ray(point, lightSource->position - point);
 
 	//Get the first intersection with any shape
 	Shape* closestShape = scene.shapes.get(0);
 	double closestIP;
 	bool hasIntersection = false;
 
-/*
 	for (int i = 0; i < scene.shapes.length(); i++) {
-		Set<double> intersections = scene.shapes.get(i)->intersect(r);
+		Set<double> intersections = scene.shapes.get(i)->intersect(ray);
 
 		if (!hasIntersection && !intersections.empty()) {
 			closestShape = scene.shapes.get(i);
@@ -176,14 +170,13 @@ bool RayTracer::isHidden(LightSource* &lightSource, Vector3 &point) {
 			closestShape = scene.shapes.get(i);
 			closestIP = intersections[0];
 			hasIntersection = true;
-
 		}
 	}
 
 	//if there are any intersections
 	if (hasIntersection) {
 		//Get the Point of the first intersection
-		Vector3 intersection = r.getPoint(closestIP);
+		Vector3 intersection = ray.getPoint(closestIP);
 
 		//Create a vector between the two object intersections
 		Vector3 point_intersection = intersection - point;
@@ -192,9 +185,8 @@ bool RayTracer::isHidden(LightSource* &lightSource, Vector3 &point) {
 		Vector3 point_light = lightSource->position - point;
 
 		//If |point_light| > |point_intersection.norm| there is shadow
-		cout << "true" << endl;
 		return point_light.norm() > point_intersection.norm();
 	}
-*/
+
 	return false;
 }
