@@ -38,11 +38,14 @@ Vector3 Draughtboard::normal(const Vector3& pt) const {
 //*
 Color Draughtboard::get_color(const Vector3 &pt) {
 	//*
-	if ((int) floor((pt / _caseSize)[0]) % 2 == (int) floor((pt / _caseSize)[2]) % 2) {
-		return color;
-	} else {
-		return _colorD;
-	}//*/
+
+		if ((int) floor( fabs((pt / _caseSize)[0]) ) % 2 == (int) floor( fabs((pt / _caseSize)[2]) ) % 2) {
+			return color;
+		} else {
+			return _colorD;
+		}
+
+	//*/
 	/*
 	if (pt[0] > 0 && pt[1] > 0) {
 		return color;
@@ -50,8 +53,8 @@ Color Draughtboard::get_color(const Vector3 &pt) {
 		return _colorD;
 	}//*/
 	/*
-	if (sin(pt[0])>0) {
-		return _colorD;
+	if (cos((pt / _caseSize)[0])>0 || cos((pt / _caseSize)[2])<0) {
+		return color;
 	} else {
 		return _colorD;
 	}
