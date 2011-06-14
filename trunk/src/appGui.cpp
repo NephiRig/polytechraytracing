@@ -20,6 +20,7 @@
 #include "Vector3.h"
 #include "Screen.h"
 #include "Sphere.h"
+#include "Draughtboard.h"
 #include "Ray.h"
 #include "Image.h"
 #include "RayTracer.h"
@@ -234,7 +235,7 @@ void handle_events(SDL_Event& event)
 				camera_t -= .1;
 				cerr << "camera_t: " << camera_t << endl;
 				rt->scene.observer[0] = posSphere[0] + cos(camera_t)*rayonCamera;
-				rt->scene.observer[2] = posSphere[2] + sin(camera_t)*rayonCamera;
+				rt->scene.observer[1] = posSphere[1] + sin(camera_t)*rayonCamera;
 				refresh = true;
 			break;
 
@@ -242,7 +243,7 @@ void handle_events(SDL_Event& event)
 				camera_t += .1;
 				cerr << "camera_t: " << camera_t << endl;
 				rt->scene.observer[0] = posSphere[0] + cos(camera_t)*rayonCamera;
-				rt->scene.observer[2] = posSphere[2] + sin(camera_t)*rayonCamera;
+				rt->scene.observer[1] = posSphere[1] + sin(camera_t)*rayonCamera;
 				refresh = true;
 			break;
 
@@ -308,10 +309,18 @@ int main(int argc, char **argv)
 	sphere2->material.k_d = 0.2;
 	sphere2->material.k_s = 0.8;
 	sphere2->material.n_s = 30;
+
+	Draughtboard *damier1 = new Draughtboard(Color(1, 1, 1), Ray(Vector3(10, -5, 20), Vector3(0, 1, 0)), 10, 10);
+	damier1->material.k_a = 0.05;
+	damier1->material.k_d = 0.2;
+	damier1->material.k_s = 0.8;
+	damier1->material.n_s = 30;
+
 	//sphere3->material.k_a = 0.2;
 	shapes.add ( (Shape*)sphere1 );
 	shapes.add ( (Shape*)sphere2 );
 	shapes.add ( (Shape*)sphere3 );
+	shapes.add ( (Shape*)damier1 );
 	// light sources
 	Set<LightSource*> lights = Set<LightSource*> ();
 	Vector3 posLight1 = Vector3 ( 0.0, 10.0, 20.0 );
