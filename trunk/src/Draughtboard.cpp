@@ -27,7 +27,8 @@ Set<double> Draughtboard::intersect(const Ray& r) const {
 	Set<double> res = Set<double>(1);
 	double t = (_d - _normAndPoint[1][0]*r[0][0] - _normAndPoint[1][1]*r[0][1] - _normAndPoint[1][2]*r[0][2])/(_normAndPoint[1][0]*r[1][0] + _normAndPoint[1][1]*r[1][1] + _normAndPoint[1][2]*r[1][2]);
 
-	if (t > 0)
+	Vector3 inter = r.getPoint(t);
+	if ((fabs(inter[0]-_normAndPoint[0][0]) < _width/2.0 && fabs(inter[2]-_normAndPoint[0][2]) < _height/2.0) && t > 0)
 		res.add(t);
 	return res;
 }
@@ -39,11 +40,12 @@ Vector3 Draughtboard::normal(const Vector3& pt) const {
 Color Draughtboard::get_color(const Vector3 &pt) {
 	//*
 
-		if ((int) floor( fabs((pt / _caseSize)[0]) ) % 2 == (int) floor( fabs((pt / _caseSize)[2]) ) % 2) {
-			return color;
-		} else {
-			return _colorD;
-		}
+	if ((int) floor( fabs((pt / _caseSize)[0])+.5 ) % 2 == (int) floor( fabs((pt / _caseSize)[2])+.5 ) % 2) {
+		return color;
+	} else {
+		return _colorD;
+	}
+
 
 	//*/
 	/*
