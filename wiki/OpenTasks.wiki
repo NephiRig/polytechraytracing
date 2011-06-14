@@ -12,9 +12,6 @@
 
 = Code =
 
- * isHidden in class Raytracer
-
- * Damier class (Valentin)
 
  * Define the comportment of the lightsource and the shape color
 --> Are the diffuse and specular light colors entirely defined by the lightsource?
@@ -35,8 +32,6 @@
  * Transparancy / Refraction
 
  * animation vidéo
-
- * shadows
 
  * refraction
 
