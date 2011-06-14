@@ -15,16 +15,15 @@
 //*
 class Draughtboard: public Shape {
 public:
-	//Color _colorD;
+	Color _colorD;
 	Ray _normAndPoint;
 	double _d;
 	double _height;
 	double _width;
-	//double _caseSize;
+	double _caseSize;
 
 	Draughtboard() {};
-	Draughtboard(const Color &color, /*const Color &colorD,*/ const Ray &normAndPoint, double height,
-			double width/*, double caseSize*/);
+	Draughtboard(const Color &color, const Color &colorD, const Ray &normAndPoint, double height, double width, double caseSize);
 	~Draughtboard();
 
 	Set<double> intersect(const Ray& r) const;
