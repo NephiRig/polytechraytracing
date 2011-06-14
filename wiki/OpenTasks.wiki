@@ -1,5 +1,15 @@
 = Documentation =
 
+
+
+= Rédaction =
+
+ * Préparation de la présentation, répartition des tâches https://pad.lqdn.fr/cdgnqwWEzo
+
+ * Rapport https://pad.lqdn.fr/qMXSpvcCVP
+
+
+
 = Code =
 
  * isHidden in class Raytracer
@@ -46,10 +56,4 @@
 
 = coté mam =
 
-installer eclipse
-
-faire marcher votre eclipse avec les libs de lapack et itpp (c'est le meme principe que pour faire marcher la lib SDL)
-
-structures de données pour les polynomes
-
-intersections
+ * faire afficher une surface paramétrée dans la scène
