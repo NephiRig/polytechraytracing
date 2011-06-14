@@ -8,10 +8,8 @@
 #include "ImageTexture.h"
 
 ImageTexture::ImageTexture(char* file_name) {
-	cerr << "coucou1" << endl;
 	image = new Image();
 	image->readPPM(file_name);
-	cerr << "coucou4" << endl;
 }
 
 ImageTexture::~ImageTexture() {

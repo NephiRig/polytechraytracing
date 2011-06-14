@@ -10,7 +10,7 @@ using namespace std;
 
 class Image {
 public:
-	Image() {cerr << "coucou2" << endl;}
+	Image() {}
 	Image(int _w, int _h);
 	Image(int _w, int _h, Color c);
 

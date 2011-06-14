@@ -157,8 +157,7 @@ void Image::writePPM(ostream &s) const {
 }
 
 void Image::readPPM(string file_name) {
-	cerr << "coucou3" << endl;
-    ifstream in;
+	ifstream in;
 	in.open(file_name.c_str());
 	if (!in.is_open()) {
         cerr << "Can't open file \'" << file_name << "\'.\n";
