@@ -12,7 +12,7 @@ template<class T>
 class Set {
 protected:
 	int sz;
-	T* data;
+	T* data; // shared_ptr<T> data;
 	int used;
 
 public:
