@@ -246,6 +246,22 @@ void handle_events(SDL_Event& event)
 				rt->scene.observer[1] = posSphere[1] + sin(camera_t)*rayonCamera;
 				refresh = true;
 			break;
+			
+			case SDLK_w:
+				camera_t -= 0.50;
+				cerr << "camera_t: " << camera_t << endl;
+				rt->scene.aimedPoint[0] = posSphere[0] + cos(camera_t)*rayonCamera;
+				rt->scene.aimedPoint[2] = posSphere[2] + sin(camera_t)*rayonCamera;
+				refresh = true;
+			break;
+			
+			case SDLK_x:
+				camera_t += 0.50;
+				cerr << "camera_t: " << camera_t << endl;
+				rt->scene.aimedPoint[0] = posSphere[0] + cos(camera_t)*rayonCamera;
+				rt->scene.aimedPoint[2] = posSphere[2] + sin(camera_t)*rayonCamera;
+				refresh = true;
+			break;
 
 			default:
 			break;
