@@ -13,7 +13,7 @@ using namespace std;
 RayTracer::RayTracer(Scene &sc, PhongModel &_lm) {
 	lm = _lm;
 	scene = sc;
-	NB_OF_INTERATIONS = 1;
+	NB_OF_INTERATIONS = 15;
 	cout << "\n # of Shapes: " << scene.shapes.length();
 	cout << "\n # of Lights: " << scene.lightSources.length() << "\n";
 
@@ -82,13 +82,14 @@ Color RayTracer::calculateColor(Ray &r, int recursions) {
 
 		if (!hasIntersection && !intersections.empty()) {
 			closestShape = scene.shapes.get(i);
-			//cout << "t1: " << intersections[0] << " t2: " << intersections[1];
+			//cout << "t1: " << intersections[0] << " t2: " << intersections[1]  << endl;
+
 			closestIP = intersections[0];
 			hasIntersection = true;
 		} else if (hasIntersection && !intersections.empty() && intersections[0] < closestIP) {
 			closestShape = scene.shapes.get(i);
 			closestIP = intersections[0];
-			//cout << "t1: " << intersections[0] << " t2: " << intersections[1];
+			cout << "t1: " << intersections[0] << " t2: " << intersections[1] << endl;;
 			hasIntersection = true;
 		}
 
@@ -113,9 +114,9 @@ Color RayTracer::calculateColor(Ray &r, int recursions) {
 		//The reflected ray at the point of intersection
 		//FIXME Move to the shape class, as it is the same for all the shapes
 		Ray reflected =
-				Ray(intersection,
+				Ray(intersection, - (
 						2 * n * (dot_product(n, r.get_direction()))
-								- r.get_direction());
+								- r.get_direction()));
 
 		/*
 		 * Calculate the light compartments using the lightmodel
