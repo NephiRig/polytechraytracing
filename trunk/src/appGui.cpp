@@ -25,14 +25,16 @@
 #include "Ray.h"
 #include "Image.h"
 #include "RayTracer.h"
+#include "Timer.h"
 
 using namespace std;
 
 //Screen attributes
-const int SCREEN_WIDTH = 640;
-const int SCREEN_HEIGHT = 480;
+const int SCREEN_WIDTH = 64;
+const int SCREEN_HEIGHT = 48;
 const int SCREEN_BPP = 32;
 
+bool quit = false;
 int mouse_clicked_x;
 int mouse_clicked_y;
 int mouse_pos_x;
@@ -212,6 +214,10 @@ void handle_events(SDL_Event& event)
 	{
 		switch(event.key.keysym.sym)
 		{
+			case SDLK_ESCAPE:
+				quit = true;
+			break;
+			
 			case SDLK_LEFT:
 				rt->scene.observer[0] -= 10.0;
 				refresh = true;
@@ -236,7 +242,7 @@ void handle_events(SDL_Event& event)
 				camera_t -= .1;
 				cerr << "camera_t: " << camera_t << endl;
 				rt->scene.observer[0] = posSphere[0] + cos(camera_t)*rayonCamera;
-				rt->scene.observer[1] = posSphere[1] + sin(camera_t)*rayonCamera;
+				rt->scene.observer[2] = posSphere[2] + sin(camera_t)*rayonCamera;
 				refresh = true;
 			break;
 
@@ -244,7 +250,7 @@ void handle_events(SDL_Event& event)
 				camera_t += .1;
 				cerr << "camera_t: " << camera_t << endl;
 				rt->scene.observer[0] = posSphere[0] + cos(camera_t)*rayonCamera;
-				rt->scene.observer[1] = posSphere[1] + sin(camera_t)*rayonCamera;
+				rt->scene.observer[2] = posSphere[2] + sin(camera_t)*rayonCamera;
 				refresh = true;
 			break;
 			
@@ -285,8 +291,7 @@ void dispUint32 ( uint32_t v )
 int main(int argc, char **argv)
 {
 	cerr << "test huhu" << endl;
-
-	bool quit = false;
+	
 	SDL_Event event;
 
 	if (SDL_Init(SDL_INIT_EVERYTHING) < 0)
@@ -328,17 +333,17 @@ int main(int argc, char **argv)
 	sphere2->material.n_s = 30;
 
 	Draughtboard *damier1 = new Draughtboard(Color(0.1, 0.1, 0.1), Color(.7, .7, .7), Ray(Vector3(10, -4, 20), Vector3(0, 1, 0)), 40, 40, 5);
-	damier1->material.k_a = 0.5;
-	damier1->material.k_d = 0.0;
-	damier1->material.k_s = 0.0;
-	damier1->material.n_s = 3;
-	damier1->material.k_reflex=1.0;
+	damier1->material.k_a = 0.05;
+	damier1->material.k_d = 0.10;
+	damier1->material.k_s = 0.01;
+	damier1->material.n_s = 5;
+	damier1->material.k_reflex=0.08;
 
 	//sphere3->material.k_a = 0.2;
-	shapes.add ( (Shape*)sphere1 );
-	shapes.add ( (Shape*)sphere2 );
-	shapes.add ( (Shape*)sphere3 );
-	shapes.add ( (Shape*)damier1 );
+	shapes.add ( sphere1 );
+	shapes.add ( sphere2 );
+	shapes.add ( sphere3 );
+	shapes.add ( damier1 );
 	// light sources
 	Set<LightSource*> lights = Set<LightSource*> ();
 	Vector3 posLight1 = Vector3 ( 0.0, 10.0, 20.0 );
@@ -348,7 +353,7 @@ int main(int argc, char **argv)
 	lights.add ( source1 );
 	lights.add ( source2 );
 	//Sphere* sphere4 = new Sphere ( posLight1, 2.0, Color ( 1.0, 1.0, 0.5 ) );
-	Sphere* sphere5 = new Sphere ( posLight2, 0.5, Color ( 1.0, 1.0, 1.0 ) );
+	//Sphere* sphere5 = new Sphere ( posLight2, 0.5, Color ( 1.0, 1.0, 1.0 ) );
 	//shapes.add ( (Shape*)sphere4 );
 	//shapes.add ( (Shape*)sphere5 );
 
@@ -359,7 +364,7 @@ int main(int argc, char **argv)
 	Vector3 aimedPoint = posSphere;
 	double distScreen = 0.50; //700.0; // distance to the screen from the observer point
 	Vector3 wayUp = Vector3 ( 0.0, 1.0, 0.0 );
-	Scene s = Scene ( shapes, lights, obs, wayUp, aimedPoint, distScreen );
+	Scene s = Scene ( &shapes, &lights, obs, wayUp, aimedPoint, distScreen );
 	PhongModel lm = PhongModel ();
 	rt = new RayTracer ( s, lm );
 
@@ -369,6 +374,8 @@ int main(int argc, char **argv)
 	refreshDisplay ();
 
 
+	Timer timer = Timer ();
+	int fps = 35;
 
 
 
@@ -376,9 +383,7 @@ int main(int argc, char **argv)
 
 
 
-
-
-
+	// main loop
 	//While the user hasn't quit
 	while( quit == false )
 	{
@@ -392,11 +397,21 @@ int main(int argc, char **argv)
 				quit = true;
 			}
 		}
-
-		// la boucle
+		
+		if( timer.getTicks () < 1000 / fps )
+			SDL_Delay ( ( 1000 / fps ) - timer.getTicks () );
 	}
 	SDL_FreeSurface ( screen );
 	SDL_Quit ();
+	
+	delete sphere1;
+	delete sphere2;
+	delete sphere3;
+	delete damier1;
+	delete source1;
+	delete source2;
+	delete rt;
+	delete img;
 
 	return 0;
 } // main ()

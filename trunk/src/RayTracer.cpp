@@ -14,11 +14,11 @@ RayTracer::RayTracer(Scene &sc, PhongModel &_lm) {
 	lm = _lm;
 	scene = sc;
 	NB_OF_INTERATIONS = 15;
-	cout << "\n # of Shapes: " << scene.shapes.length();
-	cout << "\n # of Lights: " << scene.lightSources.length() << "\n";
+	cout << "\n # of Shapes: " << scene.shapes->length();
+	cout << "\n # of Lights: " << scene.lightSources->length() << "\n";
 
-	for (int i = 0; i < scene.shapes.length(); i++) {
-		Color c = scene.shapes.get(i)->color;
+	for (int i = 0; i < scene.shapes->length(); i++) {
+		Color c = scene.shapes->get(i)->color;
 		cout << "Color " << i << " R: ";
 		cout << c[0] << "; G: " << c[1] << "; B:" << c[2] << "\n";
 	}
@@ -72,23 +72,23 @@ Color RayTracer::calculateColor(Ray &r, int recursions) {
 	Color c = Color(0, 0, 0);
 
 	//Get the first intersection with any shape
-	Shape* closestShape = scene.shapes.get(0);
+	Shape* closestShape = scene.shapes->get(0);
 	double closestIP;
 	bool hasIntersection = false;
 
 	Ray r_moved = Ray(r.getPoint(1),r.get_direction());
-	for (int i = 0; i < scene.shapes.length(); i++) {
-		Set<double> intersections = scene.shapes.get(i)->intersect(r_moved);
+	for (int i = 0; i < scene.shapes->length(); i++) {
+		Set<double> intersections = scene.shapes->get(i)->intersect(r_moved);
 
 		if (!hasIntersection && !intersections.empty()) {
-			closestShape = scene.shapes.get(i);
+			closestShape = scene.shapes->get(i);
 	closestIP = intersections[0];
 			hasIntersection = true;
 		} else if (hasIntersection && !intersections.empty() && intersections[0] < closestIP) {
-			closestShape = scene.shapes.get(i);
+			closestShape = scene.shapes->get(i);
 			closestIP = intersections[0];
 			//cout << "t1: " << intersections[0] << " t2: " << intersections[1] << endl;;
-			hasIntersection = true;
+			//hasIntersection = true;
 		}
 
 	}
@@ -124,8 +124,8 @@ Color RayTracer::calculateColor(Ray &r, int recursions) {
 		//FIXME: Take L_a of scene instead of 1
 		c = 1 * closestShape->material.k_a * closestShape->get_color(intersection);
 
-		for (int i = 0; i < scene.lightSources.length(); i++) {
-			LightSource* l = scene.lightSources.get(i);
+		for (int i = 0; i < scene.lightSources->length(); i++) {
+			LightSource* l = scene.lightSources->get(i);
 			if (!isHidden(l, intersection)) {
 
 				double diffuse = lm.getDiffuse(normal, l);
@@ -156,19 +156,19 @@ bool RayTracer::isHidden(LightSource* &lightSource, Vector3 &point) {
 	Ray ray = Ray(point, lightSource->position - point);
 
 	//Get the first intersection with any shape
-	Shape* closestShape = scene.shapes.get(0);
+	Shape* closestShape = scene.shapes->get(0);
 	double closestIP;
 	bool hasIntersection = false;
 
-	for (int i = 0; i < scene.shapes.length(); i++) {
-		Set<double> intersections = scene.shapes.get(i)->intersect(ray);
+	for (int i = 0; i < scene.shapes->length(); i++) {
+		Set<double> intersections = scene.shapes->get(i)->intersect(ray);
 
 		if (!hasIntersection && !intersections.empty()) {
-			closestShape = scene.shapes.get(i);
+			closestShape = scene.shapes->get(i);
 			closestIP = intersections[0];
 			hasIntersection = true;
 		} else if (hasIntersection && !intersections.empty() && intersections[0] < closestIP) {
-			closestShape = scene.shapes.get(i);
+			closestShape = scene.shapes->get(i);
 			closestIP = intersections[0];
 			hasIntersection = true;
 		}

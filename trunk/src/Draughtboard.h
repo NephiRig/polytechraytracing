@@ -24,7 +24,7 @@ public:
 
 	Draughtboard() {};
 	Draughtboard(const Color &color, const Color &colorD, const Ray &normAndPoint, double height, double width, double caseSize);
-	~Draughtboard();
+	virtual ~Draughtboard();
 
 	Set<double> intersect(const Ray& r) const;
 	Vector3 normal(const Vector3& pt) const;
