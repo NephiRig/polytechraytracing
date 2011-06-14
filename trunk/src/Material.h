@@ -10,10 +10,10 @@
 
 class Material {
 public:
-	Material(double k_a = 0, double k_d = 0, double k_s = 0, double n_s = 0);
+	Material(double k_a = 0, double k_d = 0, double k_s = 0, double n_s = 0, double k_reflex =0);
 	virtual ~Material();
 
-	double k_a, k_d, k_s, n_s;
+	double k_a, k_d, k_s, n_s, k_reflex;
 	// k_a: ambiant
 	// k_d: diffuse
 	
