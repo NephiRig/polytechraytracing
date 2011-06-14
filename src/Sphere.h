@@ -23,6 +23,8 @@ public:
 	Set<double> intersect (const Ray& r) const;
 
 	Vector3 normal (const Vector3& pt_intersect) const;
+
+	Color get_color(const Vector3 &pt);
 };
 
 #endif /* SPHERE_H_ */

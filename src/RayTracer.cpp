@@ -141,7 +141,7 @@ Color RayTracer::calculateColor(Ray &r, int recursions) {
 		//Recursive call
 		if (recursions > 0) {
 			//FIXME Define factor (in material for example: reflectiv index...)
-			c += 1 * calculateColor(reflected, --recursions);
+			c += closestShape->material.k_reflex * calculateColor(reflected, --recursions);
 		}
 	}
 	return c;
@@ -159,7 +159,7 @@ bool RayTracer::isHidden(LightSource* &lightSource, Vector3 &point) {
 	Shape* closestShape = scene.shapes.get(0);
 	double closestIP;
 	bool hasIntersection = false;
-/*
+
 	for (int i = 0; i < scene.shapes.length(); i++) {
 		Set<double> intersections = scene.shapes.get(i)->intersect(ray);
 
@@ -188,6 +188,6 @@ bool RayTracer::isHidden(LightSource* &lightSource, Vector3 &point) {
 		//If |point_light| > |point_intersection.norm| there is shadow
 		return point_light.norm() > point_intersection.norm();
 	}
-//*/
+
 	return false;
 }

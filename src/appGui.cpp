@@ -6,6 +6,7 @@
  */
 
 #include <iostream>
+
 #include <fstream> // ofstream
 /*
 #ifdef _MSC_VER
@@ -331,6 +332,7 @@ int main(int argc, char **argv)
 	damier1->material.k_d = 0.0;
 	damier1->material.k_s = 0.0;
 	damier1->material.n_s = 3;
+	damier1->material.k_reflex=1.0;
 
 	//sphere3->material.k_a = 0.2;
 	shapes.add ( (Shape*)sphere1 );
@@ -341,16 +343,16 @@ int main(int argc, char **argv)
 	Set<LightSource*> lights = Set<LightSource*> ();
 	Vector3 posLight1 = Vector3 ( 0.0, 10.0, 20.0 );
 	Vector3 posLight2 = Vector3 ( 20.0, 0.0, 20.0 );
-	//LightSource* source1 = new LightSource ( 1.0, posLight1, Color ( 1.0, 1.0, 0.5 ) );
+	LightSource* source1 = new LightSource ( 1.0, posLight1, Color ( 1.0, 1.0, 0.5 ) );
 	LightSource* source2 = new LightSource ( 15.0, posLight2, Color ( 1.0, 1.0, 1.0 ) );
-	//lights.add ( source1 );
+	lights.add ( source1 );
 	lights.add ( source2 );
 	//Sphere* sphere4 = new Sphere ( posLight1, 2.0, Color ( 1.0, 1.0, 0.5 ) );
 	Sphere* sphere5 = new Sphere ( posLight2, 0.5, Color ( 1.0, 1.0, 1.0 ) );
 	//shapes.add ( (Shape*)sphere4 );
-	shapes.add ( (Shape*)sphere5 );
+	//shapes.add ( (Shape*)sphere5 );
 
-	Vector3 obs ( 0.0, 0.0, -10.0 );
+	Vector3 obs ( 0.0, 0.0, -20.0 );
 	rayonCamera = (obs - posSphere).norm ();
 	cerr << "rayon camera : " << rayonCamera << endl;
 
