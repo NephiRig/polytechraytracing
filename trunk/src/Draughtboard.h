@@ -13,17 +13,23 @@
 #include "Shape.h"
 
 //*
-class Draughtboard : public Shape {
+class Draughtboard: public Shape {
 public:
-	Color color_d;
-	Vector3 o;
-	Vector3 x;
-	Vector3 y;
-	double length;
+	Color _colorD;
+	Ray _normAndPoint;
+	double _d;
+	double _length;
+	double _width;
+	double _caseSize;
 
 	Draughtboard() {};
-	Draughtboard(const Color &_color, const Color &_color_d, const Vector3 &_o, const Vector3 &_x, const Vector3 &_y, double length);
-	virtual ~Draughtboard();
+	Draughtboard(const Color &color, const Color &colorD, const Ray &normAndPoint, double length,
+			double width, double caseSize);
+	~Draughtboard();
+
+	Set<double> intersect(const Ray& r) const;
+
+	Vector3 normal(const Vector3& pt) const;
 
 	Color get_color(const Vector3 &pt);
 };

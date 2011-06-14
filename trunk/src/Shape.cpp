@@ -22,6 +22,7 @@ Set<double> Shape::intersect(const Ray& r) const {
 	cerr << "ERROR, call of Shape intersect!";
 	return Set<double>(0);
 }
+
 Vector3 Shape::normal(const Vector3& pt) const {
 	return Vector3(0,0,0);
 }

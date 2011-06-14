@@ -9,6 +9,8 @@
 #define SHAPE_H_
 
 #include "Vector3.h"
+#include "Vector2.h"
+#include "Texture.h"
 #include "Color.h"
 #include "Ray.h"
 //#include "Intersection.h"
@@ -21,7 +23,10 @@ class Intersection;
 struct HitRecord {
 	float t;
 	Vector3 normal;
+	Vector2 uv;
+	Vector3 hit_p;
 	Color color;
+	Texture *hit_tex;
 };
 
 class Shape {
