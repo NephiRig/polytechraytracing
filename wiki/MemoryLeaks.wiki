@@ -1,3 +1,4 @@
+{{{
 installer valgrind
 sudo apt-get install valgrind
 
@@ -6,3 +7,4 @@ set(CMAKE_CXX_FLAGS "-g")
 
 compiler le programme et le lancer avec valgrind
 valgrind -v --leak-check=yes bin/appGui
+}}}
