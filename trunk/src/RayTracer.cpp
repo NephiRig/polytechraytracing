@@ -39,8 +39,12 @@ void RayTracer::raytrace(Image* img) {
 	int h = img->height();
 
 	//With the given values we create an according screen
-	Screen s = Screen(scene.observer, scene.aimedPoint, scene.distScreen,
-			double(w), double(h));
+	/*Screen s = Screen(scene.observer, scene.aimedPoint, scene.distScreen,
+			double(w), double(h));*/
+	ScreenV2 s = ScreenV2(scene.observer, scene.wayUp, scene.aimedPoint,
+		PI/4.0, w, h);
+	cerr << "init screen : " << s.initFromDistScreen ( scene.distScreen ) << endl;
+	//cerr << "init screen : " << s.initFromWH3D ( w/100.0, h/100.0 ) << endl;
 
 	//Iterate over all the pixels of the screen/image
 	int count = 0;
