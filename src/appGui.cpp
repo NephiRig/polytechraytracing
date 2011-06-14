@@ -285,7 +285,7 @@ int main(int argc, char **argv)
 		cerr << SDL_GetError() << endl;
 		exit(1);
 	}
-	SDL_WM_SetCaption("Polytech Ray Tracing qui rox du poney", NULL);
+	SDL_WM_SetCaption("Polytech Ray Tracing", NULL);
 
 
 
@@ -294,12 +294,21 @@ int main(int argc, char **argv)
 	// shapes
 	posSphere = Vector3 ( 0.0, 0.0, 20.0 );
 	Sphere* sphere1 = new Sphere ( posSphere, 4.0, Color ( 0.0, 0.0, 1.0 ) );
+	sphere1->material.k_a = 0.05;
+	sphere1->material.k_d = 0.2;
+	sphere1->material.k_s = 0.8;
+	sphere1->material.n_s = 30;
 	Sphere* sphere2 = new Sphere ( Vector3 ( 10.0, 0.0, 20.0 ), 4.0, Color ( 1.0, 0.0, 0.0 ) );
-	sphere2->material.k_a = 0.2;
-	sphere2->material.k_d = 0;
+	sphere2->material.k_a = 0.05;
+	sphere2->material.k_d = 0.2;
 	sphere2->material.k_s = 0.8;
 	sphere2->material.n_s = 30;
 	Sphere* sphere3 = new Sphere ( Vector3 ( 0.0, 0.0, 30.0 ), 4.0, Color ( 0.0, 1.0, 0.0 ) );
+	sphere2->material.k_a = 0.05;
+	sphere2->material.k_d = 0.2;
+	sphere2->material.k_s = 0.8;
+	sphere2->material.n_s = 30;
+	//sphere3->material.k_a = 0.2;
 	shapes.add ( (Shape*)sphere1 );
 	shapes.add ( (Shape*)sphere2 );
 	shapes.add ( (Shape*)sphere3 );
@@ -307,13 +316,13 @@ int main(int argc, char **argv)
 	Set<LightSource*> lights = Set<LightSource*> ();
 	Vector3 posLight1 = Vector3 ( 0.0, 10.0, 20.0 );
 	Vector3 posLight2 = Vector3 ( 20.0, 0.0, 20.0 );
-	LightSource* source1 = new LightSource ( 1.0, posLight1, Color ( 1.0, 1.0, 0.5 ) );
-	LightSource* source2 = new LightSource ( 1.0, posLight2, Color ( 1.0, 1.0, 1.0 ) );
-	lights.add ( source1 );
+	//LightSource* source1 = new LightSource ( 1.0, posLight1, Color ( 1.0, 1.0, 0.5 ) );
+	LightSource* source2 = new LightSource ( 15.0, posLight2, Color ( 1.0, 1.0, 1.0 ) );
+	//lights.add ( source1 );
 	lights.add ( source2 );
-	Sphere* sphere4 = new Sphere ( posLight1, 2.0, Color ( 1.0, 1.0, 0.5 ) );
-	Sphere* sphere5 = new Sphere ( posLight2, 2.0, Color ( 1.0, 1.0, 1.0 ) );
-	shapes.add ( (Shape*)sphere4 );
+	//Sphere* sphere4 = new Sphere ( posLight1, 2.0, Color ( 1.0, 1.0, 0.5 ) );
+	Sphere* sphere5 = new Sphere ( posLight2, 0.5, Color ( 1.0, 1.0, 1.0 ) );
+	//shapes.add ( (Shape*)sphere4 );
 	shapes.add ( (Shape*)sphere5 );
 
 	Vector3 obs ( 0.0, 0.0, -10.0 );

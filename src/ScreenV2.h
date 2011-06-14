@@ -10,7 +10,7 @@ public:
 	Vector3 observer;
 	Vector3 aimedPoint;
 	Vector3 wayUp;
-	double viewAngle;
+	double viewAngle; // TODO: that's in fact the half of the angle
 	double distScreen;
 	double w3D;
 	double h3D;

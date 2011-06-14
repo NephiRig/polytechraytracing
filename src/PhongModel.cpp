@@ -9,7 +9,7 @@
 #include <cmath>
 
 PhongModel::PhongModel() {
-	k_a=1;
+	k_a=1.0;//1;
 	k_d=1;
 	k_s=1;
 	n_s=20;
