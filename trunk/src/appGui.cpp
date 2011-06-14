@@ -7,13 +7,13 @@
 
 #include <iostream>
 #include <fstream> // ofstream
-
+/*
 #ifdef _MSC_VER
    #include "stdint.h"
 #else
    #include <cstdint>
 #endif
-
+*/
 #include <SDL/SDL.h>
 #include <SDL/SDL_image.h>
 
@@ -89,20 +89,19 @@ void fillSurfaceFromFile(SDL_Surface *surface, Image* img)
 	apply_surface ( 0, 0, img_sdl, screen );
 	SDL_FreeSurface ( img_sdl );
 }
-
+/*
 void fillSurfaceNoFile(SDL_Surface *surface, Image* img)
 { // TODO: à terminer, ne marche pas pour l'instant
     int bpp = surface->format->BytesPerPixel;
     cerr << "bpp: " << bpp << endl;
     switch(bpp) {
-    /*case 1:
+    case 1:
         *p = pixel;
         break;
 
     case 2:
         *(Uint16 *)p = pixel;
         break;
-     */
     case 3:
     {
     	Uint8 *p = (Uint8 *)surface->pixels ;//+ y * surface->pitch + x * bpp;
@@ -117,8 +116,8 @@ void fillSurfaceNoFile(SDL_Surface *surface, Image* img)
     			p2[2] = img->data[x][y][2];
     		}
     	}
-    }
-        /*if(SDL_BYTEORDER == SDL_BIG_ENDIAN) {
+		/ *
+        if(SDL_BYTEORDER == SDL_BIG_ENDIAN) {
         	//for ( int y = 0; y < )
             p[0] = (pixel >> 16) & 0xff;
             p[1] = (pixel >> 8) & 0xff;
@@ -127,8 +126,9 @@ void fillSurfaceNoFile(SDL_Surface *surface, Image* img)
             p[0] = pixel & 0xff;
             p[1] = (pixel >> 8) & 0xff;
             p[2] = (pixel >> 16) & 0xff;
-        }*/
-        break;
+        }* /
+    }
+    break;
 
     case 4:
     {
@@ -141,9 +141,9 @@ void fillSurfaceNoFile(SDL_Surface *surface, Image* img)
 			{
 				cerr << "y:" << y << ";x:" << x << endl;
 				p2 = p + y * surface->pitch + x * bpp;
-				/*p2[0] = img->data[x][y][0];
-				p2[1] = img->data[x][y][1];
-				p2[2] = img->data[x][y][2];*/
+				//p2[0] = img->data[x][y][0];
+				//p2[1] = img->data[x][y][1];
+				//p2[2] = img->data[x][y][2];
 				*p2 = 0;//img->data[x][y].getRGB ();
 			}
 		}
@@ -151,7 +151,7 @@ void fillSurfaceNoFile(SDL_Surface *surface, Image* img)
         break;
     }
 }
-
+*/
 void refreshDisplay ()
 {
 	ofstream myfile;
