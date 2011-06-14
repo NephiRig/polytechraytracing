@@ -19,8 +19,8 @@ Image::Image(int _w, int _h) :
 Image::Image(int _w, int _h, Color c) {
 	this->w = _w;
 	this->h = _h;
-	//std::cerr << "params à la construction : _w" << _w << ";_h" << _h << std::endl;
-	//std::cerr << "à la construction : w" << this->w << ";h" << this->h << std::endl;
+	//cerr << "params à la construction : _w" << _w << ";_h" << _h << endl;
+	//cerr << "à la construction : w" << this->w << ";h" << this->h << endl;
 	assert (this->w > 0 && this->h > 0);
 	this->data = new Color*[this->w];
 	assert(this->data != 0);
@@ -30,8 +30,8 @@ Image::Image(int _w, int _h, Color c) {
 		for (int j = 0; j < this->h; j++)
 			this->data[i][j] = c;
 	}
-	//std::cerr << "apres la construction : w" << this->w << ";h" << this->h << std::endl;
-	//std::cerr << "2 apres la construction : _w" << _w << ";_h" << _h << std::endl;
+	//cerr << "apres la construction : w" << this->w << ";h" << this->h << endl;
+	//cerr << "2 apres la construction : _w" << _w << ";_h" << _h << endl;
 }
 
 int Image::width() const {
@@ -49,9 +49,9 @@ void Image::safeSetPixel(int x, int y, Color c) {
 
 void Image::setPixel(int x, int y, Color c) {
 	if (!(x >= 0 && x < w && y >= 0 && y < h)) {
-		std::cerr << "Image::setPixel    w = " << w << " h = " << h
+		cerr << "Image::setPixel    w = " << w << " h = " << h
 				<< "     requested pixel (" << x << ", " << y << ")"
-				<< std::endl;
+				<< endl;
 		exit(0);
 	}
 	data[x][y] = c;
@@ -132,7 +132,7 @@ void Image::readPPM(string file_name) {
 	}
 }
 //*/
-void Image::writePPM(std::ostream &s) const {
+void Image::writePPM(ostream &s) const {
 	s << "P6\n" << w << " " << h << "\n255\n";
 	unsigned int i;
 	//for (int y = h - 1; y >= 0; y--)
@@ -156,11 +156,12 @@ void Image::writePPM(std::ostream &s) const {
 		}
 }
 
-void Image::readPPM(std::string file_name) {
-    std::ifstream in;
+void Image::readPPM(string file_name) {
+	cerr << "coucou3" << endl;
+    ifstream in;
 	in.open(file_name.c_str());
 	if (!in.is_open()) {
-        std::cerr << "Can't open file \'" << file_name << "\'.\n";
+        cerr << "Can't open file \'" << file_name << "\'.\n";
 		exit(-1);
 	}
 
