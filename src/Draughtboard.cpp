@@ -12,8 +12,8 @@
 using namespace std;
 
 //*
-Draughtboard::Draughtboard(const Color &color, /*const Color &colorD,*/ const Ray &normAndPoint, double height, double width/*, double caseSize*/) :
-	/*_colorD(colorD), */_normAndPoint(normAndPoint), _height(height), _width(width)/*, _caseSize(caseSize)*/ {
+Draughtboard::Draughtboard(const Color &color, const Color &colorD, const Ray &normAndPoint, double height, double width, double caseSize) :
+	_colorD(colorD), _normAndPoint(normAndPoint), _height(height), _width(width), _caseSize(caseSize) {
 	this->color = color;
 	//Calculs de la constante d dans l'équation du plan P:ax+by+cz=d
 	_d = _normAndPoint[0][0] * _normAndPoint[1][0] + _normAndPoint[0][1] * _normAndPoint[1][1] + _normAndPoint[0][2] * _normAndPoint[1][2];
@@ -37,13 +37,24 @@ Vector3 Draughtboard::normal(const Vector3& pt) const {
 }
 //*
 Color Draughtboard::get_color(const Vector3 &pt) {
+	//*
+	if ((int) floor((pt / _caseSize)[0]) % 2 == (int) floor((pt / _caseSize)[2]) % 2) {
+		return color;
+	} else {
+		return _colorD;
+	}//*/
 	/*
-	if ((int) floor((pt / _caseSize)[0]) % 2 == (int) floor((pt / _caseSize)[1]) % 2)
+	if (pt[0] > 0 && pt[1] > 0) {
 		return color;
-	else//*/
-	/*if (pt[0] > 0 && pt[1] > 0)
-		return color;
-	else//*/
-		return color;
+	} else {
+		return _colorD;
+	}//*/
+	/*
+	if (sin(pt[0])>0) {
+		return _colorD;
+	} else {
+		return _colorD;
+	}
+	//*/
 }
 //*/

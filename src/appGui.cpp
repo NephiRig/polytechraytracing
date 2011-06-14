@@ -310,11 +310,11 @@ int main(int argc, char **argv)
 	sphere2->material.k_s = 0.8;
 	sphere2->material.n_s = 30;
 
-	Draughtboard *damier1 = new Draughtboard(Color(1, 1, 1), Ray(Vector3(10, -5, 20), Vector3(0, 1, 0)), 10, 10);
-	damier1->material.k_a = 0.05;
-	damier1->material.k_d = 0.2;
-	damier1->material.k_s = 0.8;
-	damier1->material.n_s = 30;
+	Draughtboard *damier1 = new Draughtboard(Color(0.1, 0.1, 0.1), Color(.7, .7, .7), Ray(Vector3(10, -7, 20), Vector3(0, 1, 0)), 10, 10, 10);
+	damier1->material.k_a = 0.5;
+	damier1->material.k_d = 0.0;
+	damier1->material.k_s = 0.0;
+	damier1->material.n_s = 3;
 
 	//sphere3->material.k_a = 0.2;
 	shapes.add ( (Shape*)sphere1 );

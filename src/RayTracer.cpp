@@ -122,7 +122,7 @@ Color RayTracer::calculateColor(Ray &r, int recursions) {
 
 		//Ambient color
 		//FIXME: Take L_a of scene instead of 1
-		c = 1 * closestShape->material.k_a * closestShape->color;
+		c = 1 * closestShape->material.k_a * closestShape->get_color(intersection);
 
 		for (int i = 0; i < scene.lightSources.length(); i++) {
 			LightSource* l = scene.lightSources.get(i);
@@ -130,7 +130,7 @@ Color RayTracer::calculateColor(Ray &r, int recursions) {
 
 				double diffuse = lm.getDiffuse(normal, l);
 				double specular = lm.getSpecular(reflected, l);
-				c += closestShape->material.k_d * diffuse * closestShape->color
+				c += closestShape->material.k_d * diffuse * closestShape->get_color(intersection)
 						* l->intensity;
 				c += closestShape->material.k_s * specular * l->color
 						* l->intensity;
@@ -159,7 +159,7 @@ bool RayTracer::isHidden(LightSource* &lightSource, Vector3 &point) {
 	Shape* closestShape = scene.shapes.get(0);
 	double closestIP;
 	bool hasIntersection = false;
-/*	
+/*
 	for (int i = 0; i < scene.shapes.length(); i++) {
 		Set<double> intersections = scene.shapes.get(i)->intersect(ray);
 
@@ -188,6 +188,6 @@ bool RayTracer::isHidden(LightSource* &lightSource, Vector3 &point) {
 		//If |point_light| > |point_intersection.norm| there is shadow
 		return point_light.norm() > point_intersection.norm();
 	}
-*/
+//*/
 	return false;
 }
