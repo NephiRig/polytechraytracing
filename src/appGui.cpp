@@ -327,7 +327,7 @@ int main(int argc, char **argv)
 	sphere2->material.k_s = 0.8;
 	sphere2->material.n_s = 30;
 
-	Draughtboard *damier1 = new Draughtboard(Color(0.1, 0.1, 0.1), Color(.7, .7, .7), Ray(Vector3(10, -7, 20), Vector3(0, 1, 0)), 10, 10, 10);
+	Draughtboard *damier1 = new Draughtboard(Color(0.1, 0.1, 0.1), Color(.7, .7, .7), Ray(Vector3(10, -4, 20), Vector3(0, 1, 0)), 40, 40, 5);
 	damier1->material.k_a = 0.5;
 	damier1->material.k_d = 0.0;
 	damier1->material.k_s = 0.0;
