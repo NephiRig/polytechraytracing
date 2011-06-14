@@ -232,6 +232,7 @@ void handle_events(SDL_Event& event)
 
 			case SDLK_d:
 				camera_t -= .1;
+				cerr << "camera_t: " << camera_t << endl;
 				rt->scene.observer[0] = posSphere[0] + cos(camera_t)*rayonCamera;
 				rt->scene.observer[2] = posSphere[2] + sin(camera_t)*rayonCamera;
 				refresh = true;
@@ -239,6 +240,7 @@ void handle_events(SDL_Event& event)
 
 			case SDLK_q:
 				camera_t += .1;
+				cerr << "camera_t: " << camera_t << endl;
 				rt->scene.observer[0] = posSphere[0] + cos(camera_t)*rayonCamera;
 				rt->scene.observer[2] = posSphere[2] + sin(camera_t)*rayonCamera;
 				refresh = true;
@@ -319,8 +321,9 @@ int main(int argc, char **argv)
 	cerr << "rayon camera : " << rayonCamera << endl;
 
 	Vector3 aimedPoint = posSphere;
-	double distScreen = 700.0; // distance to the screen from the observer point
-	Scene s = Scene ( shapes, lights, obs, aimedPoint, distScreen );
+	double distScreen = 0.05; //700.0; // distance to the screen from the observer point
+	Vector3 wayUp = Vector3 ( 0.0, 1.0, 0.0 );
+	Scene s = Scene ( shapes, lights, obs, wayUp, aimedPoint, distScreen );
 	PhongModel lm = PhongModel ();
 	rt = new RayTracer ( s, lm );
 

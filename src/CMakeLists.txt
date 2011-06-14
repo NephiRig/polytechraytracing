@@ -8,7 +8,7 @@
 ##
 ######################################################################
 
-project(prt)
+project(appGui)
 
 set(${PROJECT_NAME}_HEADERS
     Color.h
@@ -31,6 +31,7 @@ set(${PROJECT_NAME}_HEADERS
     stdint.h
     Vector2.h
     Vector3.h
+    ScreenV2.h
 )
 
 set(${PROJECT_NAME}_SOURCES
@@ -52,12 +53,13 @@ set(${PROJECT_NAME}_SOURCES
     Sphere.cpp
     Vector2.cpp
     Vector3.cpp
+    ScreenV2.cpp
 )
 
-#add_definitions(-std=c++0x)
+add_definitions(-std=c++0x)
 
 add_executable(${PROJECT_NAME}
-        ParamSurf.cpp
+        appGui.cpp
         ${${PROJECT_NAME}_SOURCES}
         ${${PROJECT_NAME}_HEADERS}
     )

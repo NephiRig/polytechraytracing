@@ -12,6 +12,7 @@
 #include <fstream> // ofstream
 #include "Vector3.h"
 #include "Screen.h"
+#include "ScreenV2.h"
 #include "Sphere.h"
 #include "Ray.h"
 #include "Image.h"
@@ -20,6 +21,8 @@
 #include "LightSource.h"
 #include "PhongModel.h"
 #include "Color.h"
+
+const double PI = 3.141592;
 
 
 class RayTracer {

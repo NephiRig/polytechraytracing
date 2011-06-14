@@ -16,13 +16,13 @@
 
 class Scene {
 public:
-	Scene(Set<Shape*> &sh, Set<LightSource*> &ls, Vector3 &obs, Vector3 &ap, double dist);
+	Scene(Set<Shape*> &sh, Set<LightSource*> &ls, Vector3 &obs, Vector3 &wayUp, Vector3 &ap, double dist);
 	Scene();
 	virtual ~Scene();
 
 	Set<LightSource*> lightSources;
 	Set<Shape*> shapes;
-	Vector3 observer, aimedPoint;
+	Vector3 observer, wayUp, aimedPoint;
 	double distScreen;
 	Color L_a;
 };
