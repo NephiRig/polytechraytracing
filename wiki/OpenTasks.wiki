@@ -31,17 +31,17 @@
 
  * animation vidéo
 
-* shadows
+ * shadows
 
-* refraction
+ * refraction
 
-* textures
+ * textures
 
-* mouvement caméra & lumière
+ * mouvement caméra & lumière
 
-* construire une belle scène
+ * construire une belle scène
 
-* undersampling (mouvement) et oversampling (anti aliasing) 
+ * undersampling (mouvement) et oversampling (anti aliasing) 
 
 
 
