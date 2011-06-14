@@ -14,6 +14,9 @@ public:
 	virtual ~Material();
 
 	double k_a, k_d, k_s, n_s;
+	// k_a: ambiant
+	// k_d: diffuse
+	
 };
 
 #endif /* MATERIAL_H_ */

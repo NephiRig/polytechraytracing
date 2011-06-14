@@ -17,7 +17,7 @@ LightModel::~LightModel() {
 }
 
 double LightModel::getAmbient() const {
-	return 1;
+	return 1.0;
 }
 
 double LightModel::getDiffuse(Ray &normal, LightSource* &source) const {

@@ -11,7 +11,7 @@
 
 using namespace std;
 
-Sphere::Sphere(const Vector3 &_centre, double _radius, const Color _color) :
+Sphere::Sphere(const Vector3 &_centre, double _radius, const Color& _color) :
 	centre(_centre), radius(_radius) {
 	this->color = _color;
 	material = Material(0.1, 0.4, 0.5, 20); //FIXME Take into constructor

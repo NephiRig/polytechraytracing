@@ -13,7 +13,7 @@ using namespace std;
 RayTracer::RayTracer(Scene &sc, PhongModel &_lm) {
 	lm = _lm;
 	scene = sc;
-	NB_OF_INTERATIONS = 1;
+	NB_OF_INTERATIONS = 15;
 	cout << "\n # of Shapes: " << scene.shapes.length();
 	cout << "\n # of Lights: " << scene.lightSources.length() << "\n";
 
@@ -87,6 +87,7 @@ Color RayTracer::calculateColor(Ray &r, int recursions) {
 		} else if (hasIntersection && !intersections.empty() && intersections[0] < closestIP) {
 			closestShape = scene.shapes.get(i);
 			closestIP = intersections[0];
+			//cout << "t1: " << intersections[0] << " t2: " << intersections[1] << endl;;
 			hasIntersection = true;
 		}
 
@@ -158,7 +159,7 @@ bool RayTracer::isHidden(LightSource* &lightSource, Vector3 &point) {
 	Shape* closestShape = scene.shapes.get(0);
 	double closestIP;
 	bool hasIntersection = false;
-
+/*	
 	for (int i = 0; i < scene.shapes.length(); i++) {
 		Set<double> intersections = scene.shapes.get(i)->intersect(ray);
 
@@ -187,6 +188,6 @@ bool RayTracer::isHidden(LightSource* &lightSource, Vector3 &point) {
 		//If |point_light| > |point_intersection.norm| there is shadow
 		return point_light.norm() > point_intersection.norm();
 	}
-
+*/
 	return false;
 }
