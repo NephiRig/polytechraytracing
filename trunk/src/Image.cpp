@@ -135,7 +135,8 @@ void Image::readPPM(string file_name) {
 void Image::writePPM(std::ostream &s) const {
 	s << "P6\n" << w << " " << h << "\n255\n";
 	unsigned int i;
-	for (int y = h - 1; y >= 0; y--)
+	//for (int y = h - 1; y >= 0; y--)
+	for (int y = 0; y < h; y++)
 		for (int x = 0; x < w; x++) {
 			double gamma = 1.0 / 2.2;
 			data[x][y] = Color(pow(data[x][y][0], gamma), pow(data[x][y][1],

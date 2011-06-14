@@ -321,7 +321,7 @@ int main(int argc, char **argv)
 	cerr << "rayon camera : " << rayonCamera << endl;
 
 	Vector3 aimedPoint = posSphere;
-	double distScreen = 0.05; //700.0; // distance to the screen from the observer point
+	double distScreen = 0.50; //700.0; // distance to the screen from the observer point
 	Vector3 wayUp = Vector3 ( 0.0, 1.0, 0.0 );
 	Scene s = Scene ( shapes, lights, obs, wayUp, aimedPoint, distScreen );
 	PhongModel lm = PhongModel ();
