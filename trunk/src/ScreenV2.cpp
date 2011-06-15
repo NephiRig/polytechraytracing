@@ -85,7 +85,7 @@ bool ScreenV2::initialize ()
 	return initialized;
 }
 
-Vector3 ScreenV2::getPixel ( int x, int y )
+Vector3 ScreenV2::getPixel ( double x, double y )
 { // TODO: maybe we should optimize our class data structure to ease this operation
 	return screen3D[0] + (x*1.0/w2D)*(screen3D[1]-screen3D[0])
 		+ (y*1.0/h2D)*(screen3D[2]-screen3D[0]);
