@@ -7,7 +7,7 @@
 
 #include <iostream>
 #include <fstream> // ofstream
-#include <sstream> // stringstream
+#include <cstdio> // sprintf
 /*
 #ifdef _MSC_VER
    #include "stdint.h"
@@ -30,8 +30,8 @@
 using namespace std;
 
 //Screen attributes
-const int SCREEN_WIDTH = 64;
-const int SCREEN_HEIGHT = 48;
+const int SCREEN_WIDTH = 640;
+const int SCREEN_HEIGHT = 480;
 const int SCREEN_BPP = 32;
 
 bool quit = false;
@@ -88,17 +88,9 @@ void apply_surface(int x, int y, SDL_Surface* source, SDL_Surface* destination)
 	SDL_BlitSurface(source, NULL, destination, &offset);
 }
 
-void fillSurfaceFromFile(SDL_Surface *surface, Image* img)
+void fillSurfaceFromFile ( SDL_Surface *surface, Image* img, const char* f )
 {
-	SDL_Surface *img_sdl;
-	if ( recordvideo )
-	{
-		stringstream ss;
-		ss << "img" << videoimages << ".ppm";
-		img_sdl = load_image ( ss.str().c_str() );
-	}
-	else
-		img_sdl = load_image ( "img.ppm" );
+	SDL_Surface *img_sdl = load_image ( f );
 	apply_surface ( 0, 0, img_sdl, screen );
 	SDL_FreeSurface ( img_sdl );
 }
@@ -168,23 +160,15 @@ void fillSurfaceNoFile(SDL_Surface *surface, Image* img)
 void refreshDisplay ()
 {
 	ofstream myfile;
+	char f[100] = "img.ppm";
 	if ( recordvideo )
-	{
-		stringstream ss;
-		ss << "img" << ++videoimages << ".ppm";
-		myfile.open ( ss.str().c_str() );
-	}
-	else
-		myfile.open("img.ppm");
-	//cerr << "on tente le writePPM" << endl;
+		sprintf ( f, "img%05d.ppm", ++videoimages );
+	myfile.open( f );
 	img->writePPM(myfile);
-	//cerr << "fin du writePPM" << endl;
-	//img->writePPM ( cerr );
-	//cerr << endl;
 	myfile.close();
 
 	//fillSurfaceNoFile ( screen, img );
-	fillSurfaceFromFile ( screen, img );
+	fillSurfaceFromFile ( screen, img, f );
 	SDL_Flip( screen );
 }
 
@@ -261,6 +245,23 @@ void handle_events(SDL_Event& event)
 				rt->scene.observer[0] = posSphere[0] + cos(camera_t)*rayonCamera;
 				rt->scene.observer[2] = posSphere[2] + sin(camera_t)*rayonCamera;
 				refresh = true;
+			break;
+			
+			case SDLK_f:
+			{
+				int n = 100;
+				recordvideo = true;
+				for ( int i = 0; i < n; ++i )
+				{
+					cerr << "iteration " << i << " sur " << n << endl;
+					camera_t -= .1;
+					cerr << "camera_t: " << camera_t << endl;
+					rt->scene.observer[0] = posSphere[0] + cos(camera_t)*rayonCamera;
+					rt->scene.observer[2] = posSphere[2] + sin(camera_t)*rayonCamera;
+					rt->raytrace ( img );
+					refreshDisplay ();
+				}
+			}
 			break;
 
 			case SDLK_q:
