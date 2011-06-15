@@ -14,16 +14,14 @@
 
 class Sphere : public Shape {
 public:
-	Vector3 centre;
-	double radius;
+	Vector3 _centre;
+	double _radius;
 
-	Sphere (const Vector3 &_centre = 0, double _radius = 0, const Color &_color=0);
+	Sphere (const Color &color = 0, const Material &material = 0, const Vector3 &centre = 0, double radius = 0);
 	virtual ~Sphere();
 
 	Set<double> intersect (const Ray& r) const;
-
 	Vector3 normal (const Vector3& pt_intersect) const;
-
 	Color get_color(const Vector3 &pt);
 };
 

@@ -10,25 +10,17 @@
 
 #include "Color.h"
 #include "Vector3.h"
-#include "Shape.h"
+#include "Rectangle.h"
 
-//*
-class Draughtboard: public Shape {
+class Draughtboard: public Rectangle {
 public:
 	Color _colorD;
-	Ray _normAndPoint;
-	double _d;
-	double _height;
-	double _width;
 	double _caseSize;
 
-	Draughtboard() {};
-	Draughtboard(const Color &color, const Color &colorD, const Ray &normAndPoint, double height, double width, double caseSize);
+	Draughtboard(const Color &color, const Material &material, const Color &colorD, const Ray &normAndPoint, double height, double width, double caseSize);
 	virtual ~Draughtboard();
 
-	Set<double> intersect(const Ray& r) const;
-	Vector3 normal(const Vector3& pt) const;
-	Color get_color(const Vector3 &pt);
+	virtual Color getColor(const Vector3 &pt);
 };
 //*/
 #endif /* DRAUGHTBOARD_H_ */

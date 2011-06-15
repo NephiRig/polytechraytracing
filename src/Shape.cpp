@@ -2,7 +2,7 @@
  * Forme.cpp
  *
  *  Created on: 31 mai 2011
- *      Author: quentin
+ *      Author: quentin, valentin
  */
 
 #include "Shape.h"
@@ -27,6 +27,6 @@ Vector3 Shape::normal(const Vector3& pt) const {
 	return Vector3(0,0,0);
 }
 
-Color Shape::get_color(const Vector3& pt) {
-	return color;
+Color Shape::getColor(const Vector3& pt) {
+	return _color;
 }
