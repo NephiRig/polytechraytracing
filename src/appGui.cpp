@@ -253,10 +253,10 @@ void handle_events(SDL_Event& event)
 				for ( int i = 0; i < n; ++i )
 				{
 					cerr << "iteration " << i << " sur " << n << endl;
-					camera_t -= .1;
+					camera_t += .1;
 					cerr << "camera_t: " << camera_t << endl;
 					rt->scene.observer[0] = posSphere[0] + cos(camera_t)*rayonCamera;
-					rt->scene.observer[2] = posSphere[2] + sin(camera_t)*rayonCamera;
+					rt->scene.observer[1] = posSphere[1] + sin(camera_t)*rayonCamera;
 					rt->raytrace ( img );
 					refreshDisplay ();
 				}

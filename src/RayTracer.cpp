@@ -106,7 +106,7 @@ Color RayTracer::calculateColor(Ray &r, int recursions) {
 	Shape* closestShape = scene.shapes->get(0);
 	double closestIP;
 	bool hasIntersection = false;
-
+	r[1].normalize ();
 	Ray r_moved = Ray(r.getPoint(1), r.get_direction());
 	for (int i = 0; i < scene.shapes->length(); i++) {
 		Set<double> intersections = scene.shapes->get(i)->intersect(r_moved);
@@ -131,11 +131,12 @@ Color RayTracer::calculateColor(Ray &r, int recursions) {
 		Vector3 intersection = r_moved.getPoint(closestIP); //P := intersection
 
 		//The normal at the point of intersection
-		Vector3 n = closestShape->normal(intersection);
+		Vector3 n = closestShape->normal(intersection).normalize ();
 
 		//Make sure the normal points into the right direction
 		//FIXME is this correct??
-		if (dot_product(-r.get_direction(), n) < 0) {
+		Vector3 r_dir_op = -r.get_direction ();
+		if (dot_product(r_dir_op, n) < 0) {
 			//if (dot_product(V, n) < 0) {
 			n = -n;
 		}
@@ -145,8 +146,8 @@ Color RayTracer::calculateColor(Ray &r, int recursions) {
 		//FIXME Move to the shape class, as it is the same for all the shapes
 		Ray reflected = Ray(
 				intersection,
-				-(2 * n * (dot_product(n, r.get_direction()))
-						- r.get_direction()));
+				(2 * n * (dot_product(n, r_dir_op))
+						- r_dir_op));
 
 		/*
 		 * Calculate the light compartments using the lightmodel
@@ -186,8 +187,9 @@ Color RayTracer::calculateColor(Ray &r, int recursions) {
  * and our lightsource
  */
 bool RayTracer::isHidden(LightSource* &lightSource, Vector3 &point) {
+	return false;
 	//Create the ray between intersection point and light source
-	Ray ray = Ray(point, lightSource->position - point);
+	Ray ray = Ray(point, (lightSource->position - point);
 
 	//Get the first intersection with any shape
 	Shape* closestShape = scene.shapes->get(0);
