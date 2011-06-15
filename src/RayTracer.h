@@ -34,6 +34,7 @@ public:
 	RayTracer(Scene &sc , PhongModel &_lm );
 	virtual ~RayTracer();
 	virtual void raytrace(Image* img);
+	virtual void raytrace(Image* img, int size);
 
 private:
 	virtual Color calculateColor(Ray &r, int recursions);
