@@ -11,7 +11,6 @@
 #include <iostream>
 #include <fstream> // ofstream
 #include "Vector3.h"
-#include "Screen.h"
 #include "ScreenV2.h"
 #include "Sphere.h"
 #include "Ray.h"
