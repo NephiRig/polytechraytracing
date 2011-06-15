@@ -47,6 +47,7 @@ Vector3 posSphere;
 double rayonCamera = 1.0;
 bool recordvideo = false;
 int videoimages = 0;
+int OVERSAMPLING = 3;
 
 SDL_Surface *
 load_image(std::string filename)
@@ -257,7 +258,7 @@ void handle_events(SDL_Event& event)
 					cerr << "camera_t: " << camera_t << endl;
 					rt->scene.observer[0] = posSphere[0] + cos(camera_t)*rayonCamera;
 					rt->scene.observer[1] = posSphere[1] + sin(camera_t)*rayonCamera;
-					rt->raytrace ( img );
+					rt->raytrace ( img, OVERSAMPLING );
 					refreshDisplay ();
 				}
 			}
@@ -299,7 +300,7 @@ void handle_events(SDL_Event& event)
 
 	if ( refresh == true )
 	{
-		rt->raytrace ( img );
+		rt->raytrace ( img, OVERSAMPLING );
 		refreshDisplay ();
 	}
 }
@@ -375,7 +376,7 @@ int main(int argc, char **argv)
 
 	img = new Image ( SCREEN_WIDTH, SCREEN_HEIGHT, Color ( 0.0, 0.0, 0.0 ) );
 
-	rt->raytrace ( img );
+	rt->raytrace ( img, OVERSAMPLING );
 	refreshDisplay ();
 
 
