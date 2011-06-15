@@ -264,6 +264,24 @@ void handle_events(SDL_Event& event)
 			}
 			break;
 
+			case SDLK_l:
+			{
+				int n = 100;
+				recordvideo = true;
+				rt->scene.lightSources->get(1)->position[1] = 10;
+				for ( int i = 0; i < n; ++i )
+				{
+					cerr << "iteration " << i << " sur " << n << endl;
+					camera_t += .1;
+					cerr << "camera_t: " << camera_t << endl;
+					rt->scene.lightSources->get(1)->position[0] = posSphere[0] + cos(camera_t)*rayonCamera;
+					rt->scene.lightSources->get(1)->position[2] = posSphere[2] + sin(camera_t)*rayonCamera;
+					rt->raytrace ( img, OVERSAMPLING );
+					refreshDisplay ();
+				}
+			}
+			break;
+
 			case SDLK_q:
 				camera_t += .1;
 				cerr << "camera_t: " << camera_t << endl;
@@ -363,7 +381,7 @@ int main(int argc, char **argv)
 	lights.add ( source1 );
 	lights.add ( source2 );
 
-	Vector3 obs ( 0.0, 0.0, -20.0 );
+	Vector3 obs ( 10.0, 0.0, -20.0 );
 	rayonCamera = (obs - posSphere).norm ();
 	cerr << "rayon camera : " << rayonCamera << endl;
 
@@ -382,8 +400,6 @@ int main(int argc, char **argv)
 
 	Timer timer = Timer ();
 	int fps = 35;
-
-
 
 
 
