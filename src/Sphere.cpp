@@ -64,5 +64,5 @@ Vector3 Sphere::normal(const Vector3& pt_intersect) const {
 }
 
 Color Sphere::get_color(const Vector3 &pt) {
-	return color;
+	return this->color;
 }

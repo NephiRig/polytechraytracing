@@ -28,7 +28,7 @@ public:
 	/*bool initFromDistScreen ( double _distScreen, double _ratioWH );*/
 	bool initFromDistScreen ( double _distScreen );
 
-	Vector3 getPixel ( int x, int y ); // returns the 3D point where the pixel is
+	Vector3 getPixel ( double x, double y ); // returns the 3D point where the pixel is
 	Vector3 getPixel ( const Vector2& pt );
 protected:
 	bool initialize ();

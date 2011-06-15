@@ -9,25 +9,20 @@
 #include <cmath>
 
 PhongModel::PhongModel() {
-	k_a=1.0;//1;
-	k_d=1;
-	k_s=1;
-	n_s=20;
-
 }
 
 PhongModel::~PhongModel() {
 	// TODO Auto-generated destructor stub
 }
 
-double PhongModel::getAmbient() const {
-	return k_a;
+double PhongModel::getAmbient(Material &m) const {
+	return m.k_a;
 }
 /*
  * Calculate the diffuse light. This depends on the angle between the normal and the
  * vector passing through a lightsource from the point of intersection)
  */
-double PhongModel::getDiffuse(Ray &normal, LightSource* &source) const {
+double PhongModel::getDiffuse(Ray &normal, LightSource* &source, Material &m) const {
 	//Get the vector which passes from the point on the shape thourgh the lightsource
 	Vector3 intersect_lightSource = source->position - normal.get_origin();
 
@@ -38,7 +33,7 @@ double PhongModel::getDiffuse(Ray &normal, LightSource* &source) const {
 	//the cosine is positive if our angle 0 <= alpha <= 180, i.e. the vector to the
 	// lightsource is not on the other side of the shape
 	if (a_times_b > 0) {
-		return a_times_b*k_d;
+		return a_times_b*m.k_d;
 	} else { //The lightsource is behind the shape
 		return 0;
 	}
@@ -49,7 +44,7 @@ double PhongModel::getDiffuse(Ray &normal, LightSource* &source) const {
  * the reflected ray and the vector passing through a lightsource
  * (from the point of intersection)
  */
-double PhongModel::getSpecular(Ray &refracted, LightSource* &source) const {
+double PhongModel::getSpecular(Ray &refracted, LightSource* &source, Material &m) const {
 	//Get the vector which passes from the point on the shape thourgh the lightsource
 	Vector3 intersect_lightSource = source-> position - refracted.get_origin();
 
@@ -62,7 +57,7 @@ double PhongModel::getSpecular(Ray &refracted, LightSource* &source) const {
 	//the cosine is positive if our angle 0 <= alpha <= 180, i.e. the vector to the
 	// lightsource is not on the other side of the shape
 	if (a_times_b > 0) {
-		return pow(a_times_b,n_s)*k_s;
+		return pow(a_times_b,m.n_s)*m.k_s;
 	} else { //The lightsource is behind the shape
 		return 0;
 	}

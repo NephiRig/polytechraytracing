@@ -16,7 +16,6 @@
 #include "Sphere.h"
 #include "Ray.h"
 #include "Image.h"
-#include "Rectangle.h"
 #include "Scene.h"
 #include "LightSource.h"
 #include "PhongModel.h"

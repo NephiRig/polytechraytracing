@@ -34,7 +34,7 @@ Screen::~Screen()
 {}
 
 
-Vector3 Screen::getPixel ( int x, int y )
+Vector3 Screen::getPixel ( double x, double y )
 {
 	Vector3 res;
 	res = ptI + x*w + y*h;

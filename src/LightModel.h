@@ -10,15 +10,16 @@
 
 #include "Ray.h"
 #include "LightSource.h"
+#include "Material.h"
 
 class LightModel {
 public:
 	LightModel();
 	virtual ~LightModel();
 
-	virtual double getAmbient() const;
-	virtual double getDiffuse(Ray &normal, LightSource* &source) const;
-	virtual double getSpecular(Ray &refracted, LightSource* &source) const;
+	virtual double getAmbient(Material &m) const;
+	virtual double getDiffuse(Ray &normal, LightSource* &source, Material &m) const;
+	virtual double getSpecular(Ray &refracted, LightSource* &source, Material &m) const;
 };
 
 #endif /* LIGHTMODEL_H_ */
