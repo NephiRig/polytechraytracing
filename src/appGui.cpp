@@ -6,8 +6,8 @@
  */
 
 #include <iostream>
-
 #include <fstream> // ofstream
+#include <sstream> // stringstream
 /*
 #ifdef _MSC_VER
    #include "stdint.h"
@@ -46,6 +46,8 @@ SDL_Surface* screen = NULL;
 double camera_t = 0.0;
 Vector3 posSphere;
 double rayonCamera = 1.0;
+bool recordvideo = false;
+int videoimages = 0;
 
 SDL_Surface *
 load_image(std::string filename)
@@ -88,7 +90,15 @@ void apply_surface(int x, int y, SDL_Surface* source, SDL_Surface* destination)
 
 void fillSurfaceFromFile(SDL_Surface *surface, Image* img)
 {
-	SDL_Surface *img_sdl = load_image ( "img.ppm" );
+	SDL_Surface *img_sdl;
+	if ( recordvideo )
+	{
+		stringstream ss;
+		ss << "img" << videoimages << ".ppm";
+		img_sdl = load_image ( ss.str().c_str() );
+	}
+	else
+		img_sdl = load_image ( "img.ppm" );
 	apply_surface ( 0, 0, img_sdl, screen );
 	SDL_FreeSurface ( img_sdl );
 }
@@ -158,7 +168,14 @@ void fillSurfaceNoFile(SDL_Surface *surface, Image* img)
 void refreshDisplay ()
 {
 	ofstream myfile;
-	myfile.open("img.ppm");
+	if ( recordvideo )
+	{
+		stringstream ss;
+		ss << "img" << ++videoimages << ".ppm";
+		myfile.open ( ss.str().c_str() );
+	}
+	else
+		myfile.open("img.ppm");
 	//cerr << "on tente le writePPM" << endl;
 	img->writePPM(myfile);
 	//cerr << "fin du writePPM" << endl;
@@ -268,6 +285,11 @@ void handle_events(SDL_Event& event)
 				rt->scene.aimedPoint[0] = posSphere[0] + cos(camera_t)*rayonCamera;
 				rt->scene.aimedPoint[2] = posSphere[2] + sin(camera_t)*rayonCamera;
 				refresh = true;
+			break;
+			
+			case SDLK_v:
+				recordvideo = !recordvideo;
+				cerr << "recordvideo: " << recordvideo << endl;
 			break;
 
 			default:
