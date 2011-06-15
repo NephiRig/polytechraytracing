@@ -12,48 +12,50 @@ project(appGui)
 
 set(${PROJECT_NAME}_HEADERS
     Color.h
+    Draughtboard.h
     Image.h
-    Intersection.h
     LightModel.h
     LightSource.h
     Material.h
     ONB.h
-    ParamSurf.h
+    
     PhongModel.h
+    Plane.h
     Ray.h
     RayTracer.h
     Rectangle.h
     Scene.h
-    Screen.h
+    ScreenV2.h
     Set.h
     Shape.h
     Sphere.h
     stdint.h
+    Timer.h
     Vector2.h
     Vector3.h
-    ScreenV2.h
 )
 
 set(${PROJECT_NAME}_SOURCES
     Color.cpp
+    Draughtboard.cpp
     Image.cpp
-    Intersection.cpp
     LightModel.cpp
     LightSource.cpp
     Material.cpp
     ONB.cpp
-    ParamSurf.cpp
+    
     PhongModel.cpp
+    Plane.cpp
     Ray.cpp
     RayTracer.cpp
     Rectangle.cpp
     Scene.cpp
-    Screen.cpp
+    ScreenV2.cpp
     Shape.cpp
     Sphere.cpp
+    Timer.cpp
     Vector2.cpp
     Vector3.cpp
-    ScreenV2.cpp
 )
 
 #add_definitions(-std=c++0x)

@@ -2,41 +2,37 @@
  * Sphere.cpp
  *
  *  Created on: 31 mai 2011
- *      Author: quentin, Michelet Valentin, gyglim
+ *      Author: quentin, valentin, gyglim
  */
 
 #include "Sphere.h"
-#include "math.h"
-#include <iostream>
+#include <cmath>
 
 using namespace std;
 
-Sphere::Sphere(const Vector3 &_centre, double _radius, const Color& _color) :
-	centre(_centre), radius(_radius) {
-	this->color = _color;
-	material = Material(0.1, 0.4, 0.5, 20,0.5); //FIXME Take into constructor
+Sphere::Sphere(const Color &color, const Material &material, const Vector3 &centre, double radius) :
+	_centre(centre), _radius(radius) {
+	this->_color = color;
+	this->_material = material;//Material(0.1, 0.4, 0.5, 20, 0.5);
 }
 
 Sphere::~Sphere() {
 	// TODO Auto-generated destructor stub
 }
 
-/*
- *	Calculate the intersections of a ray with a sphere
- */
 Set<double> Sphere::intersect(const Ray& r) const {
 
 	Set<double> s = Set<double> (2);
 
 	double a = r.get_direction().norm() * r.get_direction().norm();
 
-	Vector3 d_o_x = dot_product(r.get_direction(), (r.get_origin() - centre));
+	Vector3 d_o_x = dot_product(r.get_direction(), (r.get_origin() - _centre));
 	double b = 2 * (d_o_x[0] + d_o_x[1] + d_o_x[2]);
 
-	Vector3 o_c = dot_product(r.get_origin(), centre);
+	Vector3 o_c = dot_product(r.get_origin(), _centre);
 
-	double c = pow(centre.norm(), 2) + pow(r.get_origin().norm(), 2) - 2
-			* (o_c[0] + o_c[1] + o_c[2]) - radius * radius;
+	double c = pow(_centre.norm(), 2) + pow(r.get_origin().norm(), 2) - 2
+			* (o_c[0] + o_c[1] + o_c[2]) - _radius * _radius;
 
 	//Apply solve function (-b +- sqrt(b^2-4ac))/2a
 	double d = b * b - 4 * a * c; //the term in the root
@@ -60,9 +56,5 @@ Set<double> Sphere::intersect(const Ray& r) const {
 }
 
 Vector3 Sphere::normal(const Vector3& pt_intersect) const {
-	return (pt_intersect - centre).normalize();
-}
-
-Color Sphere::get_color(const Vector3 &pt) {
-	return this->color;
+	return (pt_intersect - _centre).normalize();
 }

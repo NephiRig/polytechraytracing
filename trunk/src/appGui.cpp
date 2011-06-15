@@ -334,38 +334,25 @@ int main(int argc, char **argv)
 
 
 
+	//Create Scene
+	Set<Shape*> shapes = Set<Shape*> ();
 
-	Set<Shape*> shapes = Set<Shape*> (); // create scene
-	// shapes
+	//Shapes
 	posSphere = Vector3 ( 0.0, 0.0, 20.0 );
-	Sphere* sphere1 = new Sphere ( posSphere, 4.0, Color ( 0.0, 0.0, 1.0 ) );
-	sphere1->material.k_a = 0.05;
-	sphere1->material.k_d = 0.2;
-	sphere1->material.k_s = 0.8;
-	sphere1->material.n_s = 30;
-	Sphere* sphere2 = new Sphere ( Vector3 ( 10.0, 0.0, 20.0 ), 4.0, Color ( 1.0, 0.0, 0.0 ) );
-	sphere2->material.k_a = 0.05;
-	sphere2->material.k_d = 0.2;
-	sphere2->material.k_s = 0.8;
-	sphere2->material.n_s = 30;
-	Sphere* sphere3 = new Sphere ( Vector3 ( 0.0, 0.0, 30.0 ), 4.0, Color ( 0.0, 1.0, 0.0 ) );
-	sphere2->material.k_a = 0.05;
-	sphere2->material.k_d = 0.2;
-	sphere2->material.k_s = 0.8;
-	sphere2->material.n_s = 30;
+	Sphere* sphere1 = new Sphere ( Color ( 0.0, 0.0, 1.0 ), Material(0.05, 0.2, 0.8, 30, 1), posSphere, 4.0 );
+	Sphere* sphere2 = new Sphere ( Color ( 1.0, 0.0, 0.0 ), Material(0.05, 0.2, 0.8, 30, 1), Vector3 ( 10.0, 0.0, 20.0 ), 4.0 );
+	Sphere* sphere3 = new Sphere ( Color ( 0.0, 1.0, 0.0 ), Material(0.05, 0.2, 0.8, 30, 1), Vector3 ( 0.0, 0.0, 30.0 ), 4.0 );
+	Draughtboard *draughtboard1 = new Draughtboard(Color(0.1, 0.1, 0.1), Material(0.05, 0.10, 0.01, 5, 0.08), Color(.7, .7, .7), Ray(Vector3(10, -4, 20), Vector3(0, 1, 0)), 40, 40, 5);
 
-	Draughtboard *damier1 = new Draughtboard(Color(0.1, 0.1, 0.1), Color(.7, .7, .7), Ray(Vector3(10, -4, 20), Vector3(0, 1, 0)), 40, 40, 5);
-	damier1->material.k_a = 0.05;
-	damier1->material.k_d = 0.10;
-	damier1->material.k_s = 0.01;
-	damier1->material.n_s = 5;
-	damier1->material.k_reflex=0.08;
+	//Plane *plane1 = new Plane(Color(0.9, 0.9, 0.9), Material(0.05, 0.10, 0.01, 5, 0.08), Ray(Vector3(10, -4, 20), Vector3(0, 1, 0)));
 
-	//sphere3->material.k_a = 0.2;
+	//Add shapes
 	shapes.add ( sphere1 );
 	shapes.add ( sphere2 );
 	shapes.add ( sphere3 );
-	shapes.add ( damier1 );
+	//shapes.add ( plane1 );
+	shapes.add ( draughtboard1 );
+
 	// light sources
 	Set<LightSource*> lights = Set<LightSource*> ();
 	Vector3 posLight1 = Vector3 ( 0.0, 10.0, 20.0 );
@@ -374,10 +361,6 @@ int main(int argc, char **argv)
 	LightSource* source2 = new LightSource ( 15.0, posLight2, Color ( 1.0, 1.0, 1.0 ) );
 	lights.add ( source1 );
 	lights.add ( source2 );
-	//Sphere* sphere4 = new Sphere ( posLight1, 2.0, Color ( 1.0, 1.0, 0.5 ) );
-	//Sphere* sphere5 = new Sphere ( posLight2, 0.5, Color ( 1.0, 1.0, 1.0 ) );
-	//shapes.add ( (Shape*)sphere4 );
-	//shapes.add ( (Shape*)sphere5 );
 
 	Vector3 obs ( 0.0, 0.0, -20.0 );
 	rayonCamera = (obs - posSphere).norm ();
@@ -429,7 +412,8 @@ int main(int argc, char **argv)
 	delete sphere1;
 	delete sphere2;
 	delete sphere3;
-	delete damier1;
+	//delete plane1;
+	delete draughtboard1;
 	delete source1;
 	delete source2;
 	delete rt;

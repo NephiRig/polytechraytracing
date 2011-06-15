@@ -2,47 +2,29 @@
  * Shape.h
  *
  *  Created on: 31 mai 2011
- *      Author: quentin
+ *      Author: quentin, valentin
  */
 
 #ifndef SHAPE_H_
 #define SHAPE_H_
 
 #include "Vector3.h"
-#include "Vector2.h"
-#include "Texture.h"
 #include "Color.h"
 #include "Ray.h"
-//#include "Intersection.h"
 #include "Set.h"
-#include "Color.h"
 #include "Material.h"
-
-class Intersection;
-
-struct HitRecord {
-	float t;
-	Vector3 normal;
-	Vector2 uv;
-	Vector3 hit_p;
-	Color color;
-	Texture *hit_tex;
-};
 
 class Shape {
 public:
-	Color color;
-	Material material;
+	Color _color;
+	Material _material;
 
 	Shape();
 	virtual ~Shape();
 
-	// Material material;
-
-	virtual Vector3 normal(const Vector3& pt)  const=0;
+	virtual Vector3 normal(const Vector3& pt) const=0;
 	virtual Set<double> intersect(const Ray& r) const=0;
-
-	virtual Color get_color(const Vector3& pt);
+	virtual Color getColor(const Vector3& pt);
 };
 
 #endif /* SHAPE_H_ */

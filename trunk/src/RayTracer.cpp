@@ -18,7 +18,7 @@ RayTracer::RayTracer(Scene &sc, PhongModel &_lm) {
 	cout << "\n # of Lights: " << scene.lightSources->length() << "\n";
 
 	for (int i = 0; i < scene.shapes->length(); i++) {
-		Color c = scene.shapes->get(i)->color;
+		Color c = scene.shapes->get(i)->_color;
 		cout << "Color " << i << " R: ";
 		cout << c[0] << "; G: " << c[1] << "; B:" << c[2] << "\n";
 	}
@@ -154,18 +154,18 @@ Color RayTracer::calculateColor(Ray &r, int recursions) {
 
 		//Ambient color
 		//FIXME: Take L_a of scene instead of 1
-		c = 1 * lm.getAmbient(closestShape->material)
-			  * closestShape->get_color(intersection);
+		c = 1 * lm.getAmbient(closestShape->_material)
+			  * closestShape->getColor(intersection);
 
 		for (int i = 0; i < scene.lightSources->length(); i++) {
 			LightSource* l = scene.lightSources->get(i);
 			if (!isHidden(l, intersection)) {
 
 				double diffuse = lm.getDiffuse(normal, l,
-						closestShape->material);
+						closestShape->_material);
 				double specular = lm.getSpecular(reflected, l,
-						closestShape->material);
-				c += diffuse * closestShape->get_color(intersection)
+						closestShape->_material);
+				c += diffuse * closestShape->getColor(intersection)
 						* l->intensity;
 				c += specular * l->color * l->intensity;
 
@@ -174,7 +174,7 @@ Color RayTracer::calculateColor(Ray &r, int recursions) {
 
 		//Recursive call
 		if (recursions > 0) {
-			c += closestShape->material.k_reflex * calculateColor(reflected,
+			c += closestShape->_material.k_reflex * calculateColor(reflected,
 					--recursions);
 		}
 	}
