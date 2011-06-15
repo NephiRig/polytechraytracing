@@ -19,7 +19,6 @@
 #include <SDL/SDL_image.h>
 
 #include "Vector3.h"
-#include "Screen.h"
 #include "Sphere.h"
 #include "Draughtboard.h"
 #include "Ray.h"
