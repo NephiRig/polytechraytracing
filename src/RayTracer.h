@@ -36,7 +36,7 @@ public:
 
 private:
 	virtual Color calculateColor(Ray &r, int recursions);
-	virtual bool isHidden(LightSource* &lightSource, Vector3 &point);
+	virtual bool isHidden(LightSource* lightSource, Vector3 &point);
 
 	int NB_OF_INTERATIONS;
 

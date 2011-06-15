@@ -186,11 +186,12 @@ Color RayTracer::calculateColor(Ray &r, int recursions) {
  * Implement Algorithm to test, weather there are objects inbetween a point
  * and our lightsource
  */
-bool RayTracer::isHidden(LightSource* &lightSource, Vector3 &point) {
-	return false;
+bool RayTracer::isHidden(LightSource* lightSource, Vector3 &point) {
+	//return false;
 	//Create the ray between intersection point and light source
-	Ray ray = Ray(point, (lightSource->position - point);
-
+	Ray ray = Ray ( point, (lightSource->position - point).normalize () );
+	Vector3 point_moved = point + 1*ray[1];
+	ray[0] = point_moved; //Ray r_moved = Ray(r.getPoint(1), r.get_direction());
 	//Get the first intersection with any shape
 	Shape* closestShape = scene.shapes->get(0);
 	double closestIP;
@@ -209,21 +210,17 @@ bool RayTracer::isHidden(LightSource* &lightSource, Vector3 &point) {
 			closestIP = intersections[0];
 			hasIntersection = true;
 		}
-	}
-
-	//if there are any intersections
-	if (hasIntersection) {
-		//Get the Point of the first intersection
-		Vector3 intersection = ray.getPoint(closestIP);
-
-		//Create a vector between the two object intersections
-		Vector3 point_intersection = intersection - point;
-
-		//Create a vector between object intersection and light source
-		Vector3 point_light = lightSource->position - point;
-
-		//If |point_light| > |point_intersection.norm| there is shadow
-		return point_light.norm() > point_intersection.norm();
+		if ( hasIntersection )
+		{
+			Vector3 intersection = ray.getPoint(closestIP);
+			//Create a vector between the two object intersections
+			Vector3 point_intersection = intersection - point_moved;
+			//Create a vector between object intersection and light source
+			Vector3 point_light = lightSource->position - point_moved;
+			//If |point_light| > |point_intersection| there is shadow
+			if ( point_light.norm() > point_intersection.norm() )
+				return true;
+		}
 	}
 
 	return false;
