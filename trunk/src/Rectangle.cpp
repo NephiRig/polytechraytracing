@@ -26,7 +26,7 @@ Set<double> Rectangle::intersect(const Ray& r) const {
 	Vector3 inter = r.getPoint(t);
 	if ((fabs(inter[0]-_normAndPoint[0][0]) < _width/2.0 && fabs(inter[2]-_normAndPoint[0][2]) < _height/2.0) && t > 0) {
 		res.add(t);
-		cout << t << " " << r.getPoint(t) << endl;
+		//cout << t << " " << r.getPoint(t) << endl;
 	}
 	return res;
 }
