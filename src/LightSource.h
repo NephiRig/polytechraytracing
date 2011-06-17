@@ -1,10 +1,3 @@
-/*
- * LightSource.h
- *
- *  Created on: 31.05.2011
- *      Author: nb-gyglim
- */
-
 #ifndef LIGHTSOURCE_H_
 #define LIGHTSOURCE_H_
 

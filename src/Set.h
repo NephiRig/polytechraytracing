@@ -1,10 +1,3 @@
-/*
- * Set.h
- *
- *  Created on: 31 mai 2011
- *      Author: quentin, Michelet Valentin
- */
-
 #ifndef SET_H_
 #define SET_H_
 

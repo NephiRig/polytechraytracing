@@ -1,10 +1,3 @@
-/*
- * Vecteur3.h
- *
- *  Created on: 31.05.2011
- *      Author: nb-gyglim, Michelet Valentin
- */
-
 #ifndef VECTEUR3_H_
 #define VECTEUR3_H_
 
@@ -21,13 +14,13 @@ public:
 	Vector3(const Vector3 &v1);
 	virtual ~Vector3();
 
-	double get_x() const;
-	double get_y() const;
-	double get_z() const;
+	double getX() const;
+	double getY() const;
+	double getZ() const;
 
-	void set_x(double x);
-	void set_y(double y);
-	void set_z(double z);
+	void setX(double x);
+	void setY(double y);
+	void setZ(double z);
 
 	double operator[](int i) const;
 	double& operator[](const int &i);

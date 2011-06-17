@@ -1,10 +1,3 @@
-/*
- * Rayon.cpp
- *
- *  Created on: 31.05.2011
- *      Author: nb-gyglim, Michelet Valentin
- */
-
 #include "Ray.h"
 
 Ray::Ray(const Vector3 &origin, const Vector3 &direction) {
@@ -17,7 +10,6 @@ Ray::Ray(const Ray &r) {
 }
 
 Ray::~Ray() {
-	// TODO Auto-generated destructor stub
 }
 
 
@@ -52,6 +44,6 @@ Vector3& Ray::operator[](const int &i) {
 }
 
 
-std::ostream& operator<<(std::ostream &os, const Ray &r) {
+ostream& operator<<(ostream &os, const Ray &r) {
 	return os << r.get_origin() << " + t*" << r.get_direction() << std::endl;
 }

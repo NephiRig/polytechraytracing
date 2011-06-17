@@ -1,18 +1,12 @@
-/*
- * Rayon.h
- *
- *  Created on: 31.05.2011
- *      Author: nb-gyglim, Michelet Valentin
- */
-
 #ifndef RAYON_H_
 #define RAYON_H_
 
 #include "Vector3.h"
 #include <iostream>
 
-class Ray {
+using namespace std;
 
+class Ray {
 public:
 	// coords[0] is the origin point of the vector
 	// coords[1] is the vector's direction from its origin
@@ -42,8 +36,7 @@ public:
 	Vector3 operator[](int i) const;
 	Vector3& operator[](const int &i);
 
-	friend std::ostream& operator<<(std::ostream &os, const Ray &r);
+	friend ostream& operator<<(ostream &os, const Ray &r);
 };
 
 #endif /* RAYON_H_ */
-

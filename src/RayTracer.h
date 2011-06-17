@@ -1,10 +1,3 @@
-/*
- * RayTracer.h
- *
- *  Created on: 08.06.2011
- *      Author: nb-gyglim
- */
-
 #ifndef RAYTRACER_H_
 #define RAYTRACER_H_
 
@@ -22,10 +15,8 @@
 
 const double PI = 3.141592;
 
-
 class RayTracer {
 public:
-
 	Scene scene;
 	PhongModel lm;
 
@@ -35,12 +26,10 @@ public:
 	virtual void raytrace(Image* img, int size);
 
 private:
-	virtual Color calculateColor(Ray &r, int recursions);
-	virtual bool isHidden(LightSource* lightSource, Vector3 &point);
-
 	int NB_OF_INTERATIONS;
 
-
+	virtual Color calculateColor(Ray &r, int recursions);
+	virtual bool isHidden(LightSource* lightSource, Vector3 &point);
 };
 
 #endif /* RAYTRACER_H_ */

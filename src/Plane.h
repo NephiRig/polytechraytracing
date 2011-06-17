@@ -1,10 +1,3 @@
-/*
- * Plane.h
- *
- *  Created on: 15 juin 2011
- *      Author: michelet
- */
-
 #ifndef PLANE_H_
 #define PLANE_H_
 
