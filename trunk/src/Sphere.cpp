@@ -1,23 +1,13 @@
-/*
- * Sphere.cpp
- *
- *  Created on: 31 mai 2011
- *      Author: quentin, valentin, gyglim
- */
-
 #include "Sphere.h"
 #include <cmath>
-
-using namespace std;
 
 Sphere::Sphere(const Color &color, const Material &material, const Vector3 &centre, double radius) :
 	_centre(centre), _radius(radius) {
 	this->_color = color;
-	this->_material = material;//Material(0.1, 0.4, 0.5, 20, 0.5);
+	this->_material = material;
 }
 
 Sphere::~Sphere() {
-	// TODO Auto-generated destructor stub
 }
 
 Set<double> Sphere::intersect(const Ray& r) const {

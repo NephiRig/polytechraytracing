@@ -6,10 +6,11 @@
 #include <cstdlib>
 #include <iostream>
 
-using namespace std;
-
 class Image {
 public:
+	Color **data;
+	int w, h;
+
 	Image() {}
 	Image(int _w, int _h);
 	Image(int _w, int _h, Color c);
@@ -22,12 +23,8 @@ public:
 
 	Color getPixel(int x, int y) const;
 
-	void writePPM(ostream &s) const;
-	void readPPM (string file_name);
-
-public:
-	Color **data;
-	int w, h;
+	void writePPM(std::ostream &s) const;
+	void readPPM (std::string file_name);
 };
 
-#endif
+#endif /* IMAGE_H_ */

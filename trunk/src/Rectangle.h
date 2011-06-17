@@ -1,10 +1,3 @@
-/*
- * Rectangle.h
- *
- *  Created on: 15 juin 2011
- *      Author: michelet
- */
-
 #ifndef RECTANGLE_H_
 #define RECTANGLE_H_
 

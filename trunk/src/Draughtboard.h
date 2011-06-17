@@ -1,10 +1,3 @@
-/*
- * Draughtboard.h
- *
- *  Created on: 8 juin 2011
- *      Author: michelet
- */
-
 #ifndef DRAUGHTBOARD_H_
 #define DRAUGHTBOARD_H_
 
@@ -19,8 +12,7 @@ public:
 
 	Draughtboard(const Color &color, const Material &material, const Color &colorD, const Ray &normAndPoint, double height, double width, double caseSize);
 	virtual ~Draughtboard();
-
 	virtual Color getColor(const Vector3 &pt);
 };
-//*/
+
 #endif /* DRAUGHTBOARD_H_ */

@@ -12,17 +12,17 @@ PhongModel::PhongModel() {
 }
 
 PhongModel::~PhongModel() {
-	// TODO Auto-generated destructor stub
 }
 
 double PhongModel::getAmbient(Material &m) const {
 	return m.k_a;
 }
+
 /*
  * Calculate the diffuse light. This depends on the angle between the normal and the
  * vector passing through a lightsource from the point of intersection)
  */
-double PhongModel::getDiffuse(Ray &normal, LightSource* &source, Material &m) const {
+double PhongModel::getDiffuse(Ray &normal, LightSource* source, Material &m) const {
 	//Get the vector which passes from the point on the shape thourgh the lightsource
 	Vector3 intersect_lightSource = source->position - normal.get_origin();
 
@@ -45,7 +45,7 @@ double PhongModel::getDiffuse(Ray &normal, LightSource* &source, Material &m) co
  * the reflected ray and the vector passing through a lightsource
  * (from the point of intersection)
  */
-double PhongModel::getSpecular(Ray &refracted, LightSource* &source, Material &m) const {
+double PhongModel::getSpecular(Ray &refracted, LightSource* source, Material &m) const {
 	//Get the vector which passes from the point on the shape thourgh the lightsource
 	Vector3 intersect_lightSource = source-> position - refracted.get_origin();
 
@@ -65,4 +65,3 @@ double PhongModel::getSpecular(Ray &refracted, LightSource* &source, Material &m
 		return 0;
 	}
 }
-

@@ -1,10 +1,3 @@
-/*
- * Ensemble.cpp
- *
- *  Created on: 31 mai 2011
- *      Author: quentin, Michelet Valentin
- */
-
 #include "Set.h"
 
 template<class T>
@@ -71,27 +64,16 @@ bool Set<T>::empty() {
 	return used == 0;
 }
 
-//template<class T>
-//const T& Set<T>::operator[] (int i) const
-//{
-/*if ( i < 0 || i >= used )
- return data[0];*/
-//	return data[i];
-//}
-
-//FIXME Controler les indices
 template<class T>
 T Set<T>::operator[](int i) const {
 	return data[i];
 }
 
-//FIXME Controler les indices
 template<class T>
 T Set<T>::get(int i) const {
 	return data[i];
 }
 
-//FIXME Controler les indices
 template<class T>
 T& Set<T>::operator[](const int &i) {
 	return data[i];

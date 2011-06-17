@@ -1,11 +1,3 @@
-/*
- * PhongModel.h
- *
- *  Created on: 08.06.2011
- *      Author: nb-gyglim
- *
- */
-
 #ifndef PHONGMODEL_H_
 #define PHONGMODEL_H_
 
@@ -20,8 +12,8 @@ public:
 	virtual ~PhongModel();
 
 	virtual double getAmbient(Material &m) const;
-	virtual double getDiffuse(Ray &normal, LightSource* &source, Material &m) const;
-	virtual double getSpecular(Ray &refracted, LightSource* &source, Material &m) const;
+	virtual double getDiffuse(Ray &normal, LightSource* source, Material &m) const;
+	virtual double getSpecular(Ray &refracted, LightSource* source, Material &m) const;
 };
 
 #endif /* PHONGMODEL_H_ */

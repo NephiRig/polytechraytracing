@@ -1,10 +1,3 @@
-/*
- * LightSource.cpp
- *
- *  Created on: 31.05.2011
- *      Author: nb-gyglim
- */
-
 #include "LightSource.h"
 
 LightSource::LightSource(double intens, const Vector3 &pos, const Color &c) {
@@ -15,9 +8,7 @@ LightSource::LightSource(double intens, const Vector3 &pos, const Color &c) {
 	} else {
 		color = Color(1,1,1);
 	}
-
 }
 
 LightSource::~LightSource() {
-	// TODO Auto-generated destructor stub
 }

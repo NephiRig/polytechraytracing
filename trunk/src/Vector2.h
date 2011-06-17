@@ -1,15 +1,7 @@
-/*
- * Vecteur2.h
- *
- *  Created on: 31.05.2011
- *      Author: nb-gyglim, Michelet Valentin
- */
-
 #ifndef VECTEUR2_H_
 #define VECTEUR2_H_
 
 #include <iostream>
-
 
 class Vector2 {
 public:

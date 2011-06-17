@@ -7,31 +7,25 @@
 
 Image::Image(int _w, int _h) :
 	w(_w), h(_h) {
-	//assert(w > 0 && h > 0);
 	data = new Color*[w];
-	//assert(data != 0);
 	for (int i = 0; i < w; i++) {
 		data[i] = new Color[h];
-		//assert(data[i]);
 	}
 }
 
 Image::Image(int _w, int _h, Color c) {
 	this->w = _w;
 	this->h = _h;
-	//cerr << "params à la construction : _w" << _w << ";_h" << _h << endl;
-	//cerr << "à la construction : w" << this->w << ";h" << this->h << endl;
 	assert (this->w > 0 && this->h > 0);
 	this->data = new Color*[this->w];
 	assert(this->data != 0);
 	for (int i = 0; i < this->w; i++) {
 		this->data[i] = new Color[this->h];
 		assert(data[i]);
-		for (int j = 0; j < this->h; j++)
+		for (int j = 0; j < this->h; j++) {
 			this->data[i][j] = c;
+		}
 	}
-	//cerr << "apres la construction : w" << this->w << ";h" << this->h << endl;
-	//cerr << "2 apres la construction : _w" << _w << ";_h" << _h << endl;
 }
 
 int Image::width() const {
@@ -48,13 +42,9 @@ void Image::safeSetPixel(int x, int y, Color c) {
 }
 
 void Image::setPixel(int x, int y, Color c) {
-	if (!(x >= 0 && x < w && y >= 0 && y < h)) {
-		cerr << "Image::setPixel    w = " << w << " h = " << h
-				<< "     requested pixel (" << x << ", " << y << ")"
-				<< endl;
-		exit(0);
+	if (x >= 0 && x < w && y >= 0 && y < h) {
+		data[x][y] = c;
 	}
-	data[x][y] = c;
 }
 
 Color Image::getPixel(int x, int y) const {
@@ -62,80 +52,12 @@ Color Image::getPixel(int x, int y) const {
 	x = (x < w ? x : w - 1);
 	y = (y >= 0 ? y : 0);
 	y = (y < h ? y : h - 1);
-	/*      if (!(x >= 0 && x < w && y >= 0 && y < h))
-	 {
-	 cerr << "Image::getPixel w = " << w << " h = " << h << endl
-	 << "       requested pixel (" << x << ", " << y << ")"
-	 << endl;
-	 exit(0);
-	 }
-	 */
 	return data[x][y];
 }
 
-/*
-void Image::readPPM(string file_name) {
-	int i, j;
-	ifstream in;
-	in.open(file_name.c_str());
-	if (!in.is_open()) {
-		cerr << "ERROR -- Can't find PPM file  \'" << string(file_name)
-				<< "\'\n";
-		exit(-1);
-	}
-	string file_type, garbage;
-	Color pix_col;
-
-	// read in ppm header info
-	in >> file_type >> w >> h >> garbage;
-
-	// create new raster with correct size
-	data = new Color*[w];
-	for (i = 0; i < w; i++)
-		data[i] = new Color[h];
-
-	// now read in pixel rgb values and assign to raster
-	if (file_type == "P3") {
-		int red, green, blue;
-		for (i = h - 1; i >= 0; i--) {
-			for (j = 0; j < w; j++) {
-				in >> red >> green >> blue;
-				pix_col[0] = ((float(red) + 0.5) / 256.0) * ((float(red) + 0.5)
-						/ 256.0);
-				pix_col[1] = ((float(green) + 0.5) / 256.0) * ((float(green)
-						+ 0.5) / 256.0);
-				pix_col[2] = ((float(blue) + 0.5) / 256.0) * ((float(blue)
-						+ 0.5) / 256.0);
-
-				data[j][i] = pix_col;
-			}
-		}
-	} else {
-		unsigned char red, green, blue;
-		in.get(red); // get rid of newline
-		for (i = h - 1; i >= 0; i--) {
-			for (j = 0; j < w; j++) {
-				in.get(red);
-				in.get(green);
-				in.get(blue);
-
-				pix_col[0] = ((float(red) + 0.5) / 256.0) * ((float(red) + 0.5)
-						/ 256.0);
-				pix_col[1] = ((float(green) + 0.5) / 256.0) * ((float(green)
-						+ 0.5) / 256.0);
-				pix_col[2] = ((float(blue) + 0.5) / 256.0) * ((float(blue)
-						+ 0.5) / 256.0);
-
-				data[j][i] = pix_col;
-			}
-		}
-	}
-}
-//*/
-void Image::writePPM(ostream &s) const {
+void Image::writePPM(std::ostream &s) const {
 	s << "P6\n" << w << " " << h << "\n255\n";
 	unsigned int i;
-	//for (int y = h - 1; y >= 0; y--)
 	for (int y = 0; y < h; y++)
 		for (int x = 0; x < w; x++) {
 			double gamma = 1.0 / 2.2;
@@ -156,11 +78,11 @@ void Image::writePPM(ostream &s) const {
 		}
 }
 
-void Image::readPPM(string file_name) {
-	ifstream in;
+void Image::readPPM(std::string file_name) {
+	std::ifstream in;
 	in.open(file_name.c_str());
 	if (!in.is_open()) {
-        cerr << "Can't open file \'" << file_name << "\'.\n";
+		std::cerr << "Can't open file \'" << file_name << "\'.\n";
 		exit(-1);
 	}
 

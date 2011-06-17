@@ -1,10 +1,3 @@
-/*
- * Draughtboard.cpp
- *
- *  Created on: 8 juin 2011
- *      Author: michelet
- */
-
 #include "Draughtboard.h"
 #include <cmath> //floor(), fabs()
 
@@ -13,7 +6,6 @@ Draughtboard::Draughtboard(const Color &color, const Material &material, const C
 }
 
 Draughtboard::~Draughtboard() {
-	// TODO Auto-generated destructor stub
 }
 
 Color Draughtboard::getColor(const Vector3 &pt) {

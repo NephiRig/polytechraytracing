@@ -1,10 +1,3 @@
-/*
- * Shape.h
- *
- *  Created on: 31 mai 2011
- *      Author: quentin, valentin
- */
-
 #ifndef SHAPE_H_
 #define SHAPE_H_
 

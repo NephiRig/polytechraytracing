@@ -63,33 +63,36 @@ void RayTracer::raytrace(Image* img) {
  *
  */
 void RayTracer::raytrace(Image* img, int size) {
-	//Width and height of the image
-	int w = img->width();
-	int h = img->height();
+	if (size < 2) {
+		raytrace(img);
+	} else {
+		//Width and height of the image
+		int w = img->width();
+		int h = img->height();
 
-	//With the given values we create an according screen
-	ScreenV2 s = ScreenV2(scene.observer, scene.wayUp, scene.aimedPoint,
-			PI / 8.0, w, h);
-	cerr << "init screen : " << s.initFromDistScreen(scene.distScreen) << endl;
-	//cerr << "init screen : " << s.initFromWH3D ( w/1000.0, h/1000.0 ) << endl;
+		//With the given values we create an according screen
+		ScreenV2 s = ScreenV2(scene.observer, scene.wayUp, scene.aimedPoint,
+				PI / 8.0, w, h);
+		cerr << "init screen : " << s.initFromDistScreen(scene.distScreen) << endl;
+		//cerr << "init screen : " << s.initFromWH3D ( w/1000.0, h/1000.0 ) << endl;
 
-	//Iterate over all the pixels of the screen/image
-	for (int y = 0; y < h; ++y) {
-		for (int x = 0; x < w; ++x) {
-			Color c = Color(0, 0, 0);
-			for (double dx = -0.45; dx <= 0.45; dx += 0.9 / (size-1)) {
-				for (double dy = -0.45; dy <= 0.45; dy += 0.9 / (size-1)) {
-					//Create the ray from the observer point, passing through the pixel
-					Ray r = Ray(scene.observer,
-							s.getPixel(x + dx, y + dy) - scene.observer);
-					c += calculateColor(r, NB_OF_INTERATIONS);
+		//Iterate over all the pixels of the screen/image
+		for (int y = 0; y < h; ++y) {
+			for (int x = 0; x < w; ++x) {
+				Color c = Color(0, 0, 0);
+				for (double dx = -0.45; dx <= 0.45; dx += 0.9 / (size-1)) {
+					for (double dy = -0.45; dy <= 0.45; dy += 0.9 / (size-1)) {
+						//Create the ray from the observer point, passing through the pixel
+						Ray r = Ray(scene.observer,
+								s.getPixel(x + dx, y + dy) - scene.observer);
+						c += calculateColor(r, NB_OF_INTERATIONS);
+					}
 				}
+
+				//Set the pixel accoring to the calculated Color/Light
+				img->setPixel(x, y, c / pow(size, 2));
 			}
-
-			//Set the pixel accoring to the calculated Color/Light
-			img->setPixel(x, y, c / pow(size, 2));
 		}
-
 	}
 }
 

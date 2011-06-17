@@ -1,10 +1,3 @@
-/*
- * Sphere.h
- *
- *  Created on: 31 mai 2011
- *      Author: quentin, Michelet Valentin
- */
-
 #ifndef SPHERE_H_
 #define SPHERE_H_
 

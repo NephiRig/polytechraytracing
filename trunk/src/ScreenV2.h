@@ -1,4 +1,3 @@
-
 #ifndef SCREENV2_H_
 #define SCREENV2_H_
 
@@ -30,6 +29,7 @@ public:
 
 	Vector3 getPixel ( double x, double y ); // returns the 3D point where the pixel is
 	Vector3 getPixel ( const Vector2& pt );
+
 protected:
 	bool initialize ();
 };

@@ -1,10 +1,3 @@
-/*
- * Material.cpp
- *
- *  Created on: 01.06.2011
- *      Author: nb-gyglim
- */
-
 #include "Material.h"
 
 Material::Material(double k_a, double k_d, double k_s, double n_s, double k_reflex) {
@@ -13,9 +6,7 @@ Material::Material(double k_a, double k_d, double k_s, double n_s, double k_refl
 	this->k_s = k_s;
 	this->n_s = n_s;
 	this->k_reflex = k_reflex;
-
 }
 
 Material::~Material() {
-	// TODO Auto-generated destructor stub
 }

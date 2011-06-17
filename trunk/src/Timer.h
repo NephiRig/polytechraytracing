@@ -4,10 +4,9 @@
 #include <SDL/SDL.h>
 #include <SDL/SDL_image.h>
 
-
-class Timer
-{
-  protected:
+namespace nsUtil {
+class Timer {
+protected:
 	//The clock time when the timer started
 	int startTicks;
 
@@ -18,23 +17,23 @@ class Timer
 	bool paused;
 	bool started;
 
-  public:
-	Timer ( void );
-	~Timer ( void );
+public:
+	Timer(void);
+	~Timer(void);
 
 	//The various clock actions
-	void start ( void );
-	void stop ( void );
-	void pause ( void );
-	void unpause ( void );
+	void start(void);
+	void stop(void);
+	void pause(void);
+	void unpause(void);
 
 	//Gets the timer's time
-	int getTicks ( void );
+	int getTicks(void);
 
 	//Checks the status of the timer
-	bool isStarted ( void );
-	bool isPaused ( void );
+	bool isStarted(void);
+	bool isPaused(void);
 };
-
+}
 
 #endif /*_TIMER_H_*/

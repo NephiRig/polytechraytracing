@@ -1,22 +1,8 @@
-/*
- * Couleur.h
- *
- *  Created on: 31 mai 2011
- *      Author: quentin, Michelet Valentin
- */
-
 #ifndef COLOR_H_
 #define COLOR_H_
 
 #include <iostream>
 
-/*
- * set(CMAKE_CXX_FLAGS "-Wall -g")
- *
- * add_executable(nom_executable
- * 					fichier1
- * 					fichier2)
- */
 class Color {
 public:
 	double val[3];
@@ -25,13 +11,13 @@ public:
 	Color(const Color &c);
 	virtual ~Color();
 
-	double get_r() const;
-	double get_g() const;
-	double get_b() const;
+	double getR() const;
+	double getG() const;
+	double getB() const;
 
-	void set_r(double r);
-	void set_g(double g);
-	void set_b(double b);
+	void setR(double r);
+	void setG(double g);
+	void setB(double b);
 
 	double& operator[] (unsigned i);
 	double operator[] (unsigned i) const;
@@ -59,8 +45,8 @@ public:
 
 	void clamp();
 	friend std::ostream& operator<<(std::ostream &os, const Color &c);
-	
-	
+
+	//Improvement:
 	//uint32_t getRGB () const;
 
 };

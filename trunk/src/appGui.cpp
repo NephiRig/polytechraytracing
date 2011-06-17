@@ -1,20 +1,7 @@
-/*
- * application.cpp
- *
- *  Created on: 31 mai 2011
- *      Author: quentin
- */
-
 #include <iostream>
 #include <fstream> // ofstream
 #include <cstdio> // sprintf
-/*
-#ifdef _MSC_VER
-   #include "stdint.h"
-#else
-   #include <cstdint>
-#endif
-*/
+
 #include <SDL/SDL.h>
 #include <SDL/SDL_image.h>
 
@@ -25,8 +12,6 @@
 #include "Image.h"
 #include "RayTracer.h"
 #include "Timer.h"
-
-using namespace std;
 
 //Screen attributes
 const int SCREEN_WIDTH = 640;
@@ -322,13 +307,7 @@ void handle_events(SDL_Event& event)
 		refreshDisplay ();
 	}
 }
-/*
-void dispUint32 ( uint32_t v )
-{
-	for ( int i = 31; i >= 0; --i )
-		cerr << ((v & (1 << i)) >> i);
-}
-*/
+
 int main(int argc, char **argv)
 {
 	cerr << "test huhu" << endl;
@@ -358,7 +337,7 @@ int main(int argc, char **argv)
 
 	//Shapes
 	posSphere = Vector3 ( 0.0, 0.0, 20.0 );
-	Sphere* sphere1 = new Sphere ( Color ( 0.0, 0.0, 1.0 ), Material(0.05, 0.2, 0.8, 30, 1), posSphere, 4.0 );
+	Sphere* sphere1 = new Sphere ( Color ( 0.0, 0.0, 1.0 ), Material(0.1, 0.4, 0.5, 20,0.5), posSphere, 4.0 );
 	Sphere* sphere2 = new Sphere ( Color ( 1.0, 0.0, 0.0 ), Material(0.05, 0.2, 0.8, 30, 1), Vector3 ( 10.0, 0.0, 20.0 ), 4.0 );
 	Sphere* sphere3 = new Sphere ( Color ( 0.0, 1.0, 0.0 ), Material(0.05, 0.2, 0.8, 30, 1), Vector3 ( 0.0, 0.0, 30.0 ), 4.0 );
 	Draughtboard *draughtboard1 = new Draughtboard(Color(0.1, 0.1, 0.1), Material(0.05, 0.10, 0.01, 5, 0.08), Color(.7, .7, .7), Ray(Vector3(10, -4, 20), Vector3(0, 1, 0)), 40, 40, 5);
@@ -398,7 +377,7 @@ int main(int argc, char **argv)
 	refreshDisplay ();
 
 
-	Timer timer = Timer ();
+	nsUtil::Timer timer = nsUtil::Timer ();
 	int fps = 35;
 
 
