@@ -1,10 +1,3 @@
-/*
- * RayTracer.cpp
- *
- *  Created on: 08.06.2011
- *      Author: nb-gyglim
- */
-
 #include "RayTracer.h"
 #include <iostream>
 
@@ -103,7 +96,7 @@ void RayTracer::raytrace(Image* img, int size) {
 Color RayTracer::calculateColor(Ray &r, int recursions) {
 
 	//FIXME Initialize with the background color
-	Color c = Color(0, 0, 0);
+	Color c = Color(0.0, 0.0, 0.0);
 
 	//Get the first intersection with any shape
 	Shape* closestShape = scene.shapes->get(0);
