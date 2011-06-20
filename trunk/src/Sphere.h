@@ -13,6 +13,8 @@ public:
 	Sphere (const Color &color = 0, const Material &material = 0, const Vector3 &centre = 0, double radius = 0);
 	virtual ~Sphere();
 
+	void setMaterial(const Material &m);
+
 	Set<double> intersect (const Ray& r) const;
 	Vector3 normal (const Vector3& pt_intersect) const;
 	Color get_color(const Vector3 &pt);
