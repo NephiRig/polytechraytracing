@@ -8,6 +8,19 @@
 ##
 ######################################################################
 
+#################################
+#
+# To add several exec
+#
+# set(CMAKE_CXX_FLAGS "-Wall -g")
+#
+# add_executable(nom_executable
+# 					fichier1
+# 					fichier2)
+#
+#################################
+
+
 project(appGui)
 
 set(${PROJECT_NAME}_HEADERS
@@ -17,8 +30,7 @@ set(${PROJECT_NAME}_HEADERS
     LightModel.h
     LightSource.h
     Material.h
-    ONB.h
-    
+    #ParamSurf.h
     PhongModel.h
     Plane.h
     Ray.h
@@ -29,7 +41,7 @@ set(${PROJECT_NAME}_HEADERS
     Set.h
     Shape.h
     Sphere.h
-    stdint.h
+    #stdint.h
     Timer.h
     Vector2.h
     Vector3.h
@@ -42,8 +54,7 @@ set(${PROJECT_NAME}_SOURCES
     LightModel.cpp
     LightSource.cpp
     Material.cpp
-    ONB.cpp
-    
+    #ParamSurf.cpp
     PhongModel.cpp
     Plane.cpp
     Ray.cpp
