@@ -6,12 +6,12 @@
 
 class LightSource {
 public:
-	LightSource(double intens, const Vector3 &pos, const Color &c) ;
-	virtual ~LightSource();
+	double _intensity;
+	Vector3 _position;
+	Color _color;
 
-	double intensity;
-	Color color;
-	Vector3 position;
+	LightSource(double intensity, const Vector3 &position, const Color &color);
+	virtual ~LightSource();
 };
 
 #endif /* LIGHTSOURCE_H_ */

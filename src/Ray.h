@@ -16,11 +16,11 @@ public:
 	Ray(const Ray &r);
 	virtual ~Ray();
 
-	Vector3 get_origin() const;
-	Vector3 get_direction() const;
+	Vector3 getOrigin() const;
+	Vector3 getDirection() const;
 
-	void set_origin(const Vector3 &new_origin);
-	void set_direction(const Vector3 &new_direction);
+	void setOrigin(const Vector3 &new_origin);
+	void setDirection(const Vector3 &new_direction);
 
 	/**
 	 * \fn Vector3 getPoint(double t) const

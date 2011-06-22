@@ -1,12 +1,11 @@
 #include "LightSource.h"
 
-LightSource::LightSource(double intens, const Vector3 &pos, const Color &c) {
-	intensity = intens;
-	position = pos;
-	if (c != 0){
-		color = c;
+LightSource::LightSource(double intensity, const Vector3 &position, const Color &color) :
+	_intensity(intensity), _position(position) {
+	if (color != 0){
+		_color = color;
 	} else {
-		color = Color(1,1,1);
+		_color = Color(1,1,1);
 	}
 }
 

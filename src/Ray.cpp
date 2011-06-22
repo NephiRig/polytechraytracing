@@ -13,19 +13,19 @@ Ray::~Ray() {
 }
 
 
-Vector3 Ray::get_origin() const {
+Vector3 Ray::getOrigin() const {
 	return coords[0];
 }
 
-Vector3 Ray::get_direction() const {
+Vector3 Ray::getDirection() const {
 	return coords[1];
 }
 
-void Ray::set_origin(const Vector3 &new_origin) {
+void Ray::setOrigin(const Vector3 &new_origin) {
 	coords[0] = new_origin;
 }
 
-void Ray::set_direction(const Vector3 &new_direction) {
+void Ray::setDirection(const Vector3 &new_direction) {
 	coords[1] = new_direction;
 }
 
@@ -45,5 +45,5 @@ Vector3& Ray::operator[](const int &i) {
 
 
 ostream& operator<<(ostream &os, const Ray &r) {
-	return os << r.get_origin() << " + t*" << r.get_direction() << std::endl;
+	return os << r.getOrigin() << " + t*" << r.getDirection() << std::endl;
 }
