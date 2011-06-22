@@ -65,6 +65,29 @@ Color Image::getPixel(int x, int y) const {
 	return this->_data[x][y];
 }
 
+bool operator==(const Image &img1, const Image &img2) {
+	int w1 = img1._w;
+	int h1 = img1._h;
+	int w2 = img1._w;
+	int h2 = img1._h;
+	if (w1 != w2 || h1 != h2) {
+		return false;
+	} else {
+		for (int y = 0; y < h1; y++) {
+			for (int x = 0; x < w1; x++) {
+				if (img1._data[x][y] != img2._data[x][y]) {
+					return false;
+				}
+			}
+		}
+	}
+	return true;
+}
+
+bool operator!=(const Image &img1, const Image &img2) {
+	return !(img1 == img2);
+}
+
 void Image::writePPM(std::ostream &s) const {
 	s << "P6\n" << this->_w << " " << this->_h << "\n255\n";
 	unsigned int i;
@@ -129,7 +152,7 @@ void Image::readPPM(std::string file_name) {
 	}
 }
 
-void Image::printImage(const char* fileName) const {
+void Image::printImage(const char *fileName) const {
 	std::ofstream myfile;
 	myfile.open(fileName);
 	this->writePPM(myfile);

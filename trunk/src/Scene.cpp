@@ -1,13 +1,10 @@
 #include "Scene.h"
 
-Scene::Scene(Set<Shape*>* sh, Set<LightSource*>* ls, const Vector3& obs,
-		const Vector3& _wayUp, const Vector3& ap, double dist) {
-	lightSources = ls;
-	shapes = sh;
-	observer = obs;
-	wayUp = _wayUp;
-	aimedPoint = ap;
-	distScreen = dist;
+Scene::Scene(Set<Shape*> *shapes, Set<LightSource*> *lightSources,
+		const Vector3 &observer, const Vector3& wayUp,
+		const Vector3& aimedPoint, double distScreen) :
+	_lightSources(lightSources), _shapes(shapes), _observer(observer),
+	_wayUp(wayUp), _aimedPoint(aimedPoint), _distScreen(distScreen) {
 }
 
 Scene::Scene() {

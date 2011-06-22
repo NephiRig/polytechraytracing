@@ -23,6 +23,9 @@ public:
 
 	Color getPixel(int x, int y) const;
 
+	friend bool operator==(const Image &img1, const Image &img2);
+	friend bool operator!=(const Image &img1, const Image &img2);
+
 	void writePPM(std::ostream &s) const;
 	void readPPM (std::string fileName);
 

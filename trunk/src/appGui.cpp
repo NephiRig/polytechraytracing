@@ -5,7 +5,6 @@
 #include <SDL/SDL.h>
 #include <SDL/SDL_image.h>
 
-#include "ParamSurf.h"
 #include "Vector3.h"
 #include "Sphere.h"
 #include "Draughtboard.h"
@@ -30,8 +29,6 @@ Image *img = NULL;
 SDL_Surface* screen = NULL;
 double camera_t = 0.0;
 Vector3 posSphere;
-Set<Shape*> shapes = Set<Shape*> ();
-Set<LightSource*> lights = Set<LightSource*> ();
 double rayonCamera = 1.0;
 bool recordvideo = false;
 int videoimages = 0;
@@ -206,35 +203,35 @@ void handle_events(SDL_Event& event)
 			case SDLK_ESCAPE:
 				quit = true;
 			break;
-			
+
 			case SDLK_LEFT:
-				rt->scene.observer[0] -= 10.0;
+				rt->scene._observer[0] -= 10.0;
 				refresh = true;
 			break;
 
 			case SDLK_RIGHT:
-				rt->scene.observer[0] += 10.0;
+				rt->scene._observer[0] += 10.0;
 				refresh = true;
 			break;
 
 			case SDLK_UP:
-				rt->scene.observer[2] += 10.0;
+				rt->scene._observer[2] += 10.0;
 				refresh = true;
 			break;
 
 			case SDLK_DOWN:
-				rt->scene.observer[2] -= 10.0;
+				rt->scene._observer[2] -= 10.0;
 				refresh = true;
 			break;
 
 			case SDLK_d:
 				camera_t -= .1;
 				cerr << "camera_t: " << camera_t << endl;
-				rt->scene.observer[0] = posSphere[0] + cos(camera_t)*rayonCamera;
-				rt->scene.observer[2] = posSphere[2] + sin(camera_t)*rayonCamera;
+				rt->scene._observer[0] = posSphere[0] + cos(camera_t)*rayonCamera;
+				rt->scene._observer[2] = posSphere[2] + sin(camera_t)*rayonCamera;
 				refresh = true;
 			break;
-			
+
 			case SDLK_f:
 			{
 				int n = 100;
@@ -244,8 +241,8 @@ void handle_events(SDL_Event& event)
 					cerr << "iteration " << i << " sur " << n << endl;
 					camera_t += .1;
 					cerr << "camera_t: " << camera_t << endl;
-					rt->scene.observer[0] = posSphere[0] + cos(camera_t)*rayonCamera;
-					rt->scene.observer[1] = posSphere[1] + sin(camera_t)*rayonCamera;
+					rt->scene._observer[0] = posSphere[0] + cos(camera_t)*rayonCamera;
+					rt->scene._observer[1] = posSphere[1] + sin(camera_t)*rayonCamera;
 					rt->raytrace ( img, OVERSAMPLING );
 					refreshDisplay ();
 				}
@@ -256,32 +253,35 @@ void handle_events(SDL_Event& event)
 			{
 				int n = 100;
 				recordvideo = true;
-				rt->scene.lightSources->get(1)->position[1] = 10;
+				rt->scene._lightSources->get(1)->_position[1] = 10;
 				for ( int i = 0; i < n; ++i )
 				{
 					cerr << "iteration " << i << " sur " << n << endl;
 					camera_t += .1;
 					cerr << "camera_t: " << camera_t << endl;
-					rt->scene.lightSources->get(1)->position[0] = posSphere[0] + cos(camera_t)*rayonCamera;
-					rt->scene.lightSources->get(1)->position[2] = posSphere[2] + sin(camera_t)*rayonCamera;
+					rt->scene._lightSources->get(1)->_position[0] = posSphere[0] + cos(camera_t)*rayonCamera;
+					rt->scene._lightSources->get(1)->_position[2] = posSphere[2] + sin(camera_t)*rayonCamera;
 					rt->raytrace ( img, OVERSAMPLING );
 					refreshDisplay ();
 				}
 			}
+			break;
 
-			case SDLK_m:
-			{
+			case SDLK_m: {
+
+
 				posSphere = Vector3(0.0, 0.0, 0.0);
 				Sphere* spherem = new Sphere(Color(166.0/255.0, 39.0/255.0, 0.0), Material(0.2, 0.9, 0.8, 80, 0.4), posSphere, 4.0);
 				Draughtboard *draughtboardm = new Draughtboard(Color(0.01, 0.01, 0.01), Material(0.4, 0.5, 0.4, 40, 0.5), Color(0.9, 0.9, 0.9), Ray(Vector3(0, -4, 0), Vector3(0, 1, 0)), 28, 24, 4);
 				Vector3 posLightm = Vector3(-20.0, 20.0, -20.0);
 				LightSource* sourcem = new LightSource(2.0, posLightm, Color(1.0, 1.0, 1.0));
 
+
 				refreshDisplay();
-				rt->scene.shapes->clear();
-				rt->scene.shapes->add(spherem);
-				rt->scene.shapes->add(draughtboardm);
-				rt->scene.lightSources->add(sourcem);
+				rt->scene._shapes->clear();
+				rt->scene._shapes->add(spherem);
+				rt->scene._shapes->add(draughtboardm);
+				rt->scene._lightSources->add(sourcem);
 
 				int n = 8;
 				recordvideo = true;
@@ -293,9 +293,9 @@ void handle_events(SDL_Event& event)
 							Material newMat(i/10.0, j/10.0, k/10.0, 70, 0.3);
 							camera_t += .1;
 							cerr << "camera_t: " << camera_t << endl;
-							rt->scene.shapes->get(0)->_material = Material(newMat);
+							rt->scene._shapes->get(0)->_material = Material(newMat);
 							rt->raytrace(img, OVERSAMPLING);
-							refreshDisplay ();
+							refreshDisplay();
 						}
 					}
 				}
@@ -303,33 +303,32 @@ void handle_events(SDL_Event& event)
 				delete draughtboardm;
 				delete sourcem;
 			}
-
-			break;
+				break;
 
 			case SDLK_q:
 				camera_t += .1;
 				cerr << "camera_t: " << camera_t << endl;
-				rt->scene.observer[0] = posSphere[0] + cos(camera_t)*rayonCamera;
-				rt->scene.observer[2] = posSphere[2] + sin(camera_t)*rayonCamera;
+				rt->scene._observer[0] = posSphere[0] + cos(camera_t)*rayonCamera;
+				rt->scene._observer[2] = posSphere[2] + sin(camera_t)*rayonCamera;
 				refresh = true;
 			break;
-			
+
 			case SDLK_w:
 				camera_t -= 0.50;
 				cerr << "camera_t: " << camera_t << endl;
-				rt->scene.aimedPoint[0] = posSphere[0] + cos(camera_t)*rayonCamera;
-				rt->scene.aimedPoint[2] = posSphere[2] + sin(camera_t)*rayonCamera;
+				rt->scene._aimedPoint[0] = posSphere[0] + cos(camera_t)*rayonCamera;
+				rt->scene._aimedPoint[2] = posSphere[2] + sin(camera_t)*rayonCamera;
 				refresh = true;
 			break;
-			
+
 			case SDLK_x:
 				camera_t += 0.50;
 				cerr << "camera_t: " << camera_t << endl;
-				rt->scene.aimedPoint[0] = posSphere[0] + cos(camera_t)*rayonCamera;
-				rt->scene.aimedPoint[2] = posSphere[2] + sin(camera_t)*rayonCamera;
+				rt->scene._aimedPoint[0] = posSphere[0] + cos(camera_t)*rayonCamera;
+				rt->scene._aimedPoint[2] = posSphere[2] + sin(camera_t)*rayonCamera;
 				refresh = true;
 			break;
-			
+
 			case SDLK_v:
 				recordvideo = !recordvideo;
 				cerr << "recordvideo: " << recordvideo << endl;
@@ -350,7 +349,7 @@ void handle_events(SDL_Event& event)
 int main(int argc, char **argv)
 {
 	cerr << "test huhu" << endl;
-	
+
 	SDL_Event event;
 
 	if (SDL_Init(SDL_INIT_EVERYTHING) < 0)
@@ -371,24 +370,44 @@ int main(int argc, char **argv)
 
 
 
+	//Create Scene
+	Set<Shape*> shapes = Set<Shape*> ();
 
 	//Shapes
-	posSphere = Vector3(0.0, 0.0, 0.0);
-	Sphere* sphere1 = new Sphere(Color(166.0/255.0, 39.0/255.0, 0.0), Material(0.2, 0.9, 0.8, 80, 0.4), Vector3(-5, 0, 0), 4.0);
-	Sphere* sphere2 = new Sphere(Color(38.0/255.0, 38.0/255.0, 38.0/255.0), Material(0.2, 0.9, 0.8, 80, 0.4), Vector3(5, 0, 0), 4.0);
-	Draughtboard *draughtboard1 = new Draughtboard(Color(0.01, 0.01, 0.01), Material(0.4, 0.5, 0.4, 40, 0.5), Color(0.9, 0.9, 0.9), Ray(Vector3(0, -4, 0), Vector3(0, 1, 0)), 60, 40, 4);
+	posSphere = Vector3 ( 0.0, 0.0, 20.0 );
+	Sphere* sphere1 = new Sphere ( Color ( 0.0, 0.0, 1.0 ), Material(0.1, 0.4, 0.5, 20,0.5), posSphere, 4.0 );
+	Sphere* sphere2 = new Sphere ( Color ( 1.0, 0.0, 0.0 ), Material(0.05, 0.2, 0.8, 30, 1), Vector3 ( 10.0, 0.0, 20.0 ), 4.0 );
+	Sphere* sphere3 = new Sphere ( Color ( 0.0, 1.0, 0.0 ), Material(0.05, 0.2, 0.8, 30, 1), Vector3 ( 0.0, 0.0, 30.0 ), 4.0 );
+	Draughtboard *draughtboard1 = new Draughtboard(Color(0.1, 0.1, 0.1), Material(0.05, 0.10, 0.01, 5, 0.08), Color(.7, .7, .7), Ray(Vector3(10, -4, 20), Vector3(0, 1, 0)), 40, 40, 5);
+
+	/*
+	mat M0 = "0,0,1,0; 0,1,0,0; 1,0,0,0";
+	mat M1 = "0,0,1,0; 0,-1,0,0; 1,0,0,0";
+	mat M2 = "0,-1,0,0; 0,0,-1,0; 0,0,0,-1";
+	mat M3 = "0,0,0,1; -1,0,0,0; 0,-1,0,0";
+	ParamSurf* psphere1 = new ParamSurf(Color(166/255, 39/255, 0.0), Material(0.1, 0.4, 0.5, 20,0.5), M0, M1, M2, M3, "sphere");
+	//*/
+
+	//Plane *plane1 = new Plane(Color(0.9, 0.9, 0.9), Material(0.05, 0.10, 0.01, 5, 0.08), Ray(Vector3(10, -4, 20), Vector3(0, 1, 0)));
 
 	//Add shapes
-	shapes.add(sphere1);
-	shapes.add(sphere2);
-	shapes.add(draughtboard1);
+	shapes.add ( sphere1 );
+	shapes.add ( sphere2 );
+	shapes.add ( sphere3 );
+	//shapes.add ( psphere1 );
+	//shapes.add ( plane1 );
+	shapes.add ( draughtboard1 );
 
 	// light sources
-	Vector3 posLight1 = Vector3(-20.0, 20.0, -20.0);
-	LightSource* source1 = new LightSource(3.0, posLight1, Color(1.0, 1.0, 1.0));
-	lights.add(source1);
+	Set<LightSource*> lights = Set<LightSource*> ();
+	Vector3 posLight1 = Vector3 ( 0.0, 10.0, 20.0 );
+	Vector3 posLight2 = Vector3 ( 20.0, 0.0, 20.0 );
+	LightSource* source1 = new LightSource ( 1.0, posLight1, Color ( 1.0, 1.0, 0.5 ) );
+	LightSource* source2 = new LightSource ( 15.0, posLight2, Color ( 1.0, 1.0, 1.0 ) );
+	lights.add ( source1 );
+	lights.add ( source2 );
 
-	Vector3 obs(0.0, 0.0, -40.0);
+	Vector3 obs ( 00.0, 0.0, -40.0 );
 	rayonCamera = (obs - posSphere).norm ();
 	cerr << "rayon camera : " << rayonCamera << endl;
 
@@ -399,7 +418,7 @@ int main(int argc, char **argv)
 	PhongModel lm = PhongModel ();
 	rt = new RayTracer ( s, lm );
 
-	img = new Image ( SCREEN_WIDTH, SCREEN_HEIGHT, Color(0.0, 0.0, 0.0));
+	img = new Image ( SCREEN_WIDTH, SCREEN_HEIGHT, Color ( 0.0, 0.0, 0.0 ) );
 
 	rt->raytrace ( img, OVERSAMPLING );
 	refreshDisplay ();
@@ -426,17 +445,21 @@ int main(int argc, char **argv)
 				quit = true;
 			}
 		}
-		
+
 		if( timer.getTicks () < 1000 / fps )
 			SDL_Delay ( ( 1000 / fps ) - timer.getTicks () );
 	}
 	SDL_FreeSurface ( screen );
 	SDL_Quit ();
-	
+
 	delete sphere1;
 	delete sphere2;
+	delete sphere3;
+	//delete plane1;
+	//delete psphere1;
 	delete draughtboard1;
 	delete source1;
+	delete source2;
 	delete rt;
 	delete img;
 

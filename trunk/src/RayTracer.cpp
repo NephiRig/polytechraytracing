@@ -7,11 +7,11 @@ RayTracer::RayTracer(Scene &sc, PhongModel &_lm) {
 	lm = _lm;
 	scene = sc;
 	NB_OF_INTERATIONS = 5;
-	cout << "\n # of Shapes: " << scene.shapes->length();
-	cout << "\n # of Lights: " << scene.lightSources->length() << "\n";
+	cout << "\n # of Shapes: " << scene._shapes->length();
+	cout << "\n # of Lights: " << scene._lightSources->length() << "\n";
 
-	for (int i = 0; i < scene.shapes->length(); i++) {
-		Color c = scene.shapes->get(i)->_color;
+	for (int i = 0; i < scene._shapes->length(); i++) {
+		Color c = scene._shapes->get(i)->_color;
 		cout << "Color " << i << " R: ";
 		cout << c[0] << "; G: " << c[1] << "; B:" << c[2] << "\n";
 	}
@@ -32,16 +32,16 @@ void RayTracer::raytrace(Image* img) {
 	int h = img->height();
 
 	//With the given values we create an according screen
-	ScreenV2 s = ScreenV2(scene.observer, scene.wayUp, scene.aimedPoint,
+	ScreenV2 s = ScreenV2(scene._observer, scene._wayUp, scene._aimedPoint,
 			PI / 8.0, w, h);
-	cerr << "init screen : " << s.initFromDistScreen(scene.distScreen) << endl;
+	cerr << "init screen : " << s.initFromDistScreen(scene._distScreen) << endl;
 	//cerr << "init screen : " << s.initFromWH3D ( w/1000.0, h/1000.0 ) << endl;
 
 	//Iterate over all the pixels of the screen/image
 	for (int y = 0; y < h; ++y) {
 		for (int x = 0; x < w; ++x) {
 			//Create the ray from the observer point, passing through the pixel
-			Ray r = Ray(scene.observer, s.getPixel(x, y) - scene.observer);
+			Ray r = Ray(scene._observer, s.getPixel(x, y) - scene._observer);
 
 			//Set the pixel accoring to the calculated Color/Light
 			img->setPixel(x, y, calculateColor(r, NB_OF_INTERATIONS));
@@ -64,9 +64,9 @@ void RayTracer::raytrace(Image* img, int size) {
 		int h = img->height();
 
 		//With the given values we create an according screen
-		ScreenV2 s = ScreenV2(scene.observer, scene.wayUp, scene.aimedPoint,
+		ScreenV2 s = ScreenV2(scene._observer, scene._wayUp, scene._aimedPoint,
 				PI / 8.0, w, h);
-		cerr << "init screen : " << s.initFromDistScreen(scene.distScreen) << endl;
+		cerr << "init screen : " << s.initFromDistScreen(scene._distScreen) << endl;
 		//cerr << "init screen : " << s.initFromWH3D ( w/1000.0, h/1000.0 ) << endl;
 
 		//Iterate over all the pixels of the screen/image
@@ -76,8 +76,8 @@ void RayTracer::raytrace(Image* img, int size) {
 				for (double dx = -0.45; dx <= 0.45; dx += 0.9 / (size-1)) {
 					for (double dy = -0.45; dy <= 0.45; dy += 0.9 / (size-1)) {
 						//Create the ray from the observer point, passing through the pixel
-						Ray r = Ray(scene.observer,
-								s.getPixel(x + dx, y + dy) - scene.observer);
+						Ray r = Ray(scene._observer,
+								s.getPixel(x + dx, y + dy) - scene._observer);
 						c += calculateColor(r, NB_OF_INTERATIONS);
 					}
 				}
@@ -99,21 +99,21 @@ Color RayTracer::calculateColor(Ray &r, int recursions) {
 	Color c = Color(0.0, 0.0, 0.0);
 
 	//Get the first intersection with any shape
-	Shape* closestShape = scene.shapes->get(0);
+	Shape* closestShape = scene._shapes->get(0);
 	double closestIP;
 	bool hasIntersection = false;
 	r[1].normalize ();
-	Ray r_moved = Ray(r.getPoint(1), r.get_direction());
-	for (int i = 0; i < scene.shapes->length(); i++) {
-		Set<double> intersections = scene.shapes->get(i)->intersect(r_moved);
+	Ray r_moved = Ray(r.getPoint(1), r.getDirection());
+	for (int i = 0; i < scene._shapes->length(); i++) {
+		Set<double> intersections = scene._shapes->get(i)->intersect(r_moved);
 
 		if (!hasIntersection && !intersections.empty()) {
-			closestShape = scene.shapes->get(i);
+			closestShape = scene._shapes->get(i);
 			closestIP = intersections[0];
 			hasIntersection = true;
 		} else if (hasIntersection && !intersections.empty()
 				&& intersections[0] < closestIP) {
-			closestShape = scene.shapes->get(i);
+			closestShape = scene._shapes->get(i);
 			closestIP = intersections[0];
 			//cout << "t1: " << intersections[0] << " t2: " << intersections[1] << endl;;
 			//hasIntersection = true;
@@ -131,7 +131,7 @@ Color RayTracer::calculateColor(Ray &r, int recursions) {
 
 		//Make sure the normal points into the right direction
 		//FIXME is this correct??
-		Vector3 r_dir_op = -r.get_direction ();
+		Vector3 r_dir_op = -r.getDirection ();
 		if (dot_product(r_dir_op, n) < 0) {
 			//if (dot_product(V, n) < 0) {
 			n = -n;
@@ -154,8 +154,8 @@ Color RayTracer::calculateColor(Ray &r, int recursions) {
 		c = 1 * lm.getAmbient(closestShape->_material)
 			  * closestShape->getColor(intersection);
 
-		for (int i = 0; i < scene.lightSources->length(); i++) {
-			LightSource* l = scene.lightSources->get(i);
+		for (int i = 0; i < scene._lightSources->length(); i++) {
+			LightSource* l = scene._lightSources->get(i);
 			if (!isHidden(l, intersection)) {
 
 				double diffuse = lm.getDiffuse(normal, l,
@@ -163,8 +163,8 @@ Color RayTracer::calculateColor(Ray &r, int recursions) {
 				double specular = lm.getSpecular(reflected, l,
 						closestShape->_material);
 				c += diffuse * closestShape->getColor(intersection)
-						* l->intensity;
-				c += specular * l->color * l->intensity;
+						* l->_intensity;
+				c += specular * l->_color * l->_intensity;
 
 			}
 		}
@@ -185,24 +185,24 @@ Color RayTracer::calculateColor(Ray &r, int recursions) {
 bool RayTracer::isHidden(LightSource* lightSource, Vector3 &point) {
 	//return false;
 	//Create the ray between intersection point and light source
-	Ray ray = Ray ( point, (lightSource->position - point).normalize () );
+	Ray ray = Ray ( point, (lightSource->_position - point).normalize () );
 	Vector3 point_moved = point + 1*ray[1];
 	ray[0] = point_moved; //Ray r_moved = Ray(r.getPoint(1), r.get_direction());
 	//Get the first intersection with any shape
-	Shape* closestShape = scene.shapes->get(0);
+	Shape* closestShape = scene._shapes->get(0);
 	double closestIP;
 	bool hasIntersection = false;
 
-	for (int i = 0; i < scene.shapes->length(); i++) {
-		Set<double> intersections = scene.shapes->get(i)->intersect(ray);
+	for (int i = 0; i < scene._shapes->length(); i++) {
+		Set<double> intersections = scene._shapes->get(i)->intersect(ray);
 
 		if (!hasIntersection && !intersections.empty()) {
-			closestShape = scene.shapes->get(i);
+			closestShape = scene._shapes->get(i);
 			closestIP = intersections[0];
 			hasIntersection = true;
 		} else if (hasIntersection && !intersections.empty()
 				&& intersections[0] < closestIP) {
-			closestShape = scene.shapes->get(i);
+			closestShape = scene._shapes->get(i);
 			closestIP = intersections[0];
 			hasIntersection = true;
 		}
@@ -212,7 +212,7 @@ bool RayTracer::isHidden(LightSource* lightSource, Vector3 &point) {
 			//Create a vector between the two object intersections
 			Vector3 point_intersection = intersection - point_moved;
 			//Create a vector between object intersection and light source
-			Vector3 point_light = lightSource->position - point_moved;
+			Vector3 point_light = lightSource->_position - point_moved;
 			//If |point_light| > |point_intersection| there is shadow
 			if ( point_light.norm() > point_intersection.norm() )
 				return true;
