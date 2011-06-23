@@ -7,17 +7,16 @@
 
 class Sphere : public Shape {
 public:
-	Vector3 _centre;
+	Vector3 _center;
 	double _radius;
 
-	Sphere (const Color &color = 0, const Material &material = 0, const Vector3 &centre = 0, double radius = 0);
+	Sphere (const Color &color = 0, const Material &material = 0, const Vector3 &center = 0, double radius = 0);
 	virtual ~Sphere();
 
-	void setMaterial(const Material &m);
+	void setMaterial(const Material &material);
 
-	Set<double> intersect (const Ray& r) const;
-	Vector3 normal (const Vector3& pt_intersect) const;
-	Color get_color(const Vector3 &pt);
+	virtual Set<double> intersect (const Ray& ray) const;
+	virtual Vector3 normal (const Vector3& pointIntersection) const;
 };
 
 #endif /* SPHERE_H_ */

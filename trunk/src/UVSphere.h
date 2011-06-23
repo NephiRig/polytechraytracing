@@ -1,23 +1,17 @@
 #ifndef UVSPHERE_H_
 #define UVSPHERE_H_
 
-#include "Shape.h"
-#include "Vector3.h"
-#include "Ray.h"
+#include "Sphere.h"
 #include "Texture.h"
 
-class UVSphere : public Shape {
+class UVSphere : public Sphere {
 public:
-	Vector3 _center;
-	float _radius;
 	Texture *_tex;
 
-	UVSphere(const Color &color, const Material &material, const Vector3 &center, float radius, Texture *tex);
+	UVSphere(const Color &color = 0, const Material &material = 0, const Vector3 &center = 0, float radius = 0, Texture *tex = 0);
 	virtual ~UVSphere();
 
-	Vector3 normal(const Vector3& pt_intersect) const;
-	Set<double> intersect(const Ray& r) const;
-	virtual Color getColor(const Vector3& pt);
+	virtual Color getColor(const Vector3& pointIntersection);
 };
 
 #endif /* UVSPHERE_H_ */
