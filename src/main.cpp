@@ -5,15 +5,17 @@
 #include <SDL/SDL.h>
 #include <SDL/SDL_image.h>
 
-#include "Vector3.h"
-#include "Sphere.h"
 #include "Draughtboard.h"
-#include "Ray.h"
 #include "Image.h"
-#include "RayTracer.h"
-#include "UVSphere.h"
 #include "ImageTexture.h"
+#include "MarbleTexture.h"
+#include "NoiseTexture.h"
+#include "Ray.h"
+#include "RayTracer.h"
+#include "Sphere.h"
 #include "Timer.h"
+#include "UVSphere.h"
+#include "Vector3.h"
 
 //Screen attributes
 const int SCREEN_WIDTH = 640;
@@ -177,13 +179,13 @@ void handle_events(SDL_Event& event) {
 		case SDLK_l: {
 			int n = 100;
 			recordvideo = true;
-			rt->scene._lightSources->get(1)->_position[1] = 10;
+			rt->scene._lightSources->get(0)->_position[1] = 10;
 			for(int i = 0; i < n; ++i){
 				cerr << "iteration " << i << " sur " << n << endl;
 				camera_t += .1;
 				cerr << "camera_t: " << camera_t << endl;
-				rt->scene._lightSources->get(1)->_position[0] = posSphere[0] + cos(camera_t)*rayonCamera;
-				rt->scene._lightSources->get(1)->_position[2] = posSphere[2] + sin(camera_t)*rayonCamera;
+				rt->scene._lightSources->get(0)->_position[0] = posSphere[0] + cos(camera_t)*rayonCamera;
+				rt->scene._lightSources->get(0)->_position[2] = posSphere[2] + sin(camera_t)*rayonCamera;
 				rt->raytrace(img, OVERSAMPLING);
 				refreshDisplay();
 			}
@@ -292,18 +294,28 @@ int main(int argc, char **argv) {
 	//Scene setup
 	//Shapes
 	posSphere = Vector3(0.0, 0.0, 0.0);
+
 	//ImageTexture *texQuentin = new ImageTexture("./img/quentin.ppm");
-	ImageTexture *tex10 = new ImageTexture("./img/billard10.ppm");
-	ImageTexture *tex8 = new ImageTexture("./img/billard8.ppm");
+	//ImageTexture *tex10 = new ImageTexture("./img/billard10.ppm");
 	//Sphere* sphere1 = new Sphere(Color(166.0/255.0, 39.0/255.0, 0.0), Material(0.2, 0.9, 0.8, 80, 0.4), Vector3(-5, 0, 0), 4.0);
-	UVSphere* sphere1 = new UVSphere(Color(0, 0, 0), Material(0.2, 0.9, 0.8, 80, 0.01), Vector3(-5, 0, 0), 4.0, tex10);
+	//UVSphere* sphere1 = new UVSphere(Color(0, 0, 0), Material(0.2, 0.9, 0.8, 80, 0.01), Vector3(-5, 0, 0), 4.0, tex10);
 	//Sphere* sphere2 = new Sphere(Color(38.0/255.0, 38.0/255.0, 38.0/255.0), Material(0.2, 0.9, 0.8, 80, 0.4), Vector3(5, 0, 0), 4.0);
-	UVSphere* sphere2 = new UVSphere(Color(0, 0, 0), Material(0.2, 0.9, 0.8, 80, 0.01), Vector3(5, 0, 0), 4.0, tex8);
-	//Draughtboard *draughtboard1 = new Draughtboard(Color(0.01, 0.01, 0.01), Material(0.4, 0.5, 0.4, 40, 0.5), Color(0.9, 0.9, 0.9), Ray(Vector3(0, -4, 0), Vector3(0, 1, 0)), 60, 40, 4);
-	Rectangle* draughtboard1 = new Rectangle(Color(0.0, 100.0/255.0, 0.0), Material(0.4, 0.5, 0.4, 40, 0.0), Ray(Vector3(0, -4, 0), Vector3(0, 1, 0)), 60, 40);
+
+	ImageTexture *tex10 = new ImageTexture("./img/billard10.ppm");
+	UVSphere *sphere1 = new UVSphere(Color(0, 0, 0), Material(0.2, 0.9, 0.8, 80, 0.01), Vector3(-5, 0, 0), 4.0, tex10);
+
+	NoiseTexture *noiseTex = new NoiseTexture(Color(166.0/255.0, 39.0/255.0, 0.0), Color(136.0/255.0, 29.0/255.0, 0.0), 2.0);
+	UVSphere *sphere2 = new UVSphere(Color(0, 0, 0), Material(0.2, 0.9, 0.8, 80, 0.01), Vector3(5, 0, 0), 4.0, noiseTex);
+
+	MarbleTexture *marbleTex = new MarbleTexture(0.10, 2);
+	UVSphere *sphere3 = new UVSphere(Color(0, 0, 0), Material(0.2, 0.9, 0.8, 80, 0.01), Vector3(0, 0, 6), 4.0, marbleTex);
+
+	Draughtboard *draughtboard1 = new Draughtboard(Color(0.01, 0.01, 0.01), Material(0.4, 0.5, 0.4, 40, 0.5), Color(0.9, 0.9, 0.9), Ray(Vector3(0, -4, 0), Vector3(0, 1, 0)), 60, 40, 4);
+	//Rectangle *draughtboard1 = new Rectangle(Color(0.0, 100.0/255.0, 0.0), Material(0.4, 0.5, 0.4, 40, 0.0), Ray(Vector3(0, -4, 0), Vector3(0, 1, 0)), 60, 40);
 	//Add shapes
 	shapes.add(sphere1);
 	shapes.add(sphere2);
+	shapes.add(sphere3);
 	shapes.add(draughtboard1);
 
 	//Light sources
@@ -353,8 +365,9 @@ int main(int argc, char **argv) {
 
 	//Free memory
 	delete sphere1;
-	//delete sphere2;
-	//delete draughtboard1;
+	delete sphere2;
+	delete sphere3;
+	delete draughtboard1;
 	delete source1;
 	delete rt;
 	delete img;
