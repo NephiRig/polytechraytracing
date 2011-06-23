@@ -5,10 +5,11 @@
 
 ScreenV2::ScreenV2 ( const Vector3& _observer, const Vector3& _wayUp,
 	const Vector3& _aimedPoint, double _viewAngle, int _width2D, int _height2D )
-	: initialized(false), observer(_observer),
+	: observer(_observer),
 	aimedPoint(_aimedPoint), viewAngle(_viewAngle),
 	w2D(_width2D), h2D(_height2D)
 {
+	initialized = false;
 	wayUp = _wayUp.normalized ();
 }
 

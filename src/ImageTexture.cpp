@@ -1,7 +1,7 @@
 #include "ImageTexture.h"
 
 ImageTexture::ImageTexture(std::string file_name) {
-	image = new Image(200, 200);
+	image = new Image(2, 2);
 	image->readReversePPM(file_name);
 }
 

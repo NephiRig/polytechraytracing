@@ -159,6 +159,21 @@ void handle_events(SDL_Event& event) {
 		}
 			break;
 
+		case SDLK_t: {
+			int n = 100;
+			recordvideo = true;
+			for(int i = 0; i < n; ++i){
+				cerr << "iteration " << i << " sur " << n << endl;
+				camera_t += .1;
+				cerr << "camera_t: " << camera_t << endl;
+				rt->scene._observer[0] = posSphere[0] + cos(camera_t)*rayonCamera;
+				rt->scene._observer[2] = posSphere[2] + sin(camera_t)*rayonCamera;
+				rt->raytrace(img, OVERSAMPLING);
+				refreshDisplay();
+			}
+		}
+			break;
+
 		case SDLK_l: {
 			int n = 100;
 			recordvideo = true;
@@ -277,6 +292,7 @@ int main(int argc, char **argv) {
 	//Scene setup
 	//Shapes
 	posSphere = Vector3(0.0, 0.0, 0.0);
+	//ImageTexture *texQuentin = new ImageTexture("./img/quentin.ppm");
 	ImageTexture *tex10 = new ImageTexture("./img/billard10.ppm");
 	ImageTexture *tex8 = new ImageTexture("./img/billard8.ppm");
 	//Sphere* sphere1 = new Sphere(Color(166.0/255.0, 39.0/255.0, 0.0), Material(0.2, 0.9, 0.8, 80, 0.4), Vector3(-5, 0, 0), 4.0);

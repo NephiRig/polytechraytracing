@@ -141,8 +141,8 @@ void Image::readPPM(std::string file_name) {
 
 	in.get(ch);
 
-	for (int y = 0; y < this->_h; y++) {
-		for (int x = 0; x < this->_w; x++) {
+	for (y = 0; y < this->_h; y++) {
+		for (x = 0; x < this->_w; x++) {
 			in.get(red);
 			in.get(green);
 			in.get(blue);
@@ -183,8 +183,8 @@ void Image::readReversePPM(std::string file_name) {
 
 	in.get(ch);
 
-	for (int y = this->_h-1; y >= 0; y--) {
-		for (int x = 0; x < this->_w; x++) {
+	for (y = this->_h-1; y >= 0; y--) {
+		for (x = 0; x < this->_w; x++) {
 			in.get(red);
 			in.get(green);
 			in.get(blue);
