@@ -182,7 +182,7 @@ bool RayTracer::isHidden(LightSource* lightSource, Vector3 &point) {
 	//return false;
 	//Create the ray between intersection point and light source
 	Ray ray = Ray(point, (lightSource->_position - point).normalize());
-	Vector3 point_moved = point + 1 * ray[1];
+	Vector3 point_moved = point + 0.01 * ray[1];
 	ray[0] = point_moved; //Ray r_moved = Ray(r.getPoint(1), r.get_direction());
 	//Get the first intersection with any shape
 	Shape* closestShape = scene._shapes->get(0);
