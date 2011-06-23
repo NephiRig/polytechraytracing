@@ -11,8 +11,7 @@ public:
 	Color **_data;
 	int _w, _h;
 
-	Image() {}
-	Image(int w, int h);
+	Image(int w = 0, int h = 0);
 	Image(int w, int h, Color c);
 	Image(const Image *source);
 
@@ -28,6 +27,7 @@ public:
 
 	void writePPM(std::ostream &s) const;
 	void readPPM (std::string fileName);
+	void readReversePPM (std::string fileName);
 
 	void printImage(const char* fileName) const;
 };

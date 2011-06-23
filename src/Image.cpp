@@ -132,6 +132,8 @@ void Image::readPPM(std::string file_name) {
 	this->_w = cols;
 	this->_h = rows;
 
+	std::cout << "HELLO " << cols << " " << rows << std::endl;
+
 	this->_data = new Color*[this->_w];
 	for (x = 0; x < this->_w; x++) {
 		this->_data[x] = new Color[this->_h];
@@ -140,6 +142,48 @@ void Image::readPPM(std::string file_name) {
 	in.get(ch);
 
 	for (int y = 0; y < this->_h; y++) {
+		for (int x = 0; x < this->_w; x++) {
+			in.get(red);
+			in.get(green);
+			in.get(blue);
+			this->_data[x][y] = Color(
+					(float) ((unsigned char)red)/255.0,
+					(float) ((unsigned char)green)/255.0,
+					(float) ((unsigned char)blue)/255.0);
+		}
+	}
+}
+
+void Image::readReversePPM(std::string file_name) {
+	std::ifstream in;
+	in.open(file_name.c_str());
+	if (!in.is_open()) {
+		std::cerr << "Can't open file \'" << file_name << "\'.\n";
+		exit(-1);
+	}
+
+	char ch, type;
+	char red, green, blue;
+	int x, y, cols, rows;
+	int num;
+
+	in.get(ch);
+	in.get(type);
+	in >> cols >> rows >> num;
+
+	this->_w = cols;
+	this->_h = rows;
+
+	std::cout << "HELLO " << cols << " " << rows << std::endl;
+
+	this->_data = new Color*[this->_w];
+	for (x = 0; x < this->_w; x++) {
+		this->_data[x] = new Color[this->_h];
+	}
+
+	in.get(ch);
+
+	for (int y = this->_h-1; y >= 0; y--) {
 		for (int x = 0; x < this->_w; x++) {
 			in.get(red);
 			in.get(green);
