@@ -1,8 +1,8 @@
 #include "Sphere.h"
 #include <cmath>
 
-Sphere::Sphere(const Color &color, const Material &material, const Vector3 &centre, double radius) :
-	_centre(centre), _radius(radius) {
+Sphere::Sphere(const Color &color, const Material &material, const Vector3 &center, double radius) :
+	_center(center), _radius(radius) {
 	this->_color = color;
 	this->_material = material;
 }
@@ -10,19 +10,19 @@ Sphere::Sphere(const Color &color, const Material &material, const Vector3 &cent
 Sphere::~Sphere() {
 }
 
-void Sphere::setMaterial(const Material &m) {
-	_material = m;
+void Sphere::setMaterial(const Material &material) {
+	_material = material;
 }
 
-Set<double> Sphere::intersect(const Ray& r) const {
+Set<double> Sphere::intersect(const Ray& ray) const {
 
 	Set<double> s = Set<double> (2);
-	Vector3 d_o_x = dot_product(r.getDirection(), (r.getOrigin() - _centre));
-	Vector3 o_c = dot_product(r.getOrigin(), _centre);
+	Vector3 d_o_x = dot_product(ray.getDirection(), (ray.getOrigin() - _center));
+	Vector3 o_c = dot_product(ray.getOrigin(), _center);
 
-	double a = r.getDirection().norm() * r.getDirection().norm();
+	double a = ray.getDirection().norm() * ray.getDirection().norm();
 	double b = 2 * (d_o_x[0] + d_o_x[1] + d_o_x[2]);
-	double c = pow(_centre.norm(), 2) + pow(r.getOrigin().norm(), 2) - 2 * (o_c[0] + o_c[1] + o_c[2]) - _radius * _radius;
+	double c = pow(_center.norm(), 2) + pow(ray.getOrigin().norm(), 2) - 2 * (o_c[0] + o_c[1] + o_c[2]) - _radius * _radius;
 
 	//Apply solve function (-b +- sqrt(b^2-4ac))/2a
 	double d = b * b - 4 * a * c; //the term in the root
@@ -42,6 +42,6 @@ Set<double> Sphere::intersect(const Ray& r) const {
 	return s;
 }
 
-Vector3 Sphere::normal(const Vector3& pt_intersect) const {
-	return (pt_intersect - _centre);
+Vector3 Sphere::normal(const Vector3& pointIntersection) const {
+	return (pointIntersection - _center);
 }
