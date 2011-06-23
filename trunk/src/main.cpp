@@ -11,6 +11,8 @@
 #include "Ray.h"
 #include "Image.h"
 #include "RayTracer.h"
+#include "UVSphere.h"
+#include "ImageTexture.h"
 #include "Timer.h"
 
 //Screen attributes
@@ -275,9 +277,14 @@ int main(int argc, char **argv) {
 	//Scene setup
 	//Shapes
 	posSphere = Vector3(0.0, 0.0, 0.0);
-	Sphere* sphere1 = new Sphere(Color(166.0/255.0, 39.0/255.0, 0.0), Material(0.2, 0.9, 0.8, 80, 0.4), Vector3(-5, 0, 0), 4.0);
-	Sphere* sphere2 = new Sphere(Color(38.0/255.0, 38.0/255.0, 38.0/255.0), Material(0.2, 0.9, 0.8, 80, 0.4), Vector3(5, 0, 0), 4.0);
-	Draughtboard *draughtboard1 = new Draughtboard(Color(0.01, 0.01, 0.01), Material(0.4, 0.5, 0.4, 40, 0.5), Color(0.9, 0.9, 0.9), Ray(Vector3(0, -4, 0), Vector3(0, 1, 0)), 60, 40, 4);
+	ImageTexture *tex10 = new ImageTexture("./img/billard10.ppm");
+	ImageTexture *tex8 = new ImageTexture("./img/billard8.ppm");
+	//Sphere* sphere1 = new Sphere(Color(166.0/255.0, 39.0/255.0, 0.0), Material(0.2, 0.9, 0.8, 80, 0.4), Vector3(-5, 0, 0), 4.0);
+	UVSphere* sphere1 = new UVSphere(Color(0, 0, 0), Material(0.2, 0.9, 0.8, 80, 0.01), Vector3(-5, 0, 0), 4.0, tex10);
+	//Sphere* sphere2 = new Sphere(Color(38.0/255.0, 38.0/255.0, 38.0/255.0), Material(0.2, 0.9, 0.8, 80, 0.4), Vector3(5, 0, 0), 4.0);
+	UVSphere* sphere2 = new UVSphere(Color(0, 0, 0), Material(0.2, 0.9, 0.8, 80, 0.01), Vector3(5, 0, 0), 4.0, tex8);
+	//Draughtboard *draughtboard1 = new Draughtboard(Color(0.01, 0.01, 0.01), Material(0.4, 0.5, 0.4, 40, 0.5), Color(0.9, 0.9, 0.9), Ray(Vector3(0, -4, 0), Vector3(0, 1, 0)), 60, 40, 4);
+	Rectangle* draughtboard1 = new Rectangle(Color(0.0, 100.0/255.0, 0.0), Material(0.4, 0.5, 0.4, 40, 0.0), Ray(Vector3(0, -4, 0), Vector3(0, 1, 0)), 60, 40);
 	//Add shapes
 	shapes.add(sphere1);
 	shapes.add(sphere2);
@@ -330,8 +337,8 @@ int main(int argc, char **argv) {
 
 	//Free memory
 	delete sphere1;
-	delete sphere2;
-	delete draughtboard1;
+	//delete sphere2;
+	//delete draughtboard1;
 	delete source1;
 	delete rt;
 	delete img;
