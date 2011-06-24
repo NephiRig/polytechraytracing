@@ -1,19 +1,19 @@
 #include "UVSphere.h"
 #include <cmath>
 
-UVSphere::UVSphere(const Color &color, const Material &material, const Vector3 &center, float radius, Texture *tex) :
-	Sphere(color, material, center, radius), _tex(tex) {
+UVSphere::UVSphere(const Color &color, const Material &material, const Vector3 &center, float radius, Texture *tex, const float plusTheta, const float plusPhi) :
+	Sphere(color, material, center, radius), _tex(tex), _plusTheta(plusTheta), _plusPhi(plusPhi) {
 }
 
 UVSphere::~UVSphere() {
 }
 
 Color UVSphere::getColor(const Vector3& pt) {
-	Vector3 n = normal(pt)/_radius;
+	Vector3 n = normal(pt) / _radius;
 
 	float twopi = 6.28318530718f;
 	float theta = acos(n[2]);
-	float phi = atan2(n[1], n[0]);
+	float phi = std::fmod((float)atan2(n[1], n[0]) + _plusPhi, twopi);
 
 	if (phi < 0.0f) {
 		phi += twopi;

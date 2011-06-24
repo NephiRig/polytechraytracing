@@ -295,14 +295,72 @@ int main(int argc, char **argv) {
 	//Shapes
 	posSphere = Vector3(0.0, 0.0, 0.0);
 
+	ImageTexture *tex1 = new ImageTexture("./billard/billard1.ppm");
+	ImageTexture *tex2 = new ImageTexture("./billard/billard2.ppm");
+	ImageTexture *tex3 = new ImageTexture("./billard/billard3.ppm");
+	ImageTexture *tex4 = new ImageTexture("./billard/billard4.ppm");
+	ImageTexture *tex5 = new ImageTexture("./billard/billard5.ppm");
+	ImageTexture *tex6 = new ImageTexture("./billard/billard6.ppm");
+	ImageTexture *tex7 = new ImageTexture("./billard/billard7.ppm");
+	ImageTexture *tex8 = new ImageTexture("./billard/billard8.ppm");
+	ImageTexture *tex9 = new ImageTexture("./billard/billard9.ppm");
+	ImageTexture *tex10 = new ImageTexture("./billard/billard10.ppm");
+	ImageTexture *tex11 = new ImageTexture("./billard/billard11.ppm");
+	ImageTexture *tex12 = new ImageTexture("./billard/billard12.ppm");
+	ImageTexture *tex13 = new ImageTexture("./billard/billard13.ppm");
+	ImageTexture *tex14 = new ImageTexture("./billard/billard14.ppm");
+	ImageTexture *tex15 = new ImageTexture("./billard/billard15.ppm");
+
+	Material boulMat = Material(0.2, 0.9, 0.8, 40, 0.2);
+
+	UVSphere* sphere1 = new UVSphere(Color(0, 0, 0), boulMat, Vector3(0, 0, 0), 2.0, tex1, 0.0, M_PI/2.0);
+	UVSphere* sphere14 = new UVSphere(Color(0, 0, 0), boulMat, Vector3(2, 0, 3), 2.0, tex14, 0.0, M_PI/2.0);
+	UVSphere* sphere15 = new UVSphere(Color(0, 0, 0), boulMat, Vector3(-2, 0, 3), 2.0, tex15, 0.0, M_PI/2.0);
+	UVSphere* sphere4 = new UVSphere(Color(0, 0, 0), boulMat, Vector3(4, 0, 6), 2.0, tex4, 0.0, M_PI/2.0);
+	UVSphere* sphere8 = new UVSphere(Color(0, 0, 0), boulMat, Vector3(0, 0, 6), 2.0, tex8, 0.0, M_PI/2.0);
+	UVSphere* sphere7 = new UVSphere(Color(0, 0, 0), boulMat, Vector3(-4, 0, 6), 2.0, tex7, 0.0, M_PI/2.0);
+	UVSphere* sphere11 = new UVSphere(Color(0, 0, 0), boulMat, Vector3(6, 0, 9), 2.0, tex11, 0.0, M_PI/2.0);
+	UVSphere* sphere6 = new UVSphere(Color(0, 0, 0), boulMat, Vector3(2, 0, 9), 2.0, tex6, 0.0, M_PI/2.0);
+	UVSphere* sphere13 = new UVSphere(Color(0, 0, 0), boulMat, Vector3(-2, 0, 9), 2.0, tex13, 0.0, M_PI/2.0);
+	UVSphere* sphere10 = new UVSphere(Color(0, 0, 0), boulMat, Vector3(-6, 0, 9), 2.0, tex10, 0.0, M_PI/2.0);
+	UVSphere* sphere2 = new UVSphere(Color(0, 0, 0), boulMat, Vector3(8, 0, 12), 2.0, tex2, 0.0, M_PI/2.0);
+	UVSphere* sphere12 = new UVSphere(Color(0, 0, 0), boulMat, Vector3(4, 0, 12), 2.0, tex12, 0.0, M_PI/2.0);
+	UVSphere* sphere5 = new UVSphere(Color(0, 0, 0), boulMat, Vector3(-0, 0, 12), 2.0, tex5, 0.0, M_PI/2.0);
+	UVSphere* sphere9 = new UVSphere(Color(0, 0, 0), boulMat, Vector3(-4, 0, 12), 2.0, tex9, 0.0, M_PI/2.0);
+	UVSphere* sphere3 = new UVSphere(Color(0, 0, 0), boulMat, Vector3(-8, 0, 12), 2.0, tex3, 0.0, M_PI/2.0);
+
+	Sphere* white = new Sphere(Color(1, 1, 1), boulMat, Vector3(0, 0, -18), 2.0);
+
+
+	Rectangle *draughtboard1 = new Rectangle(Color(0.0, 100.0/255.0, 0.0), Material(0.01, 0.1, 0.1, 50, 0.0), Ray(Vector3(0, -2, 0), Vector3(0, 1, 0)), 60, 40);
+
+	shapes.add(sphere1);
+	shapes.add(sphere14);
+	shapes.add(sphere15);
+	shapes.add(sphere4);
+	shapes.add(sphere8);
+	shapes.add(sphere7);
+	shapes.add(sphere11);
+	shapes.add(sphere6);
+	shapes.add(sphere13);
+	shapes.add(sphere10);
+	shapes.add(sphere2);
+	shapes.add(sphere12);
+	shapes.add(sphere5);
+	shapes.add(sphere9);
+	shapes.add(sphere3);
+	shapes.add(white);
+	shapes.add(draughtboard1);
+
+
 	//ImageTexture *texQuentin = new ImageTexture("./img/quentin.ppm");
 	//ImageTexture *tex10 = new ImageTexture("./img/billard10.ppm");
 	//Sphere* sphere1 = new Sphere(Color(166.0/255.0, 39.0/255.0, 0.0), Material(0.2, 0.9, 0.8, 80, 0.4), Vector3(-5, 0, 0), 4.0);
 	//UVSphere* sphere1 = new UVSphere(Color(0, 0, 0), Material(0.2, 0.9, 0.8, 80, 0.01), Vector3(-5, 0, 0), 4.0, tex10);
 	//Sphere* sphere2 = new Sphere(Color(38.0/255.0, 38.0/255.0, 38.0/255.0), Material(0.2, 0.9, 0.8, 80, 0.4), Vector3(5, 0, 0), 4.0);
-
+	/*
 	ImageTexture *tex10 = new ImageTexture("./img/billard10.ppm");
-	UVSphere *sphere1 = new UVSphere(Color(0, 0, 0), Material(0.2, 0.9, 0.8, 80, 0.01), Vector3(-5, 0, 0), 4.0, tex10);
+	UVSphere *sphere1 = new UVSphere(Color(0, 0, 0), Material(0.2, 0.9, 0.8, 80, 0.01), Vector3(-5, 0, 0), 4.0, tex10, M_PI/4.0, M_PI/4.0);
 
 	NoiseTexture *noiseTex = new NoiseTexture(Color(166.0/255.0, 39.0/255.0, 0.0), Color(136.0/255.0, 29.0/255.0, 0.0), 2.0);
 	UVSphere *sphere2 = new UVSphere(Color(0, 0, 0), Material(0.2, 0.9, 0.8, 80, 0.01), Vector3(5, 0, 0), 4.0, noiseTex);
@@ -317,6 +375,7 @@ int main(int argc, char **argv) {
 	shapes.add(sphere2);
 	shapes.add(sphere3);
 	shapes.add(draughtboard1);
+	*/
 
 	//Light sources
 	Vector3 posLight1 = Vector3(-20.0, 20.0, -20.0);
@@ -365,8 +424,21 @@ int main(int argc, char **argv) {
 
 	//Free memory
 	delete sphere1;
+	delete sphere14;
+	delete sphere15;
+	delete sphere4;
+	delete sphere8;
+	delete sphere7;
+	delete sphere11;
+	delete sphere6;
+	delete sphere13;
+	delete sphere10;
 	delete sphere2;
+	delete sphere12;
+	delete sphere5;
+	delete sphere9;
 	delete sphere3;
+	delete white;
 	delete draughtboard1;
 	delete source1;
 	delete rt;
