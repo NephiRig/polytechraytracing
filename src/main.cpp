@@ -5,21 +5,18 @@
 #include <SDL/SDL.h>
 #include <SDL/SDL_image.h>
 
-#include "Draughtboard.h"
 #include "Image.h"
 #include "ImageTexture.h"
 #include "MarbleTexture.h"
 #include "NoiseTexture.h"
-#include "Ray.h"
 #include "RayTracer.h"
-#include "Sphere.h"
+#include "SceneParser.h"
 #include "Timer.h"
-#include "UVSphere.h"
-#include "Vector3.h"
 
 //Screen attributes
-const int SCREEN_WIDTH = 640;
-const int SCREEN_HEIGHT = 480;
+int SCREEN_WIDTH;
+int SCREEN_HEIGHT;
+int OVERSAMPLING;
 const int SCREEN_BPP = 32;
 
 bool quit = false;
@@ -38,7 +35,6 @@ Set<LightSource*> lights = Set<LightSource*>();
 double rayonCamera = 1.0;
 bool recordvideo = false;
 int videoimages = 0;
-int OVERSAMPLING = 1;
 
 
 SDL_Surface *load_image(std::string filename) {
@@ -192,41 +188,6 @@ void handle_events(SDL_Event& event) {
 		}
 			break;
 
-		case SDLK_m: {
-			posSphere = Vector3(0.0, 0.0, 0.0);
-			Sphere* spherem = new Sphere(Color(166.0/255.0, 39.0/255.0, 0.0), Material(0.2, 0.9, 0.8, 80, 0.4), posSphere, 4.0);
-			Draughtboard *draughtboardm = new Draughtboard(Color(0.01, 0.01, 0.01), Material(0.4, 0.5, 0.4, 40, 0.5), Color(0.9, 0.9, 0.9), Ray(Vector3(0, -4, 0), Vector3(0, 1, 0)), 28, 24, 4);
-			Vector3 posLightm = Vector3(-20.0, 20.0, -20.0);
-			LightSource* sourcem = new LightSource(2.0, posLightm, Color(1.0, 1.0, 1.0));
-
-			refreshDisplay();
-			rt->scene._shapes->clear();
-			rt->scene._shapes->add(spherem);
-			rt->scene._shapes->add(draughtboardm);
-			rt->scene._lightSources->add(sourcem);
-
-			int n = 8;
-			recordvideo = true;
-
-			//Changing k_a, k_d and k_s values
-			for(int k = 4; k <= n; k++) {
-				for(int j = 4; j <= n; j++) {
-					for(int i = 1; i <= 4; i++) {
-						Material newMat(i/10.0, j/10.0, k/10.0, 70, 0.3);
-						camera_t += .1;
-						cerr << "camera_t: " << camera_t << endl;
-						rt->scene._shapes->get(0)->_material = Material(newMat);
-						rt->raytrace(img, OVERSAMPLING);
-						refreshDisplay();
-					}
-				}
-			}
-			delete spherem;
-			delete draughtboardm;
-			delete sourcem;
-		}
-			break;
-
 		case SDLK_q:
 			camera_t += .1;
 			cerr << "camera_t: " << camera_t << endl;
@@ -267,53 +228,118 @@ void handle_events(SDL_Event& event) {
 	}
 }
 
-int main1337() {
+int main(int argv, char** argc) {
 
-	return 0;
+	if (argv > 2) {
+		std::cerr << "Please, enter a file name in argument or nothing to load the default scene." << std::endl;
+		return -1;
+	} else {
+		//Scene Settups
+		//If a file has been specified, we load it, otherwise, we load the default file defaultScene.xml
+		SceneParser *parser;
+		if (argv == 2) {
+			parser = new SceneParser(argc[1]);
+		} else {
+			parser = new SceneParser((char*)"./SceneDescriptions/defaultScene.xml");
+		}
+		shapes = parser->_shapes;
+		lights = parser->_lightSources;
+		SCREEN_HEIGHT = parser->_screenHeight;
+		SCREEN_WIDTH = parser->_screenWidth;
+		OVERSAMPLING = parser->_oversampling;
+
+		//FIXME faire une classe Camera qui regroupe les notions éparpillées dans ScreenV2 et Scene
+		//		puis finir le parser pour initialiser la caméra comme il faut
+		Vector3 obs(0.0, 0.0, -40.0);
+		rayonCamera = (obs - posSphere).norm();
+		cerr << "rayon camera : " << rayonCamera << endl;
+		Vector3 aimedPoint = posSphere;
+		double distScreen = 0.50; //700.0; // distance to the screen from the observer point
+		Vector3 wayUp = Vector3(0.0, 1.0, 0.0);
+		Scene s = Scene(&shapes, &lights, obs, wayUp, aimedPoint, distScreen);
+		//FIN DU FIXME
+
+
+
+		//SDL Setups
+		SDL_Event event;
+		if(SDL_Init(SDL_INIT_EVERYTHING) < 0) {
+			fprintf(stderr, "Unable to init SDL: %s\n", SDL_GetError());
+			exit(1);
+		}
+		atexit(SDL_Quit);
+
+		screen = SDL_SetVideoMode(SCREEN_WIDTH, SCREEN_HEIGHT, 0, SDL_SWSURFACE); // w, h
+		if(screen == NULL) {
+			fprintf(stderr, "Unable to set video mode.");
+			cerr << SDL_GetError() << endl;
+			exit(1);
+		}
+		SDL_WM_SetCaption("Polytech Ray Tracing", NULL);
+
+
+
+		//Picture creation
+		PhongModel lm = PhongModel();
+		rt = new RayTracer(s, lm);
+		img = new Image(SCREEN_WIDTH, SCREEN_HEIGHT, Color(0.0, 0.0, 0.0));
+		rt->raytrace(img, OVERSAMPLING);
+		refreshDisplay();
+
+		nsUtil::Timer timer = nsUtil::Timer();
+		int fps = 35;
+
+
+
+		// main loop
+		//While the user hasn't quit
+		while(quit == false) {
+			//While there's an event to handle
+			while(SDL_PollEvent(&event)) {
+				handle_events(event);
+				if(event.type == SDL_QUIT) {
+					//Quit the program
+					quit = true;
+				}
+			}
+
+			if(timer.getTicks() < 1000 / fps) {
+				SDL_Delay((1000 / fps) - timer.getTicks());
+			}
+		}
+		SDL_FreeSurface(screen);
+		SDL_Quit();
+		return 0;
+	}
 }
 
-int main(int argc, char **argv) {
-	//SDL setup
-	SDL_Event event;
-	if(SDL_Init(SDL_INIT_EVERYTHING) < 0) {
-		fprintf(stderr, "Unable to init SDL: %s\n", SDL_GetError());
-		exit(1);
-	}
-	atexit(SDL_Quit);
+int main1337(int argc, char **argv) {
 
-	screen = SDL_SetVideoMode(SCREEN_WIDTH, SCREEN_HEIGHT, 0, SDL_SWSURFACE); // w, h
-	if(screen == NULL) {
-		fprintf(stderr, "Unable to set video mode.");
-		cerr << SDL_GetError() << endl;
-		exit(1);
-	}
-	SDL_WM_SetCaption("Polytech Ray Tracing", NULL);
-
-
+	/*
 
 	//Scene setup
 	//Shapes
 	posSphere = Vector3(0.0, 0.0, 0.0);
 
-	ImageTexture *tex1 = new ImageTexture("./billard/billard1.ppm");
-	ImageTexture *tex2 = new ImageTexture("./billard/billard2.ppm");
-	ImageTexture *tex3 = new ImageTexture("./billard/billard3.ppm");
-	ImageTexture *tex4 = new ImageTexture("./billard/billard4.ppm");
-	ImageTexture *tex5 = new ImageTexture("./billard/billard5.ppm");
-	ImageTexture *tex6 = new ImageTexture("./billard/billard6.ppm");
-	ImageTexture *tex7 = new ImageTexture("./billard/billard7.ppm");
-	ImageTexture *tex8 = new ImageTexture("./billard/billard8.ppm");
-	ImageTexture *tex9 = new ImageTexture("./billard/billard9.ppm");
-	ImageTexture *tex10 = new ImageTexture("./billard/billard10.ppm");
-	ImageTexture *tex11 = new ImageTexture("./billard/billard11.ppm");
-	ImageTexture *tex12 = new ImageTexture("./billard/billard12.ppm");
-	ImageTexture *tex13 = new ImageTexture("./billard/billard13.ppm");
-	ImageTexture *tex14 = new ImageTexture("./billard/billard14.ppm");
-	ImageTexture *tex15 = new ImageTexture("./billard/billard15.ppm");
+	ImageTexture *tex1 = new ImageTexture("./ImagesSRC/billard/billard1.ppm");
+	ImageTexture *tex2 = new ImageTexture("./ImagesSRC/billard/billard2.ppm");
+	ImageTexture *tex3 = new ImageTexture("./ImagesSRC/billard/billard3.ppm");
+	ImageTexture *tex4 = new ImageTexture("./ImagesSRC/billard/billard4.ppm");
+	ImageTexture *tex5 = new ImageTexture("./ImagesSRC/billard/billard5.ppm");
+	ImageTexture *tex6 = new ImageTexture("./ImagesSRC/billard/billard6.ppm");
+	ImageTexture *tex7 = new ImageTexture("./ImagesSRC/billard/billard7.ppm");
+	ImageTexture *tex8 = new ImageTexture("./ImagesSRC/billard/billard8.ppm");
+	ImageTexture *tex9 = new ImageTexture("./ImagesSRC/billard/billard9.ppm");
+	ImageTexture *tex10 = new ImageTexture("./ImagesSRC/billard/billard10.ppm");
+	ImageTexture *tex11 = new ImageTexture("./ImagesSRC/billard/billard11.ppm");
+	ImageTexture *tex12 = new ImageTexture("./ImagesSRC/billard/billard12.ppm");
+	ImageTexture *tex13 = new ImageTexture("./ImagesSRC/billard/billard13.ppm");
+	ImageTexture *tex14 = new ImageTexture("./ImagesSRC/billard/billard14.ppm");
+	ImageTexture *tex15 = new ImageTexture("./ImagesSRC/billard/billard15.ppm");
 
-	Material boulMat = Material(0.2, 0.9, 0.8, 40, 0.2);
+	Material boulMat = Material(0.2, 0.5, 0.4, 40, 0.2);
 
-	UVSphere* sphere1 = new UVSphere(Color(0, 0, 0), boulMat, Vector3(0, 0, 0), 2.0, tex1, 0.0, M_PI/2.0);
+	UVSphere* sphere1 = new UVSphere(Color(0, 0, 0), boulMat, Vector3(0, 0, 0), 2.0, tex1, M_PI/2.0, M_PI/2.0);
 	UVSphere* sphere14 = new UVSphere(Color(0, 0, 0), boulMat, Vector3(2, 0, 3), 2.0, tex14, 0.0, M_PI/2.0);
 	UVSphere* sphere15 = new UVSphere(Color(0, 0, 0), boulMat, Vector3(-2, 0, 3), 2.0, tex15, 0.0, M_PI/2.0);
 	UVSphere* sphere4 = new UVSphere(Color(0, 0, 0), boulMat, Vector3(4, 0, 6), 2.0, tex4, 0.0, M_PI/2.0);
@@ -333,33 +359,11 @@ int main(int argc, char **argv) {
 
 
 	Rectangle *draughtboard1 = new Rectangle(Color(0.0, 100.0/255.0, 0.0), Material(0.01, 0.1, 0.1, 50, 0.0), Ray(Vector3(0, -2, 0), Vector3(0, 1, 0)), 60, 40);
-
-	shapes.add(sphere1);
-	shapes.add(sphere14);
-	shapes.add(sphere15);
-	shapes.add(sphere4);
-	shapes.add(sphere8);
-	shapes.add(sphere7);
-	shapes.add(sphere11);
-	shapes.add(sphere6);
-	shapes.add(sphere13);
-	shapes.add(sphere10);
-	shapes.add(sphere2);
-	shapes.add(sphere12);
-	shapes.add(sphere5);
-	shapes.add(sphere9);
-	shapes.add(sphere3);
-	shapes.add(white);
-	shapes.add(draughtboard1);
+	//*/
 
 
-	//ImageTexture *texQuentin = new ImageTexture("./img/quentin.ppm");
-	//ImageTexture *tex10 = new ImageTexture("./img/billard10.ppm");
-	//Sphere* sphere1 = new Sphere(Color(166.0/255.0, 39.0/255.0, 0.0), Material(0.2, 0.9, 0.8, 80, 0.4), Vector3(-5, 0, 0), 4.0);
-	//UVSphere* sphere1 = new UVSphere(Color(0, 0, 0), Material(0.2, 0.9, 0.8, 80, 0.01), Vector3(-5, 0, 0), 4.0, tex10);
-	//Sphere* sphere2 = new Sphere(Color(38.0/255.0, 38.0/255.0, 38.0/255.0), Material(0.2, 0.9, 0.8, 80, 0.4), Vector3(5, 0, 0), 4.0);
 	/*
-	ImageTexture *tex10 = new ImageTexture("./img/billard10.ppm");
+	ImageTexture *tex10 = new ImageTexture("./ImagesSRC/billard/billard10.ppm");
 	UVSphere *sphere1 = new UVSphere(Color(0, 0, 0), Material(0.2, 0.9, 0.8, 80, 0.01), Vector3(-5, 0, 0), 4.0, tex10, M_PI/4.0, M_PI/4.0);
 
 	NoiseTexture *noiseTex = new NoiseTexture(Color(166.0/255.0, 39.0/255.0, 0.0), Color(136.0/255.0, 29.0/255.0, 0.0), 2.0);
@@ -368,81 +372,7 @@ int main(int argc, char **argv) {
 	MarbleTexture *marbleTex = new MarbleTexture(0.10, 2);
 	UVSphere *sphere3 = new UVSphere(Color(0, 0, 0), Material(0.2, 0.9, 0.8, 80, 0.01), Vector3(0, 0, 6), 4.0, marbleTex);
 
-	Draughtboard *draughtboard1 = new Draughtboard(Color(0.01, 0.01, 0.01), Material(0.4, 0.5, 0.4, 40, 0.5), Color(0.9, 0.9, 0.9), Ray(Vector3(0, -4, 0), Vector3(0, 1, 0)), 60, 40, 4);
-	//Rectangle *draughtboard1 = new Rectangle(Color(0.0, 100.0/255.0, 0.0), Material(0.4, 0.5, 0.4, 40, 0.0), Ray(Vector3(0, -4, 0), Vector3(0, 1, 0)), 60, 40);
-	//Add shapes
-	shapes.add(sphere1);
-	shapes.add(sphere2);
-	shapes.add(sphere3);
-	shapes.add(draughtboard1);
-	*/
-
-	//Light sources
-	Vector3 posLight1 = Vector3(-20.0, 20.0, -20.0);
-	LightSource* source1 = new LightSource(3.0, posLight1, Color(1.0, 1.0, 1.0));
-	lights.add(source1);
-
-	Vector3 obs(0.0, 0.0, -40.0);
-	rayonCamera =(obs - posSphere).norm();
-	cerr << "rayon camera : " << rayonCamera << endl;
-	Vector3 aimedPoint = posSphere;
-	double distScreen = 0.50; //700.0; // distance to the screen from the observer point
-	Vector3 wayUp = Vector3(0.0, 1.0, 0.0);
-	Scene s = Scene(&shapes, &lights, obs, wayUp, aimedPoint, distScreen);
-	PhongModel lm = PhongModel();
-	rt = new RayTracer(s, lm);
-
-	img = new Image(SCREEN_WIDTH, SCREEN_HEIGHT, Color(0.0, 0.0, 0.0));
-
-	rt->raytrace(img, OVERSAMPLING);
-	refreshDisplay();
-
-	nsUtil::Timer timer = nsUtil::Timer();
-	int fps = 35;
-
-
-
-	// main loop
-	//While the user hasn't quit
-	while(quit == false) {
-		//While there's an event to handle
-		while(SDL_PollEvent(&event)) {
-			handle_events(event);
-			if(event.type == SDL_QUIT) {
-				//Quit the program
-				quit = true;
-			}
-		}
-		
-		if(timer.getTicks() < 1000 / fps) {
-			SDL_Delay((1000 / fps) - timer.getTicks());
-		}
-	}
-	SDL_FreeSurface(screen);
-	SDL_Quit();
-	
-
-	//Free memory
-	delete sphere1;
-	delete sphere14;
-	delete sphere15;
-	delete sphere4;
-	delete sphere8;
-	delete sphere7;
-	delete sphere11;
-	delete sphere6;
-	delete sphere13;
-	delete sphere10;
-	delete sphere2;
-	delete sphere12;
-	delete sphere5;
-	delete sphere9;
-	delete sphere3;
-	delete white;
-	delete draughtboard1;
-	delete source1;
-	delete rt;
-	delete img;
+	//*/
 
 	return 0;
 } // main()
