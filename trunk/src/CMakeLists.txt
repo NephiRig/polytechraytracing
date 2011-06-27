@@ -43,6 +43,7 @@ set(${PROJECT_NAME}_HEADERS
     Rectangle.h
     RNG.h
     Scene.h
+    SceneParser.h
     ScreenV2.h
     Set.h
     Shape.h
@@ -52,6 +53,8 @@ set(${PROJECT_NAME}_HEADERS
     #stdint.h
     Texture.h
     Timer.h
+    tinystr.h
+    tinyxml.h
     UVSphere.h
     Vector2.h
     Vector3.h
@@ -75,6 +78,7 @@ set(${PROJECT_NAME}_SOURCES
     Rectangle.cpp
     RNG.cpp
     Scene.cpp
+    SceneParser.cpp
     ScreenV2.cpp
     Shape.cpp
     SimpleTexture.cpp
@@ -82,6 +86,10 @@ set(${PROJECT_NAME}_SOURCES
     Sphere.cpp
     Texture.cpp
     Timer.cpp
+    tinystr.cpp
+    tinyxml.cpp
+    tinyxmlerror.cpp
+    tinyxmlparser.cpp
     UVSphere.cpp
     Vector2.cpp
     Vector3.cpp
