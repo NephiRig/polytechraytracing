@@ -13,7 +13,7 @@ Color UVSphere::getColor(const Vector3& pt) {
 
 	float twopi = 6.28318530718f;
 	float theta = acos(n[2]);
-	float phi = std::fmod((float)atan2(n[1], n[0]) + _plusPhi, twopi);
+	float phi = atan2(n[1], n[0]) + _plusPhi;
 
 	if (phi < 0.0f) {
 		phi += twopi;
