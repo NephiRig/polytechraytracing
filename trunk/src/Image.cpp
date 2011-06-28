@@ -132,8 +132,6 @@ void Image::readPPM(std::string file_name) {
 	this->_w = cols;
 	this->_h = rows;
 
-	std::cout << "HELLO " << cols << " " << rows << std::endl;
-
 	this->_data = new Color*[this->_w];
 	for (x = 0; x < this->_w; x++) {
 		this->_data[x] = new Color[this->_h];
@@ -173,8 +171,6 @@ void Image::readReversePPM(std::string file_name) {
 
 	this->_w = cols;
 	this->_h = rows;
-
-	std::cout << "HELLO " << cols << " " << rows << std::endl;
 
 	this->_data = new Color*[this->_w];
 	for (x = 0; x < this->_w; x++) {

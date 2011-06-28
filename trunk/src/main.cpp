@@ -5,9 +5,6 @@
 #include <SDL/SDL.h>
 #include <SDL/SDL_image.h>
 
-#include "Image.h"
-#include "MarbleTexture.h"
-#include "NoiseTexture.h"
 #include "RayTracer.h"
 #include "SceneParser.h"
 #include "Timer.h"
