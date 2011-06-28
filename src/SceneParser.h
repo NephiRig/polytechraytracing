@@ -6,6 +6,7 @@
 #include "tinyxml.h"
 
 #include "Draughtboard.h"
+#include "ImageTexture.h"
 #include "LightSource.h"
 #include "Plane.h"
 #include "Rectangle.h"
@@ -15,6 +16,7 @@
 #include "Shape.h"
 #include "Sphere.h"
 #include "Texture.h"
+#include "UVSphere.h"
 
 class SceneParser {
 public:

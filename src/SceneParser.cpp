@@ -18,6 +18,8 @@ int SceneParser::parse() {
 		std::cerr << "error #" << scene.ErrorId() << " : " << scene.ErrorDesc() << std::endl;
 		return -1;
 	} else {
+		std::cout << "################################################" << std::endl;
+		std::cout << "BEGINNING OF XML PARSING" << std::endl;
 		TiXmlHandle hdl(&scene);
 		TiXmlElement *elem = hdl.FirstChildElement().FirstChildElement().Element();
 		if (!elem) {
@@ -45,14 +47,30 @@ int SceneParser::parse() {
 				elem->FirstChildElement("material")->QueryDoubleAttribute("ks", &material.k_s);
 				elem->FirstChildElement("material")->QueryDoubleAttribute("ns", &material.n_s);
 				elem->FirstChildElement("material")->QueryDoubleAttribute("kreflex", &material.k_reflex);
-				if (shapeType == "sphere") {
+				if (shapeType == "uvsphere" || shapeType == "sphere") {
 					Vector3 center;
 					double radius;
 					elem->FirstChildElement("center")->QueryDoubleAttribute("x", &center[0]);
 					elem->FirstChildElement("center")->QueryDoubleAttribute("y", &center[1]);
 					elem->FirstChildElement("center")->QueryDoubleAttribute("z", &center[2]);
 					elem->FirstChildElement("radius")->QueryDoubleAttribute("value", &radius);
-					s = new Sphere(color, material, center, radius);
+					if (shapeType == "uvsphere") {
+						ImageTexture *image;
+						double plusPhi;
+						double plusTheta;
+						std::string typeTexture = elem->FirstChildElement("texture")->Attribute("type");
+						if (typeTexture == "image") {
+							image = new ImageTexture((std::string)elem->FirstChildElement("texture")->FirstChildElement("src")->Attribute("value"));
+
+						}
+						elem->FirstChildElement("plusphi")->QueryDoubleAttribute("value", &plusPhi);
+						plusPhi *= M_PI;
+						elem->FirstChildElement("plustheta")->QueryDoubleAttribute("value", &plusTheta);
+						plusTheta *= M_PI;
+						s = new UVSphere(color, material, center, radius, image, plusTheta, plusPhi);
+					} else if (shapeType == "sphere") {
+						s = new Sphere(color, material, center, radius);
+					}
 				} else if (shapeType == "draughtboard" || shapeType == "rectangle" || shapeType == "plane") {
 					Ray normAndPoint;
 					elem->FirstChildElement("center")->QueryDoubleAttribute("x", &normAndPoint[0][0]);
@@ -81,10 +99,11 @@ int SceneParser::parse() {
 						}
 					}
 				} else {
-					std::cerr << "Invalid description: " << (std::string) elem->Attribute("type") << " does not exist.\nPlease, check the spelling and try again." << std::endl;
+					std::cout << "Invalid description: " << shapeType << " does not exist.\nPlease, check the spelling and try again." << std::endl;
 					return -1;
 				}
 				_shapes.add(s);
+				std::cout << "Shape #" << _shapes.size() << " (" << shapeType << ")" << " INITIALIZED" << std::endl;
 			} else if ((std::string) elem->Value() == "light") {
 				double intensity;
 				Vector3 position;
@@ -98,13 +117,16 @@ int SceneParser::parse() {
 				elem->FirstChildElement("color")->QueryDoubleAttribute("b", &color.val[2]);
 				LightSource *l = new LightSource(intensity, position, color);
 				_lightSources.add(l);
+				std::cerr << "Light #" << _lightSources.size() << " INITIALIZED" << std::endl;
 			} else {
-				std::cerr << "Invalid description: " << (std::string) elem->Value() << " does not exist.\nPlease, check the spelling and try again." << std::endl;
+				std::cout << "Invalid description: " << (std::string) elem->Value() << " does not exist.\nPlease, check the spelling and try again." << std::endl;
 				return -1;
 			}
 			//FIXME finir le parser avec les données de la camera
 			elem = elem->NextSiblingElement(); // iteration
 		}
+		std::cout << "ENDING OF XML PARSING" << std::endl;
+		std::cout << "################################################\n" << std::endl;
 	}
 	return 0;
 }

@@ -7,13 +7,9 @@ RayTracer::RayTracer(Scene &sc, PhongModel &_lm) {
 	lm = _lm;
 	scene = sc;
 	NB_OF_INTERATIONS = 5;
-	cout << "\n # of Shapes: " << scene._shapes->length();
-	cout << "\n # of Lights: " << scene._lightSources->length() << "\n";
 
 	for (int i = 0; i < scene._shapes->length(); i++) {
 		Color c = scene._shapes->get(i)->_color;
-		cout << "Color " << i << " R: ";
-		cout << c[0] << "; G: " << c[1] << "; B:" << c[2] << "\n";
 	}
 }
 
@@ -31,8 +27,7 @@ void RayTracer::raytrace(Image* img) {
 	int h = img->height();
 
 	//With the given values we create an according screen
-	ScreenV2 s = ScreenV2(scene._observer, scene._wayUp, scene._aimedPoint,
-			PI / 8.0, w, h);
+	ScreenV2 s = ScreenV2(scene._observer, scene._wayUp, scene._aimedPoint, PI / 8.0, w, h);
 	cerr << "init screen : " << s.initFromDistScreen(scene._distScreen) << endl;
 	//cerr << "init screen : " << s.initFromWH3D ( w/1000.0, h/1000.0 ) << endl;
 
@@ -47,7 +42,7 @@ void RayTracer::raytrace(Image* img) {
 		}
 
 	}
-	cout << "done";
+	cout << "done" << endl;
 }
 
 /**
