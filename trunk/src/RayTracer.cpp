@@ -1,8 +1,6 @@
 #include "RayTracer.h"
 #include <iostream>
 
-using namespace std;
-
 RayTracer::RayTracer(Scene &sc, PhongModel &_lm) {
 	lm = _lm;
 	scene = sc;
@@ -23,17 +21,17 @@ RayTracer::~RayTracer() {
 void RayTracer::raytrace(Image* img) {
 
 	//Width and height of the image
-	int w = img->width();
-	int h = img->height();
+	int width = img->_width;
+	int height = img->_height;
 
 	//With the given values we create an according screen
-	ScreenV2 s = ScreenV2(scene._observer, scene._wayUp, scene._aimedPoint, PI / 8.0, w, h);
+	ScreenV2 s = ScreenV2(scene._observer, scene._wayUp, scene._aimedPoint, PI / 8.0, width, height);
 	cerr << "init screen : " << s.initFromDistScreen(scene._distScreen) << endl;
-	//cerr << "init screen : " << s.initFromWH3D ( w/1000.0, h/1000.0 ) << endl;
+	//cerr << "init screen : " << s.initFromWH3D ( width/1000.0, height/1000.0 ) << endl;
 
 	//Iterate over all the pixels of the screen/image
-	for (int y = 0; y < h; ++y) {
-		for (int x = 0; x < w; ++x) {
+	for (int y = 0; y < height; ++y) {
+		for (int x = 0; x < width; ++x) {
 			//Create the ray from the observer point, passing through the pixel
 			Ray r = Ray(scene._observer, s.getPixel(x, y) - scene._observer);
 
@@ -54,17 +52,17 @@ void RayTracer::raytrace(Image* img, int size) {
 		raytrace(img);
 	} else {
 		//Width and height of the image
-		int w = img->width();
-		int h = img->height();
+		int width = img->_width;
+		int height = img->_height;
 
 		//With the given values we create an according screen
-		ScreenV2 s = ScreenV2(scene._observer, scene._wayUp, scene._aimedPoint, PI / 8.0, w, h);
+		ScreenV2 s = ScreenV2(scene._observer, scene._wayUp, scene._aimedPoint, PI / 8.0, width, height);
 		cerr << "init screen : " << s.initFromDistScreen(scene._distScreen) << endl;
-		//cerr << "init screen : " << s.initFromWH3D ( w/1000.0, h/1000.0 ) << endl;
+		//cerr << "init screen : " << s.initFromWH3D ( width/1000.0, height/1000.0 ) << endl;
 
 		//Iterate over all the pixels of the screen/image
-		for (int y = 0; y < h; ++y) {
-			for (int x = 0; x < w; ++x) {
+		for (int y = 0; y < height; ++y) {
+			for (int x = 0; x < width; ++x) {
 				Color c = Color(0, 0, 0);
 				for (double dx = -0.45; dx <= 0.45; dx += 0.9 / (size - 1)) {
 					for (double dy = -0.45; dy <= 0.45; dy += 0.9 / (size - 1)) {

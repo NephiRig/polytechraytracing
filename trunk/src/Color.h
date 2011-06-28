@@ -52,48 +52,6 @@ public:
 	virtual ~Color();
 
 	/**
-	 * \bref Getter
-	 *
-	 * Get the red value
-	 */
-	double getR() const;
-
-	/**
-	 * \bref Getter
-	 *
-	 * Get the green value
-	 */
-	double getG() const;
-
-	/**
-	 * \bref Getter
-	 *
-	 * Get the blue value
-	 */
-	double getB() const;
-
-	/**
-	 * \bref Setter
-	 *
-	 * Set the red value
-	 */
-	void setR(double r);
-
-	/**
-	 * \bref Setter
-	 *
-	 * Set the green value
-	 */
-	void setG(double g);
-
-	/**
-	 * \bref Setter
-	 *
-	 * Set the blue value
-	 */
-	void setB(double b);
-
-	/**
 	 * \bref operator []
 	 *
 	 * Get the color value at the specified index
