@@ -1,5 +1,5 @@
 #include "Color.h"
-#include <stdint.h>
+//#include <stdint.h>
 
 Color::Color(double r/*= 0.0*/, double g/*= 0.0*/, double b/*= 0.0*/) {
 	_val[0] = r;
@@ -12,30 +12,6 @@ Color::Color(const Color &color) {
 }
 
 Color::~Color() {
-}
-
-double Color::getR() const {
-	return _val[0];
-}
-
-double Color::getG() const {
-	return _val[1];
-}
-
-double Color::getB() const {
-	return _val[2];
-}
-
-void Color::setR(double r) {
-	_val[0] = r;
-}
-
-void Color::setG(double g) {
-	_val[1] = g;
-}
-
-void Color::setB(double b) {
-	_val[2] = b;
 }
 
 double& Color::operator[](unsigned i) {

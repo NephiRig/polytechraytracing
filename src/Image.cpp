@@ -1,81 +1,73 @@
-#include "Image.h"
-#include <cmath>
-#include <fstream>
-#include <string>
-#include <iostream> // debug
 #include <cassert>
 
-Image::Image(int w, int h) :
-	_w(w), _h(h) {
-	this->_data = new Color*[this->_w];
-	for (int x = 0; x < this->_w; x++) {
-		this->_data[x] = new Color[this->_h];
+#include "Image.h"
+
+Image::Image(int width, int height) :
+	_width(width), _height(height) {
+	this->_data = new Color*[this->_width];
+	for (int x = 0; x < this->_width; x++) {
+		this->_data[x] = new Color[this->_height];
 	}
 }
 
-Image::Image(int w, int h, Color c) {
-	this->_w = w;
-	this->_h = h;
-	assert (this->_w > 0 && this->_h > 0);
+Image::Image(int width, int height, Color color) {
+	this->_width = width;
+	this->_height = height;
+	assert (this->_width > 0 && this->_height > 0);
 
-	this->_data = new Color*[this->_w];
+	this->_data = new Color*[this->_width];
 	assert(this->_data != 0);
 
-	for (int x = 0; x < this->_w; x++) {
-		this->_data[x] = new Color[this->_h];
+	for (int x = 0; x < this->_width; x++) {
+		this->_data[x] = new Color[this->_height];
 		assert(_data[x]);
-		for (int y = 0; y < this->_h; y++) {
-			this->_data[x][y] = c;
+		for (int y = 0; y < this->_height; y++) {
+			this->_data[x][y] = color;
 		}
 	}
 }
 
 Image::Image(const Image *source) {
-	this->_w = source->_w;
-	this->_h = source->_h;
+	this->_width = source->_width;
+	this->_height = source->_height;
 
-	this->_data = new Color*[this->_w];
-	for (int x = 0; x < this->_w; x++) {
-		this->_data[x] = new Color[this->_h];
-		for (int y = 0; y < this->_h; y++) {
+	this->_data = new Color*[this->_width];
+	for (int x = 0; x < this->_width; x++) {
+		this->_data[x] = new Color[this->_height];
+		for (int y = 0; y < this->_height; y++) {
 			this->_data[x][y] = source->getPixel(x, y);
 		}
 	}
 }
 
-int Image::width() const {
-	return this->_w;
+Image::~Image() {
 }
 
-int Image::height() const {
-	return this->_h;
-}
-
-void Image::setPixel(int x, int y, Color c) {
-	if (x >= 0 && x < this->_w && y >= 0 && y < this->_h) {
-		this->_data[x][y] = c;
+void Image::setPixel(int x, int y, Color color) {
+	if (x >= 0 && x < this->_width && y >= 0 && y < this->_height) {
+		this->_data[x][y] = color;
 	}
 }
 
 Color Image::getPixel(int x, int y) const {
 	x = (x >= 0 ? x : 0);
-	x = (x < this->_w ? x : this->_w - 1);
+	x = (x < this->_width ? x : this->_width - 1);
 	y = (y >= 0 ? y : 0);
-	y = (y < this->_h ? y : this->_h - 1);
+	y = (y < this->_height ? y : this->_height - 1);
 	return this->_data[x][y];
 }
 
-bool operator==(const Image &img1, const Image &img2) {
-	int w1 = img1._w;
-	int h1 = img1._h;
-	int w2 = img1._w;
-	int h2 = img1._h;
-	if (w1 != w2 || h1 != h2) {
+bool operator==(const Image &image1, const Image &image2) {
+	int width1 = image1._width;
+	int h1 = image1._height;
+	int width2 = image1._width;
+	int h2 = image1._height;
+	if (width1 != width2 || h1 != h2) {
 		return false;
 	} else {
 		for (int y = 0; y < h1; y++) {
-			for (int x = 0; x < w1; x++) {
-				if (img1._data[x][y] != img2._data[x][y]) {
+			for (int x = 0; x < width1; x++) {
+				if (image1._data[x][y] != image2._data[x][y]) {
 					return false;
 				}
 			}
@@ -84,15 +76,15 @@ bool operator==(const Image &img1, const Image &img2) {
 	return true;
 }
 
-bool operator!=(const Image &img1, const Image &img2) {
-	return !(img1 == img2);
+bool operator!=(const Image &image1, const Image &image2) {
+	return !(image1 == image2);
 }
 
 void Image::writePPM(std::ostream &s) const {
-	s << "P6\n" << this->_w << " " << this->_h << "\n255\n";
+	s << "P6\n" << this->_width << " " << this->_height << "\n255\n";
 	unsigned int i;
-	for (int y = 0; y < this->_h; y++) {
-		for (int x = 0; x < _w; x++) {
+	for (int y = 0; y < this->_height; y++) {
+		for (int x = 0; x < _width; x++) {
 			double gamma = 1.0 / 2.2;
 			this->_data[x][y] = Color(pow(this->_data[x][y][0], gamma), pow(this->_data[x][y][1],
 					gamma), pow(this->_data[x][y][2], gamma));
@@ -116,7 +108,7 @@ void Image::readPPM(std::string file_name) {
 	std::ifstream in;
 	in.open(file_name.c_str());
 	if (!in.is_open()) {
-		std::cerr << "Can't open file \'" << file_name << "\'.\n";
+		std::cerr << "Can't open file \'" << file_name << "\'" << std::endl;
 		exit(-1);
 	}
 
@@ -129,18 +121,18 @@ void Image::readPPM(std::string file_name) {
 	in.get(type);
 	in >> cols >> rows >> num;
 
-	this->_w = cols;
-	this->_h = rows;
+	this->_width = cols;
+	this->_height = rows;
 
-	this->_data = new Color*[this->_w];
-	for (x = 0; x < this->_w; x++) {
-		this->_data[x] = new Color[this->_h];
+	this->_data = new Color*[this->_width];
+	for (x = 0; x < this->_width; x++) {
+		this->_data[x] = new Color[this->_height];
 	}
 
 	in.get(ch);
 
-	for (y = 0; y < this->_h; y++) {
-		for (x = 0; x < this->_w; x++) {
+	for (y = 0; y < this->_height; y++) {
+		for (x = 0; x < this->_width; x++) {
 			in.get(red);
 			in.get(green);
 			in.get(blue);
@@ -156,7 +148,7 @@ void Image::readReversePPM(std::string file_name) {
 	std::ifstream in;
 	in.open(file_name.c_str());
 	if (!in.is_open()) {
-		std::cerr << "Can't open file \'" << file_name << "\'.\n";
+		std::cerr << "Can't open file \'" << file_name << "\'." << std::endl;
 		exit(-1);
 	}
 
@@ -169,18 +161,18 @@ void Image::readReversePPM(std::string file_name) {
 	in.get(type);
 	in >> cols >> rows >> num;
 
-	this->_w = cols;
-	this->_h = rows;
+	this->_width = cols;
+	this->_height = rows;
 
-	this->_data = new Color*[this->_w];
-	for (x = 0; x < this->_w; x++) {
-		this->_data[x] = new Color[this->_h];
+	this->_data = new Color*[this->_width];
+	for (x = 0; x < this->_width; x++) {
+		this->_data[x] = new Color[this->_height];
 	}
 
 	in.get(ch);
 
-	for (y = this->_h-1; y >= 0; y--) {
-		for (x = 0; x < this->_w; x++) {
+	for (y = this->_height-1; y >= 0; y--) {
+		for (x = 0; x < this->_width; x++) {
 			in.get(red);
 			in.get(green);
 			in.get(blue);

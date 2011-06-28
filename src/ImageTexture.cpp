@@ -13,8 +13,8 @@ Color ImageTexture::value(const Vector2 &uv, const Vector3 &p) const {
 	float u = uv[0] - int(uv[0]);
 	float v = uv.get_y() - int(uv.get_y());
 
-	u *= (image->_w - 3);
-	v *= (image->_h - 3);
+	u *= (image->_width - 3);
+	v *= (image->_height - 3);
 
 	int iu = (int) u;
 	int iv = (int) v;
