@@ -16,6 +16,7 @@ int OVERSAMPLING;
 const int SCREEN_BPP = 32;
 
 nsUtil::Timer timer = nsUtil::Timer();
+SceneParser *parser = NULL;
 bool quit = false;
 int mouse_clicked_x;
 int mouse_clicked_y;
@@ -70,7 +71,7 @@ void apply_surface(int x, int y, SDL_Surface* source, SDL_Surface* destination) 
 	SDL_BlitSurface(source, NULL, destination, &offset);
 }
 
-void fillSurfaceFromFile(SDL_Surface *surface, Image* img, const char* f){
+void fillSurfaceFromFile(SDL_Surface *surface, Image* img, const char* f) {
 	SDL_Surface *img_sdl = load_image(f);
 	apply_surface(0, 0, img_sdl, screen);
 	SDL_FreeSurface(img_sdl);
@@ -88,6 +89,7 @@ void refreshDisplay() {
 
 void handle_events(SDL_Event& event) {
 	bool refresh = false;
+	bool changeCamera = false;
 
 	if(event.type == SDL_MOUSEMOTION) {
 		if(mouse_down) {
@@ -114,22 +116,23 @@ void handle_events(SDL_Event& event) {
 
 		case SDLK_LEFT:
 			rt->_camera._observer[0] -= 10.0;
-			refresh = true;
+			cerr << rt->_camera._observer[0] << endl;
+			refresh = changeCamera = true;
 			break;
 
 		case SDLK_RIGHT:
 			rt->_camera._observer[0] += 10.0;
-			refresh = true;
+			refresh = changeCamera = true;
 			break;
 
 		case SDLK_UP:
 			rt->_camera._observer[2] += 10.0;
-			refresh = true;
+			refresh = changeCamera = true;
 			break;
 
 		case SDLK_DOWN:
 			rt->_camera._observer[2] -= 10.0;
-			refresh = true;
+			refresh = changeCamera = true;
 			break;
 
 		case SDLK_d:
@@ -137,11 +140,11 @@ void handle_events(SDL_Event& event) {
 			cerr << "camera_t: " << camera_t << endl;
 			rt->_camera._observer[0] = posSphere[0] + cos(camera_t)*rayonCamera;
 			rt->_camera._observer[2] = posSphere[2] + sin(camera_t)*rayonCamera;
-			refresh = true;
+			refresh = changeCamera = true;
 			break;
 
 		case SDLK_f: {
-			int n = 100;
+			int n = 63;
 			recordvideo = true;
 			for(int i = 0; i < n; ++i){
 				cerr << "iteration " << i << " sur " << n << endl;
@@ -149,6 +152,7 @@ void handle_events(SDL_Event& event) {
 				cerr << "camera_t: " << camera_t << endl;
 				rt->_camera._observer[0] = posSphere[0] + cos(camera_t)*rayonCamera;
 				rt->_camera._observer[1] = posSphere[1] + sin(camera_t)*rayonCamera;
+				rt->_camera.initFromDistScreen(rt->_camera._distScreen);
 				rt->raytrace(img, OVERSAMPLING);
 				refreshDisplay();
 			}
@@ -156,7 +160,7 @@ void handle_events(SDL_Event& event) {
 			break;
 
 		case SDLK_t: {
-			int n = 100;
+			int n = 63;
 			recordvideo = true;
 			for(int i = 0; i < n; ++i){
 				cerr << "iteration " << i << " sur " << n << endl;
@@ -164,6 +168,7 @@ void handle_events(SDL_Event& event) {
 				cerr << "camera_t: " << camera_t << endl;
 				rt->_camera._observer[0] = posSphere[0] + cos(camera_t)*rayonCamera;
 				rt->_camera._observer[2] = posSphere[2] + sin(camera_t)*rayonCamera;
+				rt->_camera.initFromDistScreen(rt->_camera._distScreen);
 				rt->raytrace(img, OVERSAMPLING);
 				refreshDisplay();
 			}
@@ -171,9 +176,9 @@ void handle_events(SDL_Event& event) {
 			break;
 
 		case SDLK_l: {
-			int n = 100;
+			int n = 63;
 			recordvideo = true;
-			rt->_scene._lightSources->get(0)->_position[1] = 10;
+			rt->_scene._lightSources->get(0)->_position[1] = 20;
 			for(int i = 0; i < n; ++i){
 				cerr << "iteration " << i << " sur " << n << endl;
 				camera_t += .1;
@@ -191,7 +196,7 @@ void handle_events(SDL_Event& event) {
 			cerr << "camera_t: " << camera_t << endl;
 			rt->_camera._observer[0] = posSphere[0] + cos(camera_t)*rayonCamera;
 			rt->_camera._observer[2] = posSphere[2] + sin(camera_t)*rayonCamera;
-			refresh = true;
+			refresh = changeCamera = true;
 			break;
 
 		case SDLK_w:
@@ -199,7 +204,7 @@ void handle_events(SDL_Event& event) {
 			cerr << "camera_t: " << camera_t << endl;
 			rt->_camera._aimedPoint[0] = posSphere[0] + cos(camera_t)*rayonCamera;
 			rt->_camera._aimedPoint[2] = posSphere[2] + sin(camera_t)*rayonCamera;
-			refresh = true;
+			refresh = changeCamera = true;
 			break;
 
 		case SDLK_x:
@@ -207,7 +212,7 @@ void handle_events(SDL_Event& event) {
 			cerr << "camera_t: " << camera_t << endl;
 			rt->_camera._aimedPoint[0] = posSphere[0] + cos(camera_t)*rayonCamera;
 			rt->_camera._aimedPoint[2] = posSphere[2] + sin(camera_t)*rayonCamera;
-			refresh = true;
+			refresh = changeCamera = true;
 			break;
 
 		case SDLK_v:
@@ -220,7 +225,11 @@ void handle_events(SDL_Event& event) {
 		}
 	}
 
-	if(refresh == true) {
+	if (changeCamera == true) {
+		rt->_camera.initFromDistScreen(parser->_camera._distScreen);
+	}
+
+	if (refresh == true) {
 		rt->raytrace(img, OVERSAMPLING);
 		refreshDisplay();
 	}
@@ -236,7 +245,6 @@ int main(int argv, char** argc) {
 		//If a file has been specified, we load it, otherwise, we load the default file defaultScene.xml
 
 		cout << "\n## XML Parsing:\n" << endl;
-		SceneParser *parser;
 		if (argv == 2) {
 			parser = new SceneParser(argc[1]);
 		} else {
@@ -256,6 +264,7 @@ int main(int argv, char** argc) {
 		rt = new RayTracer(s, lm, camera);
 		img = new Image(SCREEN_WIDTH, SCREEN_HEIGHT, Color(0.0, 0.0, 0.0));
 		int timeInitialize = timer.getTicks();
+		rayonCamera = (camera._observer - camera._aimedPoint).norm();
 		cout << "Initialization time: " << timeInitialize/1000.0 << "s\n" << endl;
 
 

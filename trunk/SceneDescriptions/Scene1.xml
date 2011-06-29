@@ -1,7 +1,7 @@
 <?xml version="1.0" encoding="ISO-8859-1"?>
 
 <scene>
-	<screenSetup width="1024" height="780" overSampling="1" />
+	<screenSetup width="640" height="480" overSampling="1" />
 	<shape type="uvsphere">
 		<color r="0.0" g="0.0" b="0.0" />
 		<material ka="0.2" kd="0.9" ks="0.8" ns="80" kreflex="0.4" />
@@ -35,7 +35,7 @@
 		<color r="1.0" g="1.0" b="1.0" />
 	</light>
 	<camera>
-		<observer x="0.0" y="0.0" z="-40.0" />
+		<observer x="-40.0" y="40.0" z="-40.0" />
 		<aimedPoint x="0.0" y="0.0" z="0.0" />
 		<viewAngle value="0.125" />
 		<distScreen value="0.50" />
