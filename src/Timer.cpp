@@ -11,7 +11,7 @@ TIMER::Timer(void) {
 	pausedTicks = 0;
 	paused = false;
 	started = false;
-	std::cout << "Timer ()" << std::endl;
+	//std::cout << "Timer ()" << std::endl;
 }
 
 TIMER::~Timer(void) {
@@ -27,7 +27,7 @@ void TIMER::start(void) {
 	//Get the current clock time
 	startTicks = SDL_GetTicks();
 
-	std::cout << "Timer started" << std::endl;
+	//std::cout << "Timer started" << std::endl;
 }
 
 void TIMER::stop(void) {

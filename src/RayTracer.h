@@ -9,6 +9,7 @@
 #include "Ray.h"
 #include "Image.h"
 #include "Scene.h"
+#include "ScreenV2.h"
 #include "LightSource.h"
 #include "PhongModel.h"
 #include "Color.h"
@@ -17,10 +18,11 @@ const double PI = 3.141592;
 
 class RayTracer {
 public:
-	Scene scene;
-	PhongModel lm;
+	Scene _scene;
+	PhongModel _lightModel;
+	ScreenV2 _camera;
 
-	RayTracer(Scene &sc , PhongModel &_lm );
+	RayTracer(Scene &scene, PhongModel &lightModel, ScreenV2 &camera);
 	virtual ~RayTracer();
 	virtual void raytrace(Image* img);
 	virtual void raytrace(Image* img, int size);

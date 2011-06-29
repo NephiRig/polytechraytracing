@@ -15,6 +15,7 @@ int SCREEN_HEIGHT;
 int OVERSAMPLING;
 const int SCREEN_BPP = 32;
 
+nsUtil::Timer timer = nsUtil::Timer();
 bool quit = false;
 int mouse_clicked_x;
 int mouse_clicked_y;
@@ -25,6 +26,7 @@ RayTracer *rt = NULL;
 Image *img = NULL;
 SDL_Surface* screen = NULL;
 double camera_t = 0.0;
+
 Vector3 posSphere;
 Set<Shape*> shapes = Set<Shape*>();
 Set<LightSource*> lights = Set<LightSource*>();
@@ -111,30 +113,30 @@ void handle_events(SDL_Event& event) {
 			break;
 
 		case SDLK_LEFT:
-			rt->scene._observer[0] -= 10.0;
+			rt->_camera._observer[0] -= 10.0;
 			refresh = true;
 			break;
 
 		case SDLK_RIGHT:
-			rt->scene._observer[0] += 10.0;
+			rt->_camera._observer[0] += 10.0;
 			refresh = true;
 			break;
 
 		case SDLK_UP:
-			rt->scene._observer[2] += 10.0;
+			rt->_camera._observer[2] += 10.0;
 			refresh = true;
 			break;
 
 		case SDLK_DOWN:
-			rt->scene._observer[2] -= 10.0;
+			rt->_camera._observer[2] -= 10.0;
 			refresh = true;
 			break;
 
 		case SDLK_d:
 			camera_t -= .1;
 			cerr << "camera_t: " << camera_t << endl;
-			rt->scene._observer[0] = posSphere[0] + cos(camera_t)*rayonCamera;
-			rt->scene._observer[2] = posSphere[2] + sin(camera_t)*rayonCamera;
+			rt->_camera._observer[0] = posSphere[0] + cos(camera_t)*rayonCamera;
+			rt->_camera._observer[2] = posSphere[2] + sin(camera_t)*rayonCamera;
 			refresh = true;
 			break;
 
@@ -145,8 +147,8 @@ void handle_events(SDL_Event& event) {
 				cerr << "iteration " << i << " sur " << n << endl;
 				camera_t += .1;
 				cerr << "camera_t: " << camera_t << endl;
-				rt->scene._observer[0] = posSphere[0] + cos(camera_t)*rayonCamera;
-				rt->scene._observer[1] = posSphere[1] + sin(camera_t)*rayonCamera;
+				rt->_camera._observer[0] = posSphere[0] + cos(camera_t)*rayonCamera;
+				rt->_camera._observer[1] = posSphere[1] + sin(camera_t)*rayonCamera;
 				rt->raytrace(img, OVERSAMPLING);
 				refreshDisplay();
 			}
@@ -160,8 +162,8 @@ void handle_events(SDL_Event& event) {
 				cerr << "iteration " << i << " sur " << n << endl;
 				camera_t += .1;
 				cerr << "camera_t: " << camera_t << endl;
-				rt->scene._observer[0] = posSphere[0] + cos(camera_t)*rayonCamera;
-				rt->scene._observer[2] = posSphere[2] + sin(camera_t)*rayonCamera;
+				rt->_camera._observer[0] = posSphere[0] + cos(camera_t)*rayonCamera;
+				rt->_camera._observer[2] = posSphere[2] + sin(camera_t)*rayonCamera;
 				rt->raytrace(img, OVERSAMPLING);
 				refreshDisplay();
 			}
@@ -171,13 +173,13 @@ void handle_events(SDL_Event& event) {
 		case SDLK_l: {
 			int n = 100;
 			recordvideo = true;
-			rt->scene._lightSources->get(0)->_position[1] = 10;
+			rt->_scene._lightSources->get(0)->_position[1] = 10;
 			for(int i = 0; i < n; ++i){
 				cerr << "iteration " << i << " sur " << n << endl;
 				camera_t += .1;
 				cerr << "camera_t: " << camera_t << endl;
-				rt->scene._lightSources->get(0)->_position[0] = posSphere[0] + cos(camera_t)*rayonCamera;
-				rt->scene._lightSources->get(0)->_position[2] = posSphere[2] + sin(camera_t)*rayonCamera;
+				rt->_scene._lightSources->get(0)->_position[0] = posSphere[0] + cos(camera_t)*rayonCamera;
+				rt->_scene._lightSources->get(0)->_position[2] = posSphere[2] + sin(camera_t)*rayonCamera;
 				rt->raytrace(img, OVERSAMPLING);
 				refreshDisplay();
 			}
@@ -187,24 +189,24 @@ void handle_events(SDL_Event& event) {
 		case SDLK_q:
 			camera_t += .1;
 			cerr << "camera_t: " << camera_t << endl;
-			rt->scene._observer[0] = posSphere[0] + cos(camera_t)*rayonCamera;
-			rt->scene._observer[2] = posSphere[2] + sin(camera_t)*rayonCamera;
+			rt->_camera._observer[0] = posSphere[0] + cos(camera_t)*rayonCamera;
+			rt->_camera._observer[2] = posSphere[2] + sin(camera_t)*rayonCamera;
 			refresh = true;
 			break;
 
 		case SDLK_w:
 			camera_t -= 0.50;
 			cerr << "camera_t: " << camera_t << endl;
-			rt->scene._aimedPoint[0] = posSphere[0] + cos(camera_t)*rayonCamera;
-			rt->scene._aimedPoint[2] = posSphere[2] + sin(camera_t)*rayonCamera;
+			rt->_camera._aimedPoint[0] = posSphere[0] + cos(camera_t)*rayonCamera;
+			rt->_camera._aimedPoint[2] = posSphere[2] + sin(camera_t)*rayonCamera;
 			refresh = true;
 			break;
 
 		case SDLK_x:
 			camera_t += 0.50;
 			cerr << "camera_t: " << camera_t << endl;
-			rt->scene._aimedPoint[0] = posSphere[0] + cos(camera_t)*rayonCamera;
-			rt->scene._aimedPoint[2] = posSphere[2] + sin(camera_t)*rayonCamera;
+			rt->_camera._aimedPoint[0] = posSphere[0] + cos(camera_t)*rayonCamera;
+			rt->_camera._aimedPoint[2] = posSphere[2] + sin(camera_t)*rayonCamera;
 			refresh = true;
 			break;
 
@@ -230,30 +232,31 @@ int main(int argv, char** argc) {
 		std::cerr << "Please, enter a file name in argument or nothing to load the default scene." << std::endl;
 		return -1;
 	} else {
-		//Scene Settups
+		//Scene Setups
 		//If a file has been specified, we load it, otherwise, we load the default file defaultScene.xml
+
+		cout << "\n## XML Parsing:\n" << endl;
 		SceneParser *parser;
 		if (argv == 2) {
 			parser = new SceneParser(argc[1]);
 		} else {
-			parser = new SceneParser((char*)"./SceneDescriptions/defaultScene.xml");
+			parser = new SceneParser();
 		}
+
+		cout << "\nInitialization..." << endl;
+		timer.start();
 		shapes = parser->_shapes;
 		lights = parser->_lightSources;
 		SCREEN_HEIGHT = parser->_screenHeight;
 		SCREEN_WIDTH = parser->_screenWidth;
 		OVERSAMPLING = parser->_oversampling;
-
-		//FIXME faire une classe Camera qui regroupe les notions éparpillées dans ScreenV2 et Scene
-		//		puis finir le parser pour initialiser la caméra comme il faut
-		Vector3 obs(0.0, 0.0, -40.0);
-		rayonCamera = (obs - posSphere).norm();
-		cerr << "rayon camera : " << rayonCamera << endl;
-		Vector3 aimedPoint = posSphere;
-		double distScreen = 0.50; //700.0; // distance to the screen from the observer point
-		Vector3 wayUp = Vector3(0.0, 1.0, 0.0);
-		Scene s = Scene(&shapes, &lights, obs, wayUp, aimedPoint, distScreen);
-		//FIN DU FIXME
+		ScreenV2 camera = parser->_camera;
+		Scene s = Scene(&shapes, &lights);
+		PhongModel lm = PhongModel();
+		rt = new RayTracer(s, lm, camera);
+		img = new Image(SCREEN_WIDTH, SCREEN_HEIGHT, Color(0.0, 0.0, 0.0));
+		int timeInitialize = timer.getTicks();
+		cout << "Initialization time: " << timeInitialize/1000.0 << "s\n" << endl;
 
 
 
@@ -276,13 +279,14 @@ int main(int argv, char** argc) {
 
 
 		//Picture creation
-		PhongModel lm = PhongModel();
-		rt = new RayTracer(s, lm);
-		img = new Image(SCREEN_WIDTH, SCREEN_HEIGHT, Color(0.0, 0.0, 0.0));
+		timer.start();
 		rt->raytrace(img, OVERSAMPLING);
+		int timeElapsed = timer.getTicks();
+		cout << "Creating picture time: " << timeElapsed/1000.0 << "s" << endl;
+		timer.stop();
+
 		refreshDisplay();
 
-		nsUtil::Timer timer = nsUtil::Timer();
 		int fps = 35;
 
 
@@ -305,70 +309,7 @@ int main(int argv, char** argc) {
 		}
 		SDL_FreeSurface(screen);
 		SDL_Quit();
+
 		return 0;
 	}
-}
-
-int main1337(int argc, char **argv) {
-
-	/*
-
-	//Scene setup
-	//Shapes
-	posSphere = Vector3(0.0, 0.0, 0.0);
-
-	ImageTexture *tex1 = new ImageTexture("./ImagesSRC/billard/billard1.ppm");
-	ImageTexture *tex2 = new ImageTexture("./ImagesSRC/billard/billard2.ppm");
-	ImageTexture *tex3 = new ImageTexture("./ImagesSRC/billard/billard3.ppm");
-	ImageTexture *tex4 = new ImageTexture("./ImagesSRC/billard/billard4.ppm");
-	ImageTexture *tex5 = new ImageTexture("./ImagesSRC/billard/billard5.ppm");
-	ImageTexture *tex6 = new ImageTexture("./ImagesSRC/billard/billard6.ppm");
-	ImageTexture *tex7 = new ImageTexture("./ImagesSRC/billard/billard7.ppm");
-	ImageTexture *tex8 = new ImageTexture("./ImagesSRC/billard/billard8.ppm");
-	ImageTexture *tex9 = new ImageTexture("./ImagesSRC/billard/billard9.ppm");
-	ImageTexture *tex10 = new ImageTexture("./ImagesSRC/billard/billard10.ppm");
-	ImageTexture *tex11 = new ImageTexture("./ImagesSRC/billard/billard11.ppm");
-	ImageTexture *tex12 = new ImageTexture("./ImagesSRC/billard/billard12.ppm");
-	ImageTexture *tex13 = new ImageTexture("./ImagesSRC/billard/billard13.ppm");
-	ImageTexture *tex14 = new ImageTexture("./ImagesSRC/billard/billard14.ppm");
-	ImageTexture *tex15 = new ImageTexture("./ImagesSRC/billard/billard15.ppm");
-
-	Material boulMat = Material(0.2, 0.5, 0.4, 40, 0.2);
-
-	UVSphere* sphere1 = new UVSphere(Color(0, 0, 0), boulMat, Vector3(0, 0, 0), 2.0, tex1, M_PI/2.0, M_PI/2.0);
-	UVSphere* sphere14 = new UVSphere(Color(0, 0, 0), boulMat, Vector3(2, 0, 3), 2.0, tex14, 0.0, M_PI/2.0);
-	UVSphere* sphere15 = new UVSphere(Color(0, 0, 0), boulMat, Vector3(-2, 0, 3), 2.0, tex15, 0.0, M_PI/2.0);
-	UVSphere* sphere4 = new UVSphere(Color(0, 0, 0), boulMat, Vector3(4, 0, 6), 2.0, tex4, 0.0, M_PI/2.0);
-	UVSphere* sphere8 = new UVSphere(Color(0, 0, 0), boulMat, Vector3(0, 0, 6), 2.0, tex8, 0.0, M_PI/2.0);
-	UVSphere* sphere7 = new UVSphere(Color(0, 0, 0), boulMat, Vector3(-4, 0, 6), 2.0, tex7, 0.0, M_PI/2.0);
-	UVSphere* sphere11 = new UVSphere(Color(0, 0, 0), boulMat, Vector3(6, 0, 9), 2.0, tex11, 0.0, M_PI/2.0);
-	UVSphere* sphere6 = new UVSphere(Color(0, 0, 0), boulMat, Vector3(2, 0, 9), 2.0, tex6, 0.0, M_PI/2.0);
-	UVSphere* sphere13 = new UVSphere(Color(0, 0, 0), boulMat, Vector3(-2, 0, 9), 2.0, tex13, 0.0, M_PI/2.0);
-	UVSphere* sphere10 = new UVSphere(Color(0, 0, 0), boulMat, Vector3(-6, 0, 9), 2.0, tex10, 0.0, M_PI/2.0);
-	UVSphere* sphere2 = new UVSphere(Color(0, 0, 0), boulMat, Vector3(8, 0, 12), 2.0, tex2, 0.0, M_PI/2.0);
-	UVSphere* sphere12 = new UVSphere(Color(0, 0, 0), boulMat, Vector3(4, 0, 12), 2.0, tex12, 0.0, M_PI/2.0);
-	UVSphere* sphere5 = new UVSphere(Color(0, 0, 0), boulMat, Vector3(-0, 0, 12), 2.0, tex5, 0.0, M_PI/2.0);
-	UVSphere* sphere9 = new UVSphere(Color(0, 0, 0), boulMat, Vector3(-4, 0, 12), 2.0, tex9, 0.0, M_PI/2.0);
-	UVSphere* sphere3 = new UVSphere(Color(0, 0, 0), boulMat, Vector3(-8, 0, 12), 2.0, tex3, 0.0, M_PI/2.0);
-
-	Sphere* white = new Sphere(Color(1, 1, 1), boulMat, Vector3(0, 0, -18), 2.0);
-
-
-	Rectangle *draughtboard1 = new Rectangle(Color(0.0, 100.0/255.0, 0.0), Material(0.01, 0.1, 0.1, 50, 0.0), Ray(Vector3(0, -2, 0), Vector3(0, 1, 0)), 60, 40);
-	//*/
-
-
-	/*
-	ImageTexture *tex10 = new ImageTexture("./ImagesSRC/billard/billard10.ppm");
-	UVSphere *sphere1 = new UVSphere(Color(0, 0, 0), Material(0.2, 0.9, 0.8, 80, 0.01), Vector3(-5, 0, 0), 4.0, tex10, M_PI/4.0, M_PI/4.0);
-
-	NoiseTexture *noiseTex = new NoiseTexture(Color(166.0/255.0, 39.0/255.0, 0.0), Color(136.0/255.0, 29.0/255.0, 0.0), 2.0);
-	UVSphere *sphere2 = new UVSphere(Color(0, 0, 0), Material(0.2, 0.9, 0.8, 80, 0.01), Vector3(5, 0, 0), 4.0, noiseTex);
-
-	MarbleTexture *marbleTex = new MarbleTexture(0.10, 2);
-	UVSphere *sphere3 = new UVSphere(Color(0, 0, 0), Material(0.2, 0.9, 0.8, 80, 0.01), Vector3(0, 0, 6), 4.0, marbleTex);
-
-	//*/
-
-	return 0;
 } // main()
