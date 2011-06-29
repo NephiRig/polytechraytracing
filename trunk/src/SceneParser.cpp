@@ -1,4 +1,5 @@
 #include "SceneParser.h"
+#include "Timer.h"
 
 SceneParser::SceneParser(char* fileName) :
 	_fileName(fileName) {
@@ -12,14 +13,16 @@ SceneParser::~SceneParser() {
 }
 
 void SceneParser::parse() {
+	nsUtil::Timer timer = nsUtil::Timer();
 	TiXmlDocument scene(_fileName);
 	if (!scene.LoadFile()) {
 		cerr << "error while loading" << endl;
 		cerr << "error #" << scene.ErrorId() << " : " << scene.ErrorDesc() << endl;
 		exit(-1);
 	} else {
-		cout << "################################################" << endl;
-		cout << "BEGINNING OF XML PARSING" << endl;
+		//Timer Start
+		timer.start();
+
 		TiXmlHandle hdl(&scene);
 		TiXmlElement *elem = hdl.FirstChildElement().FirstChildElement().Element();
 		if (!elem) {
@@ -34,15 +37,17 @@ void SceneParser::parse() {
 				parseShape(elem);
 			} else if ((std::string) elem->Value() == "light") {
 				parseLight(elem);
+			} else if ((std::string) elem->Value() == "camera") {
+				parseCamera(elem);
 			} else {
 				cerr << "Invalid description: " << (std::string) elem->Value() << " does not exist.\nPlease, check the spelling and try again." << endl;
 				exit(-1);
 			}
-			//FIXME finir le parser avec les données de la camera
 			elem = elem->NextSiblingElement();
 		}
-		cout << "ENDING OF XML PARSING" << endl;
-		cout << "################################################\n" << endl;
+		int time = timer.getTicks();
+		cout << "\nParsing time: " << time/1000.0 << "s\n" << endl;
+		parsingInfo();
 	}
 }
 
@@ -121,7 +126,7 @@ void SceneParser::parseShape(TiXmlElement *elem) {
 		exit(-1);
 	}
 	_shapes.add(s);
-	cout << "Shape #" << _shapes.size() << " (" << shapeType << ")" << " INITIALIZED" << endl;
+	cout << "  Shape #" << _shapes.size() << " (" << shapeType.substr(0, 7) << ")" << "\t[OK]" << endl;
 }
 
 Texture* SceneParser::parseTexture(TiXmlElement *elem) {
@@ -145,13 +150,62 @@ void SceneParser::parseLight(TiXmlElement *elem) {
 	Vector3 position;
 	Color color;
 	elem->FirstChildElement("intensity")->QueryDoubleAttribute("value", &intensity);
-	elem->FirstChildElement("position")->QueryDoubleAttribute("x", &position.coords[0]);
-	elem->FirstChildElement("position")->QueryDoubleAttribute("y", &position.coords[1]);
-	elem->FirstChildElement("position")->QueryDoubleAttribute("z", &position.coords[2]);
+	elem->FirstChildElement("position")->QueryDoubleAttribute("x", &position[0]);
+	elem->FirstChildElement("position")->QueryDoubleAttribute("y", &position[1]);
+	elem->FirstChildElement("position")->QueryDoubleAttribute("z", &position[2]);
 	elem->FirstChildElement("color")->QueryDoubleAttribute("r", &color[0]);
 	elem->FirstChildElement("color")->QueryDoubleAttribute("g", &color[1]);
 	elem->FirstChildElement("color")->QueryDoubleAttribute("b", &color[2]);
 	LightSource *l = new LightSource(intensity, position, color);
 	_lightSources.add(l);
-	cout << "Light #" << _lightSources.size() << " INITIALIZED" << endl;
+	cout << "  Light #" << _lightSources.size() << "\t\t[OK]" << endl;
+}
+
+void SceneParser::parseCamera(TiXmlElement *elem) {
+	Vector3 observer;
+	Vector3 wayUp;
+	Vector3 aimedPoint;
+	double viewAngle;
+	double distScreen;
+	elem->FirstChildElement("observer")->QueryDoubleAttribute("x", &observer[0]);
+	elem->FirstChildElement("observer")->QueryDoubleAttribute("y", &observer[1]);
+	elem->FirstChildElement("observer")->QueryDoubleAttribute("z", &observer[2]);
+	elem->FirstChildElement("aimedPoint")->QueryDoubleAttribute("x", &aimedPoint[0]);
+	elem->FirstChildElement("aimedPoint")->QueryDoubleAttribute("y", &aimedPoint[1]);
+	elem->FirstChildElement("aimedPoint")->QueryDoubleAttribute("z", &aimedPoint[2]);
+	elem->FirstChildElement("viewAngle")->QueryDoubleAttribute("value", &viewAngle);
+	elem->FirstChildElement("distScreen")->QueryDoubleAttribute("value", &distScreen);
+	_camera = ScreenV2(observer, aimedPoint, M_PI*viewAngle, _screenWidth, _screenHeight);
+	_camera.initFromDistScreen(distScreen);
+}
+
+void SceneParser::parsingInfo() {
+	cout << "\n## Information:" << endl;
+	cout << "" << endl;
+	cout << "Screen settings:" << endl;
+	cout << "  Width:\t\t" << _screenWidth << endl;
+	cout << "  Height:\t\t" << _screenHeight << endl;
+	cout << "  Over sampling:\t" << _oversampling << endl;
+	cout << "--------------------------------------------------------" << endl;
+	cout << "Sene settings:" << endl;
+	cout << "  Shapes used:\t\t" << _shapes.length() << endl;
+	cout << "  Lights used:\t\t" << _lightSources.length() << endl;
+	cout << "--------------------------------------------------------" << endl;
+	cout << "Camera settings:" << endl;
+	cout << "  Camera Rayon:\t\t" << (_camera._observer - _camera._aimedPoint).norm() << endl;
+	cout << "  Initialized:\t\t" << _camera._initialized << endl;
+	cout << "  Observer point:\t" << _camera._observer << endl;
+	cout << "  Aimed point:\t\t" << _camera._aimedPoint << endl;
+	cout << "  Way Up:\t\t" << _camera._wayUp << endl;
+	cout << "  View Angle:\t\t" << _camera._viewAngle << endl;
+	cout << "  Distance to Screen:\t" << _camera._distScreen << endl;
+	cout << "  W3D:\t\t\t" << _camera._w3D << endl;
+	cout << "  H3D:\t\t\t" << _camera._h3D << endl;
+	cout << "  W2D:\t\t\t" << _camera._w2D << endl;
+	cout << "  H2D:\t\t\t" << _camera._h2D << endl;
+	cout << "  Ratio WH:\t\t" << _camera._ratioWH << endl;
+	cout << "  Top-Left:\t\t" << _camera._screen3D[0] << endl;
+	cout << "  Top-Right:\t\t" << _camera._screen3D[1] << endl;
+	cout << "  Bottom-Left:\t\t" << _camera._screen3D[2] << endl;
+	cout << "  Bottom-Right:\t\t" << _camera._screen3D[3] << endl;
 }

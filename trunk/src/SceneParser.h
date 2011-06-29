@@ -43,15 +43,14 @@ public:
 	Set<Shape*> _shapes;
 	Set<LightSource*> _lightSources;
 	int _screenWidth, _screenHeight, _oversampling;
-	//FIXME ajouter la caméra
-	//ScreenV2 _camera;
+	ScreenV2 _camera;
 
 	/**
 	 * \brief Constructor
 	 *
 	 * Construct the parser from a XML file.
 	 */
-	SceneParser(char* fileName);
+	SceneParser(char* fileName = (char*)"./SceneDescriptions/defaultScene.xml");
 
 	/**
 	 * \brief Destructor
@@ -88,7 +87,7 @@ public:
 	/**
 	 * \brief light parser
 	 *
-	 * Parse the XML file to set the different lights.
+	 * Parse the XML file to set the different lights
 	 *
 	 * \param elem : the node that contain the lights
 	 */
@@ -97,12 +96,28 @@ public:
 	/**
 	 * \brief texture parser
 	 *
-	 * Parse the XML file to get a texture.
+	 * Parse the XML file to get a texture
 	 *
 	 * \param elem : the node that contain the texture
 	 * \return the texture parsing
 	 */
 	Texture* parseTexture(TiXmlElement *elem);
+
+	/**
+	 * \brief camera parser
+	 *
+	 * Parse the XML file to get the camera
+	 *
+	 * \param elem : the node that contain the camera
+	 */
+	void parseCamera(TiXmlElement *elem);
+
+	/**
+	 * \brief parsing info
+	 *
+	 * Summarize the parsing info results
+	 */
+	void parsingInfo();
 };
 
 #endif /* SCENEPARSER_H_ */

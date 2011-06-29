@@ -29,4 +29,10 @@
 		<position x="-20.0" y="20.0" z="-20.0" />
 		<color r="1.0" g="1.0" b="1.0" />
 	</light>
+	<camera>
+		<observer x="0.0" y="0.0" z="-40.0" />
+		<aimedPoint x="0.0" y="0.0" z="0.0" />
+		<viewAngle value="0.125" />
+		<distScreen value="0.50" />
+	</camera>
 </scene>
