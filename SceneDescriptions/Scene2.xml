@@ -2,7 +2,7 @@
 
 <!-- Creating picture time: 048.88s (17min 30s) -->
 <scene>
-	<screenSetup width="100" height="100" overSampling="1" />
+	<screenSetup width="900" height="900" overSampling="3" />
 	<!-- Mur droit -->
 	<shape type="plane">
 		<color r="0.329" g="0.416" b="0.082" />
