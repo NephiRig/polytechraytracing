@@ -135,9 +135,37 @@ Texture* SceneParser::parseTexture(TiXmlElement *elem) {
 	if (textureType == "image") {
 		texture = new ImageTexture((std::string)elem->FirstChildElement("texture")->FirstChildElement("src")->Attribute("value"));
 	} else if (textureType == "marble") {
-		//TODO
+		Color c0;
+		Color c1;
+		Color c2;
+		float stripes_per_unit;
+		float scale;
+		int octaves;
+		elem->FirstChildElement("texture")->FirstChildElement("c0")->QueryDoubleAttribute("r", &c0[0]);
+		elem->FirstChildElement("texture")->FirstChildElement("c0")->QueryDoubleAttribute("g", &c0[1]);
+		elem->FirstChildElement("texture")->FirstChildElement("c0")->QueryDoubleAttribute("b", &c0[2]);
+		elem->FirstChildElement("texture")->FirstChildElement("c1")->QueryDoubleAttribute("r", &c1[0]);
+		elem->FirstChildElement("texture")->FirstChildElement("c1")->QueryDoubleAttribute("g", &c1[1]);
+		elem->FirstChildElement("texture")->FirstChildElement("c1")->QueryDoubleAttribute("b", &c1[2]);
+		elem->FirstChildElement("texture")->FirstChildElement("c2")->QueryDoubleAttribute("r", &c2[0]);
+		elem->FirstChildElement("texture")->FirstChildElement("c2")->QueryDoubleAttribute("g", &c2[1]);
+		elem->FirstChildElement("texture")->FirstChildElement("c2")->QueryDoubleAttribute("b", &c2[2]);
+		elem->FirstChildElement("texture")->FirstChildElement("stripesPerUnit")->QueryFloatAttribute("value", &stripes_per_unit);
+		elem->FirstChildElement("texture")->FirstChildElement("scale")->QueryFloatAttribute("value", &scale);
+		elem->FirstChildElement("texture")->FirstChildElement("octaves")->QueryIntAttribute("value", &octaves);
+		texture = new MarbleTexture(c0, c1, c2, stripes_per_unit, scale, octaves);
 	} else if (textureType == "noise") {
-		//TODO
+		Color c0;
+		Color c1;
+		float scale;
+		elem->FirstChildElement("texture")->FirstChildElement("c0")->QueryDoubleAttribute("r", &c0[0]);
+		elem->FirstChildElement("texture")->FirstChildElement("c0")->QueryDoubleAttribute("g", &c0[1]);
+		elem->FirstChildElement("texture")->FirstChildElement("c0")->QueryDoubleAttribute("b", &c0[2]);
+		elem->FirstChildElement("texture")->FirstChildElement("c1")->QueryDoubleAttribute("r", &c1[0]);
+		elem->FirstChildElement("texture")->FirstChildElement("c1")->QueryDoubleAttribute("g", &c1[1]);
+		elem->FirstChildElement("texture")->FirstChildElement("c1")->QueryDoubleAttribute("b", &c1[2]);
+		elem->FirstChildElement("texture")->FirstChildElement("scale")->QueryFloatAttribute("value", &scale);
+		texture = new NoiseTexture(c0, c1, scale);
 	} else {
 		cerr << "Invalid description: " << textureType << " does not exist.\nPlease, check the spelling and try again." << endl;
 		exit(-1);
