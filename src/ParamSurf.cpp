@@ -19,7 +19,7 @@ ParamSurf::ParamSurf(const Color &_color,mat M0, mat M1, mat M2, mat M3, string 
 	 M0(M0), M1(M1), M2(M2), M3(M3) {
 	this->color = _color;
 	this->surface = surface;
-	material=Material(0.1,0.4,0.5,20); //FIXME Take into constructor
+	Material material(0.1, 0.4, 0.5, 20, 0.2); //FIXME Take into constructor
 }
 
 ParamSurf::~ParamSurf() {
@@ -32,16 +32,16 @@ Set<mat> ParamSurf::make_pencil(const Ray& r) const {
 
 	Set<mat> pencil = Set<mat> (2);
 
-	Vector3 originRay = r.get_origin();
-	Vector3 directionRay = r.get_direction();
+	Vector3 originRay = r[0];
+	Vector3 directionRay = r[1];
 
-	double x0 = originRay.get_x();
-	double y0 = originRay.get_y();
-	double z0 = originRay.get_z();
+	double x0 = originRay[0];
+	double y0 = originRay[1];
+	double z0 = originRay[2];
 
-	double xd = directionRay.get_x();
-	double yd = directionRay.get_y();
-	double zd = directionRay.get_z();
+	double xd = directionRay[0];
+	double yd = directionRay[1];
+	double zd = directionRay[2];
 
 	mat A = M0+x0*M1+y0*M2+z0*M3;
 	mat B = (-xd)*M1+(-yd)*M2+(-zd)*M3;
@@ -251,9 +251,9 @@ Vector3 ParamSurf::normalSteiner(double s, double t) const {
 
 Vector3 ParamSurf::normal(const Vector3& pt_intersection) const {
 
-	double x = pt_intersection.get_x();
-	double y = pt_intersection.get_y();
-	double z = pt_intersection.get_z();
+	double x = pt_intersection[0];
+	double y = pt_intersection[1];
+	double z = pt_intersection[2];
 
 	//kernel
 	mat M = M0+x*M1+y*M2+z*M3;
