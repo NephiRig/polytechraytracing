@@ -38,6 +38,7 @@ set(${PROJECT_NAME}_HEADERS
     #ParamSurf.h
     PhongModel.h
     Plane.h
+    Quadrics.h
     Ray.h
     RayTracer.h
     Rectangle.h
@@ -73,6 +74,7 @@ set(${PROJECT_NAME}_SOURCES
     #ParamSurf.cpp
     PhongModel.cpp
     Plane.cpp
+    Quadrics.cpp
     Ray.cpp
     RayTracer.cpp
     Rectangle.cpp
