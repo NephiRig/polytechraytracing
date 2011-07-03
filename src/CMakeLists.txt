@@ -30,6 +30,7 @@ set(${PROJECT_NAME}_HEADERS
     Draughtboard.h
     Image.h
     ImageTexture.h
+    Intersection.h
     LightModel.h
     LightSource.h
     MarbleTexture.h
@@ -66,6 +67,7 @@ set(${PROJECT_NAME}_SOURCES
     Draughtboard.cpp
     Image.cpp
     ImageTexture.cpp
+    Intersection.cpp
     LightModel.cpp
     LightSource.cpp
     MarbleTexture.cpp

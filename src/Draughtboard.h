@@ -56,7 +56,10 @@ public:
 	 * \param pt: the intersection point
 	 * \return the color of the draughtboard at the intersection pôint
 	 */
-	virtual Color getColor(const Vector3 &pt);
+	virtual Color getColor(const Vector3 &pt) const;
+	/*
+	virtual Intersection getIntersectParams(const Ray &rayon) const;
+	//*/
 };
 
 #endif /* DRAUGHTBOARD_H_ */

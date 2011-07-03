@@ -13,7 +13,10 @@ public:
 	UVSphere(const Color &color = 0, const Material &material = 0, const Vector3 &center = 0, float radius = 0, Texture *tex = new SimpleTexture(), const float plusTheta = 0, const float plusPhi = 0);
 	virtual ~UVSphere();
 
-	virtual Color getColor(const Vector3& pointIntersection);
+	virtual Color getColor(const Vector3& ptIntersect) const;
+	/*
+	virtual Intersection getIntersectParams(const Ray &rayon) const;
+	//*/
 };
 
 #endif /* UVSPHERE_H_ */

@@ -12,9 +12,11 @@ public:
 			double g, double h, double i, double j);
 	virtual ~Quadrics();
 
-	virtual Vector3 normal(const Vector3& pt) const;
-	virtual Set<double> intersect(const Ray& r) const;
-
+	virtual Vector3 normal(const Vector3 &ptIntersect) const;
+	virtual Set<double> ensIntersect(const Ray &rayon) const;
+	/*
+	virtual Intersection getIntersectParams(const Ray &rayon) const;
+	//*/
 };
 
 #endif /* QUADRICS_H_ */

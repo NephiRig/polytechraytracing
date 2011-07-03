@@ -11,24 +11,24 @@ Quadrics::Quadrics(const Color &color, const Material &material, double a,
 Quadrics::~Quadrics() {
 }
 
-Vector3 Quadrics::normal(const Vector3& pt) const {
-	double x0 = pt[0];
-	double y0 = pt[1];
-	double z0 = pt[2];
-	return Vector3(2 * x0 + 2 * _e * z0 + 2 * _f * y0 + _g,
-			2 * y0 + 2 * _d * z0 + 2 * _f * x0 + _h,
-			2 * z0 + 2 * _d * y0 + 2 * _e * x0 + _i);
+Vector3 Quadrics::normal(const Vector3& ptIntersect) const {
+	double x0 = ptIntersect[0];
+	double y0 = ptIntersect[1];
+	double z0 = ptIntersect[2];
+	return Vector3(2.0 * _a * x0 + 2.0 * _e * z0 + 2.0 * _f * y0 + _g,
+				   2.0 * _b * y0 + 2.0 * _d * z0 + 2.0 * _f * x0 + _h,
+				   2.0 * _c * z0 + 2.0 * _d * y0 + 2.0 * _e * x0 + _i);
 }
 
-Set<double> Quadrics::intersect(const Ray& r) const {
+Set<double> Quadrics::ensIntersect(const Ray &rayon) const {
 	Set<double> res;
 
-	double ox = r[0][0];
-	double oy = r[0][1];
-	double oz = r[0][2];
-	double dx = r[1][0];
-	double dy = r[1][1];
-	double dz = r[1][2];
+	double ox = rayon[0][0];
+	double oy = rayon[0][1];
+	double oz = rayon[0][2];
+	double dx = rayon[1][0];
+	double dy = rayon[1][1];
+	double dz = rayon[1][2];
 
 	double alpha = _a * dx * dx + _b * dy * dy + _c * dz * dz + 2 * _d * dy
 			* dz + 2 * _e * dx * dz + 2 * _f * dx * dy;
@@ -51,3 +51,14 @@ Set<double> Quadrics::intersect(const Ray& r) const {
 
 	return res;
 }
+/*
+Intersection Quadrics::getIntersectParams(const Ray &rayon) const {
+	Set<double> intersections = intersect(rayon);
+	Vector3 ptInter = intersections.get(0);
+	if (!intersections.empty()) {
+		return Intersection(intersections, normal(ptInter), _color);
+	} else {
+		return Intersection();
+	}
+}
+//*/
