@@ -11,7 +11,10 @@ public:
 	Rectangle(const Color &color, const Material &material, const Ray &normAndPoint, double height, double width);
 	virtual ~Rectangle();
 
-	virtual Set<double> intersect(const Ray& r) const;
+	virtual Set<double> ensIntersect(const Ray &rayon) const;
+	/*
+	virtual Intersection getIntersectParams(const Ray &rayon) const;
+	//*/
 };
 
 #endif /* RECTANGLE_H_ */

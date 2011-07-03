@@ -22,6 +22,7 @@
 #include "MarbleTexture.h"
 #include "NoiseTexture.h"
 #include "Plane.h"
+#include "Quadrics.h"
 #include "Rectangle.h"
 #include "ScreenV2.h"
 #include "Set.h"

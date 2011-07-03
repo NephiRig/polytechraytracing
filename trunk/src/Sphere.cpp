@@ -10,19 +10,18 @@ Sphere::Sphere(const Color &color, const Material &material, const Vector3 &cent
 Sphere::~Sphere() {
 }
 
-void Sphere::setMaterial(const Material &material) {
-	_material = material;
+Vector3 Sphere::normal(const Vector3 &ptIntersect) const {
+	return (ptIntersect - _center);
 }
 
-Set<double> Sphere::intersect(const Ray& ray) const {
-
+Set<double> Sphere::ensIntersect(const Ray &rayon) const {
 	Set<double> s = Set<double> (2);
-	Vector3 d_o_x = dot_product(ray.getDirection(), (ray.getOrigin() - _center));
-	Vector3 o_c = dot_product(ray.getOrigin(), _center);
+	Vector3 d_o_x = dot_product(rayon.getDirection(), (rayon.getOrigin() - _center));
+	Vector3 o_c = dot_product(rayon.getOrigin(), _center);
 
-	double a = ray.getDirection().norm() * ray.getDirection().norm();
+	double a = rayon.getDirection().norm() * rayon.getDirection().norm();
 	double b = 2 * (d_o_x[0] + d_o_x[1] + d_o_x[2]);
-	double c = pow(_center.norm(), 2) + pow(ray.getOrigin().norm(), 2) - 2 * (o_c[0] + o_c[1] + o_c[2]) - _radius * _radius;
+	double c = pow(_center.norm(), 2) + pow(rayon.getOrigin().norm(), 2) - 2 * (o_c[0] + o_c[1] + o_c[2]) - _radius * _radius;
 
 	//Apply solve function (-b +- sqrt(b^2-4ac))/2a
 	double d = b * b - 4 * a * c; //the term in the root
@@ -41,7 +40,13 @@ Set<double> Sphere::intersect(const Ray& ray) const {
 	}
 	return s;
 }
-
-Vector3 Sphere::normal(const Vector3& pointIntersection) const {
-	return (pointIntersection - _center);
+/*
+Intersection Sphere::getIntersectParams(const Ray &rayon) const {
+	Set<double> intersections = intersect(rayon);
+	if (!intersections.empty()) {
+		return Intersection(intersections, normal(), _color);
+	} else {
+		return Intersection();
+	}
 }
+//*/

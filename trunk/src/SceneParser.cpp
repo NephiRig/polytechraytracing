@@ -70,7 +70,20 @@ void SceneParser::parseShape(TiXmlElement *elem) {
 	elem->FirstChildElement("material")->QueryDoubleAttribute("ks", &material.k_s);
 	elem->FirstChildElement("material")->QueryDoubleAttribute("ns", &material.n_s);
 	elem->FirstChildElement("material")->QueryDoubleAttribute("kreflex", &material.k_reflex);
-	if (shapeType == "uvsphere" || shapeType == "sphere") {
+	if (shapeType == "quadric") {
+		double a, b, c, d, e, f, g, h, i, j;
+		elem->FirstChildElement("a")->QueryDoubleAttribute("value", &a);
+		elem->FirstChildElement("b")->QueryDoubleAttribute("value", &b);
+		elem->FirstChildElement("c")->QueryDoubleAttribute("value", &c);
+		elem->FirstChildElement("d")->QueryDoubleAttribute("value", &d);
+		elem->FirstChildElement("e")->QueryDoubleAttribute("value", &e);
+		elem->FirstChildElement("f")->QueryDoubleAttribute("value", &f);
+		elem->FirstChildElement("g")->QueryDoubleAttribute("value", &g);
+		elem->FirstChildElement("h")->QueryDoubleAttribute("value", &h);
+		elem->FirstChildElement("i")->QueryDoubleAttribute("value", &i);
+		elem->FirstChildElement("j")->QueryDoubleAttribute("value", &j);
+		s = new Quadrics(color, material, a, b, c, d, e, f, g, h, i, j);
+	} else if (shapeType == "uvsphere" || shapeType == "sphere") {
 		Vector3 center;
 		double radius;
 		elem->FirstChildElement("center")->QueryDoubleAttribute("x", &center[0]);

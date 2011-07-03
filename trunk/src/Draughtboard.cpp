@@ -8,10 +8,20 @@ Draughtboard::Draughtboard(const Color &color, const Material &material, const C
 Draughtboard::~Draughtboard() {
 }
 
-Color Draughtboard::getColor(const Vector3 &pt) {
-	if ((int) floor( fabs((pt / _caseSize)[0])+.5 ) % 2 == (int) floor( fabs((pt / _caseSize)[2])+.5 ) % 2) {
-		return Shape::_color;
+Color Draughtboard::getColor(const Vector3 &ptIntersect) const {
+	if ((int) floor( fabs((ptIntersect / _caseSize)[0])+.5 ) % 2 == (int) floor( fabs((ptIntersect / _caseSize)[2])+.5 ) % 2) {
+		return _color;
 	} else {
 		return _colorD;
 	}
 }
+/*
+Intersection Draughtboard::getIntersectParams(const Ray &rayon) const {
+	Set<double> intersections = intersect(rayon);
+	if (!intersections.empty()) {
+		return Intersection(intersections, _normAndPoint[1], getColor(rayon.getPoint(intersections.get(0))));
+	} else {
+		return Intersection();
+	}
+}
+//*/

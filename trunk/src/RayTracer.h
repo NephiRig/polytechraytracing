@@ -8,6 +8,7 @@
 #include "Sphere.h"
 #include "Ray.h"
 #include "Image.h"
+#include "Intersection.h"
 #include "Scene.h"
 #include "ScreenV2.h"
 #include "LightSource.h"

@@ -4,10 +4,6 @@
 RayTracer::RayTracer(Scene &scene, PhongModel &lightModel, ScreenV2 &camera) :
 	_scene(scene), _lightModel(lightModel), _camera(camera) {
 	NB_OF_INTERATIONS = 5;
-
-	for (int i = 0; i < _scene._shapes->length(); i++) {
-		Color c = _scene._shapes->get(i)->_color;
-	}
 }
 
 RayTracer::~RayTracer() {
@@ -76,24 +72,26 @@ void RayTracer::raytrace(Image* img, int size) {
 Color RayTracer::calculateColor(Ray &r, int recursions) {
 
 	//FIXME Initialize with the background color
-	Color c = Color(0.0, 0.0, 0.0);
+	Color c = Color(0, 0, 0);
 
 	//Get the first intersection with any shape
-	Shape* closestShape = _scene._shapes->get(0);
+	Shape *closestShape = _scene._shapes->get(0);
 	double closestIP;
 	bool hasIntersection = false;
-	r[1].normalize();
+	r[1].normalize ();
 	Ray r_moved = Ray(r.getPoint(1), r.getDirection());
 	for (int i = 0; i < _scene._shapes->length(); i++) {
-		Set<double> intersections = _scene._shapes->get(i)->intersect(r_moved);
+		Shape *currentShape = _scene._shapes->get(i);
+		Intersection currentIntersect = Intersection(currentShape, r_moved);
+		Set<double> intersections = currentIntersect._intersections;
 
 		if (!hasIntersection && !intersections.empty()) {
-			closestShape = _scene._shapes->get(i);
+			closestShape = currentShape;
 			closestIP = intersections[0];
 			hasIntersection = true;
 		} else if (hasIntersection && !intersections.empty()
 				&& intersections[0] < closestIP) {
-			closestShape = _scene._shapes->get(i);
+			closestShape = currentShape;
 			closestIP = intersections[0];
 		}
 
@@ -101,15 +99,16 @@ Color RayTracer::calculateColor(Ray &r, int recursions) {
 
 	//if there are any intersections
 	if (hasIntersection) {
+		Intersection inter = Intersection(closestShape, r_moved);
 		//Get the Point of the first intersection
-		Vector3 intersection = r_moved.getPoint(closestIP); //P := intersection
+		Vector3 intersection = r_moved.getPoint(inter._intersections[0]); //P := intersection
 
 		//The normal at the point of intersection
-		Vector3 n = closestShape->normal(intersection).normalize();
+		Vector3 n = inter._normal;
 
 		//Make sure the normal points into the right direction
 		//FIXME is this correct??
-		Vector3 r_dir_op = -r.getDirection();
+		Vector3 r_dir_op = -r.getDirection ();
 		if (dot_product(r_dir_op, n) < 0) {
 			//if (dot_product(V, n) < 0) {
 			n = -n;
@@ -118,7 +117,10 @@ Color RayTracer::calculateColor(Ray &r, int recursions) {
 
 		//The reflected ray at the point of intersection
 		//FIXME Move to the shape class, as it is the same for all the shapes
-		Ray reflected = Ray(intersection, (2 * n * (dot_product(n, r_dir_op)) - r_dir_op));
+		Ray reflected = Ray(
+				intersection,
+				(2 * n * (dot_product(n, r_dir_op))
+						- r_dir_op));
 
 		/*
 		 * Calculate the light compartments using the lightmodel
@@ -127,7 +129,7 @@ Color RayTracer::calculateColor(Ray &r, int recursions) {
 		//Ambient color
 		//FIXME: Take L_a of scene instead of 1
 		c = 1 * _lightModel.getAmbient(closestShape->_material)
-				* closestShape->getColor(intersection);
+			  * inter._color;
 
 		for (int i = 0; i < _scene._lightSources->length(); i++) {
 			LightSource* l = _scene._lightSources->get(i);
@@ -137,7 +139,7 @@ Color RayTracer::calculateColor(Ray &r, int recursions) {
 						closestShape->_material);
 				double specular = _lightModel.getSpecular(reflected, l,
 						closestShape->_material);
-				c += diffuse * closestShape->getColor(intersection)
+				c += diffuse * inter._color
 						* l->_intensity;
 				c += specular * l->_color * l->_intensity;
 
@@ -146,7 +148,8 @@ Color RayTracer::calculateColor(Ray &r, int recursions) {
 
 		//Recursive call
 		if (recursions > 0) {
-			c += closestShape->_material.k_reflex * calculateColor(reflected, --recursions);
+			c += closestShape->_material.k_reflex * calculateColor(reflected,
+					--recursions);
 		}
 	}
 	return c;
@@ -161,13 +164,14 @@ bool RayTracer::isHidden(LightSource* lightSource, Vector3 &point) {
 	Ray ray = Ray(point, (lightSource->_position - point).normalize());
 	Vector3 point_moved = point + 0.01 * ray[1];
 	ray[0] = point_moved;
-	//Get the first intersection with any shape
-	Shape* closestShape = _scene._shapes->get(0);
-	double closestIP;
-	bool hasIntersection = false;
 
+	Shape *closestShape = _scene._shapes->get(0);
+	bool hasIntersection = false;
+	double closestIP;
 	for (int i = 0; i < _scene._shapes->length(); i++) {
-		Set<double> intersections = _scene._shapes->get(i)->intersect(ray);
+		Shape *currentShape = _scene._shapes->get(i);
+		Intersection currentIntersect = Intersection(currentShape, ray);
+		Set<double> intersections = currentIntersect._intersections;
 
 		if (!hasIntersection && !intersections.empty()) {
 			closestShape = _scene._shapes->get(i);
@@ -177,10 +181,12 @@ bool RayTracer::isHidden(LightSource* lightSource, Vector3 &point) {
 				&& intersections[0] < closestIP) {
 			closestShape = _scene._shapes->get(i);
 			closestIP = intersections[0];
-			hasIntersection = true;
 		}
+
 		if (hasIntersection) {
-			Vector3 intersection = ray.getPoint(closestIP);
+			Intersection inter = Intersection(closestShape, ray);
+			//Get the Point of the first intersection
+			Vector3 intersection = ray.getPoint(inter._intersections[0]); //P := intersection
 			//Create a vector between the two object intersections
 			Vector3 point_intersection = intersection - point_moved;
 			//Create a vector between object intersection and light source

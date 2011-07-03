@@ -1,11 +1,11 @@
 #ifndef SHAPE_H_
 #define SHAPE_H_
 
-#include "Vector3.h"
 #include "Color.h"
+#include "Material.h"
 #include "Ray.h"
 #include "Set.h"
-#include "Material.h"
+#include "Vector3.h"
 
 class Shape {
 public:
@@ -15,9 +15,12 @@ public:
 	Shape();
 	virtual ~Shape();
 
-	virtual Vector3 normal(const Vector3& pt) const=0;
-	virtual Set<double> intersect(const Ray& r) const=0;
-	virtual Color getColor(const Vector3& pt);
+	virtual Vector3 normal(const Vector3 &ptIntersect) const;
+	virtual Set<double> ensIntersect(const Ray &rayon) const;
+	virtual Color getColor(const Vector3 &ptIntersect) const;
+	/*
+	virtual Intersection getIntersectParams(const Ray &rayon) const = 0;
+	//*/
 };
 
 #endif /* SHAPE_H_ */
