@@ -49,6 +49,8 @@ set(${PROJECT_NAME}_HEADERS
     ScreenV2.h
     Set.h
     Shape.h
+    ShapeIntersection.h
+    ShapeUnion.h
     SimpleTexture.h
     SolidNoise.h
     Sphere.h
@@ -85,6 +87,8 @@ set(${PROJECT_NAME}_SOURCES
     SceneParser.cpp
     ScreenV2.cpp
     Shape.cpp
+    ShapeIntersection.cpp
+    ShapeUnion.cpp
     SimpleTexture.cpp
     SolidNoise.cpp
     Sphere.cpp

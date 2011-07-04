@@ -51,6 +51,23 @@ Set<double> Quadrics::ensIntersect(const Ray &rayon) const {
 
 	return res;
 }
+
+bool Quadrics::belongsTo(const Vector3& ptIntersect) const {
+	double x0 = ptIntersect[0];
+	double y0 = ptIntersect[1];
+	double z0 = ptIntersect[2];
+	return abs(_a * x0 * x0
+			 + _b * y0 * y0
+			 + _c * z0 * z0
+			 + 2 * _d * y0 * z0
+			 + 2 * _e * x0 * z0
+			 + 2 * _f * x0 * y0
+			 + _g * x0
+			 + _h * y0
+			 + _i * z0
+			 + _j) < 0.001;
+
+}
 /*
 Intersection Quadrics::getIntersectParams(const Ray &rayon) const {
 	Set<double> intersections = intersect(rayon);

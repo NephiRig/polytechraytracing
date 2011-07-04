@@ -15,9 +15,10 @@ public:
 	Shape();
 	virtual ~Shape();
 
-	virtual Vector3 normal(const Vector3 &ptIntersect) const;
-	virtual Set<double> ensIntersect(const Ray &rayon) const;
-	virtual Color getColor(const Vector3 &ptIntersect) const;
+	virtual Vector3 normal(const Vector3 &ptIntersect) const = 0;
+	virtual Set<double> ensIntersect(const Ray &rayon) const = 0;
+	virtual Color getColor(const Vector3 &ptIntersect);
+	virtual bool belongsTo(const Vector3 &ptIntersect) const = 0;
 	/*
 	virtual Intersection getIntersectParams(const Ray &rayon) const = 0;
 	//*/

@@ -28,6 +28,7 @@
 #include "Set.h"
 #include "ScreenV2.h"
 #include "Shape.h"
+#include "ShapeIntersection.h"
 #include "Sphere.h"
 #include "Texture.h"
 #include "UVSphere.h"
@@ -49,14 +50,14 @@ public:
 	/**
 	 * \brief Constructor
 	 *
-	 * Construct the parser from a XML file.
+	 * Construct the parser from a XML file
 	 */
 	SceneParser(char* fileName = (char*)"./SceneDescriptions/defaultScene.xml");
 
 	/**
 	 * \brief Destructor
 	 *
-	 * Destruct the parser.
+	 * Destruct the parser
 	 */
 	virtual ~SceneParser();
 
@@ -70,7 +71,7 @@ public:
 	/**
 	 * \brief screen setup
 	 *
-	 * Parse the XML file to set the screen options.
+	 * Parse the XML file to set the screen options
 	 *
 	 * \param elem : the node that contain the screen options
 	 */
@@ -79,11 +80,14 @@ public:
 	/**
 	 * \brief shape parser
 	 *
-	 * Parse the XML file to set the different shapes.
+	 * Parse the XML file to set the different shapes
 	 *
 	 * \param elem : the node that contain the shapes
+	 * \return a pointer on the new shape created
 	 */
-	void parseShape(TiXmlElement *elem);
+	Shape* parseShape(TiXmlElement *elem);
+
+	Shape* parseCSG(TiXmlElement *elem);
 
 	/**
 	 * \brief light parser

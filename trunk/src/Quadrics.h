@@ -14,6 +14,7 @@ public:
 
 	virtual Vector3 normal(const Vector3 &ptIntersect) const;
 	virtual Set<double> ensIntersect(const Ray &rayon) const;
+	virtual bool belongsTo(const Vector3& ptIntersect) const;
 	/*
 	virtual Intersection getIntersectParams(const Ray &rayon) const;
 	//*/

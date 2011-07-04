@@ -5,12 +5,10 @@ Intersection::Intersection(Shape *shape, const Ray &rayon) :
 	_rayon(rayon) {
 	_shape = shape;
 	_intersections = _shape->ensIntersect(rayon);
-	if (_intersections.length() > 1) {
-		quickSort(_intersections, 0, _intersections.length() - 1);
-		double firstT = _intersections[0];
-		_normal = _shape->normal(rayon.getPoint(firstT));
-		_color = _shape->getColor(rayon.getPoint(firstT));
-	} else if (_intersections.length() > 0) {
+	if (_intersections.length() > 0) {
+		if (_intersections.length() > 1) {
+			quickSort(_intersections, 0, _intersections.length() - 1);
+		}
 		double firstT = _intersections[0];
 		_normal = _shape->normal(rayon.getPoint(firstT));
 		_color = _shape->getColor(rayon.getPoint(firstT));

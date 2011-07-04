@@ -14,8 +14,12 @@ Set<double> Shape::ensIntersect(const Ray &rayon) const {
 	return Set<double>(0);
 }
 
-Color Shape::getColor(const Vector3 &ptIntersect) const {
+Color Shape::getColor(const Vector3 &ptIntersect) {
 	return _color;
+}
+
+bool Shape::belongsTo(const Vector3 &ptIntersect) const {
+	return true;
 }
 
 /*
