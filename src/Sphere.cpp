@@ -40,6 +40,12 @@ Set<double> Sphere::ensIntersect(const Ray &rayon) const {
 	}
 	return s;
 }
+
+bool Sphere::belongsTo(const Vector3 &ptIntersect) const {
+	return fabs(sqrt((ptIntersect[0] - _center[0])*(ptIntersect[0] - _center[0])
+				   + (ptIntersect[1] - _center[1])*(ptIntersect[1] - _center[1])
+				   + (ptIntersect[2] - _center[2])*(ptIntersect[2] - _center[2])) - _radius) < 0.001;
+}
 /*
 Intersection Sphere::getIntersectParams(const Ray &rayon) const {
 	Set<double> intersections = intersect(rayon);

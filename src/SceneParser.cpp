@@ -34,7 +34,11 @@ void SceneParser::parse() {
 			if ((std::string) elem->Value() == "screenSetup") {
 				screenSetup(elem);
 			} else if ((std::string) elem->Value() == "shape") {
-				parseShape(elem);
+				Shape *s = parseShape(elem);
+				_shapes.add(s);
+			} else if ((std::string) elem->Value() == "csg") {
+				Shape *s = parseCSG(elem);
+				_shapes.add(s);
 			} else if ((std::string) elem->Value() == "light") {
 				parseLight(elem);
 			} else if ((std::string) elem->Value() == "camera") {
@@ -56,8 +60,22 @@ void SceneParser::screenSetup(TiXmlElement *elem) {
 	elem->QueryIntAttribute("height", &_screenHeight);
 	elem->QueryIntAttribute("overSampling", &_oversampling);
 }
-
-void SceneParser::parseShape(TiXmlElement *elem) {
+//*
+Shape* SceneParser::parseCSG(TiXmlElement *elem) {
+	std::string csgType = elem->Attribute("type");
+	Shape *s;
+	if (csgType == "intersection") {
+		Shape *s1 = parseShape(elem->FirstChildElement("fst")->FirstChildElement("shape"));
+		Shape *s2 = parseShape(elem->FirstChildElement("snd")->FirstChildElement("shape"));
+		s = new ShapeIntersection(s1, s2);
+	} else {
+		cerr << "Invalid description: " << csgType << " does not exist.\nPlease, check the spelling and try again." << endl;
+		exit(-1);
+	}
+	return s;
+}
+//*/
+Shape* SceneParser::parseShape(TiXmlElement *elem) {
 	std::string shapeType = elem->Attribute("type");
 	Shape *s;
 	Color color;
@@ -138,8 +156,8 @@ void SceneParser::parseShape(TiXmlElement *elem) {
 		cerr << "Invalid description: " << shapeType << " does not exist.\nPlease, check the spelling and try again." << endl;
 		exit(-1);
 	}
-	_shapes.add(s);
-	cout << "  Shape #" << _shapes.size() << " (" << shapeType.substr(0, 7) << ")" << "\t[OK]" << endl;
+	cout << "  Shape #" << _shapes.size()+1 << " (" << shapeType.substr(0, 7) << ")" << "\t[OK]" << endl;
+	return s;
 }
 
 Texture* SceneParser::parseTexture(TiXmlElement *elem) {

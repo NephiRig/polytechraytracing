@@ -19,6 +19,7 @@
 		<center x="5" y="0" z="0" />
 		<radius value="4" />
 	</shape>
+	<!-- damier -->
 	<shape type="draughtboard">
 		<color r="0.01" g="0.01" b="0.01" />
 		<material ka="0.4" kd="0.5" ks="0.4" ns="40" kreflex="0.5" />
@@ -29,6 +30,7 @@
 		<otherColor r="0.9" g="0.9" b="0.9" />
 		<caseSize value="4.0" />
 	</shape>
+	<!-- fin du damier -->
 	<light>
 		<intensity value="3.0" />
 		<position x="20.0" y="30.0" z="-30.0" />

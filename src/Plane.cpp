@@ -32,6 +32,12 @@ Vector3 Plane::normal(const Vector3 &ptIntersect) const {
 	return _normAndPoint[1];
 }
 
+bool Plane::belongsTo(const Vector3 &ptIntersect) const {
+	return abs(_d + ptIntersect[0] * _normAndPoint[1][0]
+	              + ptIntersect[1] * _normAndPoint[1][1]
+	              + ptIntersect[2] * _normAndPoint[1][2]) < 0.001;
+}
+
 /*
 Intersection Plane::getIntersectParams(const Ray &rayon) const {
 	Set<double> intersections = intersect(rayon);

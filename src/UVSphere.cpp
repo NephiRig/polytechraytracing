@@ -8,7 +8,7 @@ UVSphere::UVSphere(const Color &color, const Material &material, const Vector3 &
 UVSphere::~UVSphere() {
 }
 
-Color UVSphere::getColor(const Vector3& ptIntersect) const {
+Color UVSphere::getColor(const Vector3& ptIntersect) {
 	Vector3 n = normal(ptIntersect) / _radius;
 
 	float twopi = 6.28318530718f;
