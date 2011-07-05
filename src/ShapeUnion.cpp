@@ -1,14 +1,14 @@
-#include "ShapeIntersection.h"
+#include "ShapeUnion.h"
 
-ShapeIntersection::ShapeIntersection(Shape *shape1, Shape *shape2) {
+ShapeUnion::ShapeUnion(Shape *shape1, Shape *shape2) {
 	_shape1 = shape1;
 	_shape2 = shape2;
 }
 
-ShapeIntersection::~ShapeIntersection() {
+ShapeUnion::~ShapeUnion() {
 }
 
-Vector3 ShapeIntersection::normal(const Vector3& ptIntersect) const {
+Vector3 ShapeUnion::normal(const Vector3 &ptIntersect) const {
 	if (_shape2->belongsTo(ptIntersect)) {
 		return _shape2->normal(ptIntersect);
 	} else if (_shape1->belongsTo(ptIntersect)) {
@@ -18,21 +18,22 @@ Vector3 ShapeIntersection::normal(const Vector3& ptIntersect) const {
 	}
 }
 
-Set<double> ShapeIntersection::ensIntersect(const Ray& rayon) const {
+Set<double> ShapeUnion::ensIntersect(const Ray &rayon) const {
 	Set<double> s = Set<double>();
 	Set<double> s1 = _shape1->ensIntersect(rayon);
 	Set<double> s2 = _shape2->ensIntersect(rayon);
 
-	if (s1.empty() || s2.empty()) {
-		return s;
-	} else if (s1[0] < s2[0]) {
-		return s2;
-	} else {
-		return s1;
+	for (int i = 0; i < s1.length(); i++) {
+		s.add(s1[i]);
 	}
+	for (int i = 0; i < s2.length(); i++) {
+		s.add(s2[i]);
+	}
+
+	return s;
 }
 
-Color ShapeIntersection::getColor(const Vector3& ptIntersect) {
+Color ShapeUnion::getColor(const Vector3 &ptIntersect) {
 	if (_shape2->belongsTo(ptIntersect)) {
 		_material = _shape2->_material;
 		return _shape2->getColor(ptIntersect);
@@ -44,7 +45,6 @@ Color ShapeIntersection::getColor(const Vector3& ptIntersect) {
 	}
 }
 
-bool ShapeIntersection::belongsTo(const Vector3& ptIntersect) const {
-	//FIXME Faire un meilleur test, celui-ci est faux
+bool ShapeUnion::belongsTo(const Vector3 &ptIntersect) const {
 	return _shape1->belongsTo(ptIntersect) || _shape2->belongsTo(ptIntersect);
 }

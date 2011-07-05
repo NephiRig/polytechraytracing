@@ -64,10 +64,12 @@ void SceneParser::screenSetup(TiXmlElement *elem) {
 Shape* SceneParser::parseCSG(TiXmlElement *elem) {
 	std::string csgType = elem->Attribute("type");
 	Shape *s;
+	Shape *s1 = parseShape(elem->FirstChildElement("fst")->FirstChildElement("shape"));
+	Shape *s2 = parseShape(elem->FirstChildElement("snd")->FirstChildElement("shape"));
 	if (csgType == "intersection") {
-		Shape *s1 = parseShape(elem->FirstChildElement("fst")->FirstChildElement("shape"));
-		Shape *s2 = parseShape(elem->FirstChildElement("snd")->FirstChildElement("shape"));
 		s = new ShapeIntersection(s1, s2);
+	} else if (csgType == "union") {
+		s = new ShapeUnion(s1, s2);
 	} else {
 		cerr << "Invalid description: " << csgType << " does not exist.\nPlease, check the spelling and try again." << endl;
 		exit(-1);
