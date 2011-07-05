@@ -29,6 +29,7 @@
 #include "ScreenV2.h"
 #include "Shape.h"
 #include "ShapeIntersection.h"
+#include "ShapeUnion.h"
 #include "Sphere.h"
 #include "Texture.h"
 #include "UVSphere.h"
@@ -73,7 +74,7 @@ public:
 	 *
 	 * Parse the XML file to set the screen options
 	 *
-	 * \param elem : the node that contain the screen options
+	 * \param elem : the node that contains the screen options
 	 */
 	void screenSetup(TiXmlElement *elem);
 
@@ -82,11 +83,20 @@ public:
 	 *
 	 * Parse the XML file to set the different shapes
 	 *
-	 * \param elem : the node that contain the shapes
+	 * \param elem : the node that contains the shapes
 	 * \return a pointer on the new shape created
 	 */
 	Shape* parseShape(TiXmlElement *elem);
 
+	/**
+	 * \brief CSG parser
+	 *
+	 * Parse the XML file to set the different CSGs
+	 * CSGs are special shapes, obtained by intersection, union or difference between two shapes
+	 *
+	 * \param elem : the node that contains the shapes
+	 * \return a pointer on the new shape (CSG) created
+	 */
 	Shape* parseCSG(TiXmlElement *elem);
 
 	/**
@@ -94,7 +104,7 @@ public:
 	 *
 	 * Parse the XML file to set the different lights
 	 *
-	 * \param elem : the node that contain the lights
+	 * \param elem : the node that contains the lights
 	 */
 	void parseLight(TiXmlElement *elem);
 
@@ -103,7 +113,7 @@ public:
 	 *
 	 * Parse the XML file to get a texture
 	 *
-	 * \param elem : the node that contain the texture
+	 * \param elem : the node that contains the texture
 	 * \return the texture parsing
 	 */
 	Texture* parseTexture(TiXmlElement *elem);
@@ -113,7 +123,7 @@ public:
 	 *
 	 * Parse the XML file to get the camera
 	 *
-	 * \param elem : the node that contain the camera
+	 * \param elem : the node that contains the camera
 	 */
 	void parseCamera(TiXmlElement *elem);
 
