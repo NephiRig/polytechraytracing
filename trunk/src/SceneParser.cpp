@@ -36,9 +36,6 @@ void SceneParser::parse() {
 			} else if ((std::string) elem->Value() == "shape") {
 				Shape *s = parseShape(elem);
 				_shapes.add(s);
-			} else if ((std::string) elem->Value() == "csg") {
-				Shape *s = parseCSG(elem);
-				_shapes.add(s);
 			} else if ((std::string) elem->Value() == "light") {
 				parseLight(elem);
 			} else if ((std::string) elem->Value() == "camera") {
@@ -60,23 +57,7 @@ void SceneParser::screenSetup(TiXmlElement *elem) {
 	elem->QueryIntAttribute("height", &_screenHeight);
 	elem->QueryIntAttribute("overSampling", &_oversampling);
 }
-//*
-Shape* SceneParser::parseCSG(TiXmlElement *elem) {
-	std::string csgType = elem->Attribute("type");
-	Shape *s;
-	Shape *s1 = parseShape(elem->FirstChildElement("fst")->FirstChildElement("shape"));
-	Shape *s2 = parseShape(elem->FirstChildElement("snd")->FirstChildElement("shape"));
-	if (csgType == "intersection") {
-		s = new ShapeIntersection(s1, s2);
-	} else if (csgType == "union") {
-		s = new ShapeUnion(s1, s2);
-	} else {
-		cerr << "Invalid description: " << csgType << " does not exist.\nPlease, check the spelling and try again." << endl;
-		exit(-1);
-	}
-	return s;
-}
-//*/
+
 Shape* SceneParser::parseShape(TiXmlElement *elem) {
 	std::string shapeType = elem->Attribute("type");
 	Shape *s;

@@ -11,6 +11,7 @@ Set<T>::Set(int _size/*= 4*/) {
 
 template<class T>
 Set<T>::~Set() {
+	delete[] data;
 }
 
 template<class T>

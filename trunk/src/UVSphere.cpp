@@ -8,8 +8,8 @@ UVSphere::UVSphere(const Color &color, const Material &material, const Vector3 &
 UVSphere::~UVSphere() {
 }
 
-Color UVSphere::getColor(const Vector3& ptIntersect) {
-	Vector3 n = normal(ptIntersect) / _radius;
+Color UVSphere::getColor(const Vector3& pt) {
+	Vector3 n = normal(pt) / _radius;
 
 	float twopi = 6.28318530718f;
 	float theta = acos(n[2]);
@@ -24,16 +24,5 @@ Color UVSphere::getColor(const Vector3& ptIntersect) {
 
 	Vector2 uv(phi * one_over_2pi, (M_PI - theta) * one_over_pi);
 
-	return _tex->value(uv, ptIntersect);
+	return _tex->value(uv, pt);
 }
-/*
-Intersection UVSphere::getIntersectParams(const Ray &rayon) const {
-	Set<double> intersections = intersect(rayon);
-	Vector3 ptInter = intersections.get(0);
-	if (!intersections.empty()) {
-		return Intersection(intersections, normal(ptInter), getColor(ptInter));
-	} else {
-		return Intersection();
-	}
-}
-//*/

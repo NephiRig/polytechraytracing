@@ -28,8 +28,6 @@
 #include "Set.h"
 #include "ScreenV2.h"
 #include "Shape.h"
-#include "ShapeIntersection.h"
-#include "ShapeUnion.h"
 #include "Sphere.h"
 #include "Texture.h"
 #include "UVSphere.h"
@@ -87,17 +85,6 @@ public:
 	 * \return a pointer on the new shape created
 	 */
 	Shape* parseShape(TiXmlElement *elem);
-
-	/**
-	 * \brief CSG parser
-	 *
-	 * Parse the XML file to set the different CSGs
-	 * CSGs are special shapes, obtained by intersection, union or difference between two shapes
-	 *
-	 * \param elem : the node that contains the shapes
-	 * \return a pointer on the new shape (CSG) created
-	 */
-	Shape* parseCSG(TiXmlElement *elem);
 
 	/**
 	 * \brief light parser
