@@ -6,24 +6,14 @@ Shape::Shape() {
 Shape::~Shape() {
 }
 
-Vector3 Shape::normal(const Vector3 &ptIntersect) const {
-	return Vector3(0,0,0);
-}
-
-Set<double> Shape::ensIntersect(const Ray &rayon) const {
+Set<double> Shape::intersect(const Ray& r) const {
 	return Set<double>(0);
 }
 
-Color Shape::getColor(const Vector3 &ptIntersect) {
+Vector3 Shape::normal(const Vector3& pt) const {
+	return Vector3(0,0,0);
+}
+
+Color Shape::getColor(const Vector3& pt) {
 	return _color;
 }
-
-bool Shape::belongsTo(const Vector3 &ptIntersect) const {
-	return true;
-}
-
-/*
-Intersection Shape::getIntersectParams(const Ray &rayon) const {
-	return Intersection(Set<double>(0), Vector3(0,0,0), _color);
-}
-//*/

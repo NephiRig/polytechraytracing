@@ -9,24 +9,14 @@ Rectangle::Rectangle(const Color &color, const Material &material, const Ray &no
 Rectangle::~Rectangle() {
 }
 
-Set<double> Rectangle::ensIntersect(const Ray &rayon) const {
+Set<double> Rectangle::intersect(const Ray& r) const {
 	Set<double> res = Set<double>(1);
-	double t = (
-		_d - _normAndPoint[1][0]*rayon[0][0] - _normAndPoint[1][1]*rayon[0][1] - _normAndPoint[1][2]*rayon[0][2])
-		/(_normAndPoint[1][0]*rayon[1][0] + _normAndPoint[1][1]*rayon[1][1] + _normAndPoint[1][2]*rayon[1][2]
-	);
+	double t = (_d - _normAndPoint[1][0]*r[0][0] - _normAndPoint[1][1]*r[0][1] - _normAndPoint[1][2]*r[0][2])/(_normAndPoint[1][0]*r[1][0] + _normAndPoint[1][1]*r[1][1] + _normAndPoint[1][2]*r[1][2]);
 
-	Vector3 inter = rayon.getPoint(t);
-	if ((fabs(inter[0]-_normAndPoint[0][0]) < _width/2.0
-		&& fabs(inter[2]-_normAndPoint[0][2]) < _height/2.0)
-		&& t > 0) {
+	Vector3 inter = r.getPoint(t);
+	if ((fabs(inter[0]-_normAndPoint[0][0]) < _width/2.0 && fabs(inter[2]-_normAndPoint[0][2]) < _height/2.0) && t > 0) {
 		res.add(t);
 	}
 
 	return res;
 }
-/*
-Intersection Rectangle::getIntersectParams(const Ray &rayon) const {
-	return Intersection(intersect(rayon), _normAndPoint[1], _color);
-}
-//*/
