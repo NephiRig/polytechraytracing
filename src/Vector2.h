@@ -7,7 +7,7 @@ class Vector2 {
 public:
 	//the 2 coordinates
 	// [0] = x, [1] = y
-	double coords[2];
+	double _coords[2];
 
 	Vector2(double x = 0, double y = 0);
 	Vector2(const Vector2 &v1);

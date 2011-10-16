@@ -27,6 +27,7 @@ project(appGui)
 
 set(${PROJECT_NAME}_HEADERS
     Color.h
+    #Cylindre.h
     Draughtboard.h
     Image.h
     ImageTexture.h
@@ -34,6 +35,7 @@ set(${PROJECT_NAME}_HEADERS
     LightSource.h
     MarbleTexture.h
     Material.h
+    Matrix3.h
     NoiseTexture.h
     #ParamSurf.h
     PhongModel.h
@@ -63,6 +65,7 @@ set(${PROJECT_NAME}_HEADERS
 
 set(${PROJECT_NAME}_SOURCES
     Color.cpp
+    #Cylindre.cpp
     Draughtboard.cpp
     Image.cpp
     ImageTexture.cpp
@@ -70,6 +73,7 @@ set(${PROJECT_NAME}_SOURCES
     LightSource.cpp
     MarbleTexture.cpp
     Material.cpp
+    Matrix3.cpp
     NoiseTexture.cpp
     #ParamSurf.cpp
     PhongModel.cpp

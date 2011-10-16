@@ -10,7 +10,7 @@ class NoiseTexture : public Texture {
 public:
 	float _scale;
 	Color _c0, _c1;
-	SolidNoise _solideNoise;
+	SolidNoise _solidNoise;
 
 	NoiseTexture(float scale = 1.0f);
 	NoiseTexture(const Color &c0, const Color &c1, float scale = 1.0f);

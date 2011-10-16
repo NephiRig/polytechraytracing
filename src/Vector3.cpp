@@ -2,9 +2,9 @@
 #include <cmath> // sqrt ()
 
 Vector3::Vector3(double x, double y, double z) {
-	coords[0] = x;
-	coords[1] = y;
-	coords[2] = z;
+	_coords[0] = x;
+	_coords[1] = y;
+	_coords[2] = z;
 }
 
 Vector3::Vector3(const Vector3 &v1) {
@@ -15,35 +15,35 @@ Vector3::~Vector3() {
 }
 
 double Vector3::getX() const {
-	return coords[0];
+	return _coords[0];
 }
 
 double Vector3::getY() const {
-	return coords[1];
+	return _coords[1];
 }
 
 double Vector3::getZ() const {
-	return coords[2];
+	return _coords[2];
 }
 
 void Vector3::setX(double x) {
-	coords[0] = x;
+	_coords[0] = x;
 }
 
 void Vector3::setY(double y) {
-	coords[1] = y;
+	_coords[1] = y;
 }
 
 void Vector3::setZ(double z) {
-	coords[2] = z;
+	_coords[2] = z;
 }
 
 double Vector3::operator[](int i) const {
-	return coords[i];
+	return _coords[i];
 }
 
 double& Vector3::operator[](const int &i) {
-	return coords[i];
+	return _coords[i];
 }
 
 bool operator==(const Vector3 &v1, const Vector3 &v2) {
@@ -59,13 +59,13 @@ const Vector3& Vector3::operator+() const {
 }
 
 Vector3 Vector3::operator-() const {
-	return Vector3(-coords[0], -coords[1], -coords[2]);
+	return Vector3(-_coords[0], -_coords[1], -_coords[2]);
 }
 
 Vector3& Vector3::operator=(const Vector3 &v) {
-	coords[0] = v[0];
-	coords[1] = v[1];
-	coords[2] = v[2];
+	_coords[0] = v[0];
+	_coords[1] = v[1];
+	_coords[2] = v[2];
 	return *this;
 }
 
@@ -120,13 +120,13 @@ double triple_product(const Vector3& v1, const Vector3& v2, const Vector3& v3) {
 
 double Vector3::norm() const {
 	return sqrt(
-			coords[0] * coords[0] + coords[1] * coords[1] + coords[2]
-					* coords[2]);
+			_coords[0] * _coords[0] + _coords[1] * _coords[1] + _coords[2]
+					* _coords[2]);
 }
 
 double Vector3::squared_norm() const {
-	return (coords[0] * coords[0] + coords[1] * coords[1] + coords[2]
-			* coords[2]);
+	return (_coords[0] * _coords[0] + _coords[1] * _coords[1] + _coords[2]
+			* _coords[2]);
 }
 
 Vector3 &Vector3::normalize() {
@@ -138,85 +138,85 @@ Vector3 Vector3::normalized() const {
 }
 
 double Vector3::min_coord() const {
-	double tmp = coords[0];
-	if (tmp > coords[1])
-		tmp = coords[1];
-	if (tmp > coords[2])
-		tmp = coords[2];
+	double tmp = _coords[0];
+	if (tmp > _coords[1])
+		tmp = _coords[1];
+	if (tmp > _coords[2])
+		tmp = _coords[2];
 	return tmp;
 }
 
 double Vector3::max_coord() const {
-	double tmp = coords[0];
-	if (tmp < coords[1])
-		tmp = coords[1];
-	if (tmp < coords[2])
-		tmp = coords[2];
+	double tmp = _coords[0];
+	if (tmp < _coords[1])
+		tmp = _coords[1];
+	if (tmp < _coords[2])
+		tmp = _coords[2];
 	return tmp;
 }
 
 double Vector3::min_abs_coord() const {
-	double tmp = fabs(coords[0]);
-	if (tmp > fabs(coords[1]))
-		tmp = fabs(coords[1]);
-	if (tmp > fabs(coords[2]))
-		tmp = fabs(coords[2]);
+	double tmp = fabs(_coords[0]);
+	if (tmp > fabs(_coords[1]))
+		tmp = fabs(_coords[1]);
+	if (tmp > fabs(_coords[2]))
+		tmp = fabs(_coords[2]);
 	return tmp;
 }
 
 double Vector3::max_abs_coord() const {
-	double tmp = fabs(coords[0]);
-	if (tmp < fabs(coords[1]))
-		tmp = fabs(coords[1]);
-	if (tmp < fabs(coords[2]))
-		tmp = fabs(coords[2]);
+	double tmp = fabs(_coords[0]);
+	if (tmp < fabs(_coords[1]))
+		tmp = fabs(_coords[1]);
+	if (tmp < fabs(_coords[2]))
+		tmp = fabs(_coords[2]);
 	return tmp;
 }
 
 int Vector3::index_min_coord() const {
 	int index = 0;
-	double tmp = coords[0];
-	if (tmp > coords[1]) {
-		tmp = coords[1];
+	double tmp = _coords[0];
+	if (tmp > _coords[1]) {
+		tmp = _coords[1];
 		index = 1;
 	}
-	if (tmp > coords[2])
+	if (tmp > _coords[2])
 		index = 2;
 	return index;
 }
 
 int Vector3::index_max_coord() const {
 	int index = 0;
-	double tmp = coords[0];
-	if (tmp < coords[1]) {
-		tmp = coords[1];
+	double tmp = _coords[0];
+	if (tmp < _coords[1]) {
+		tmp = _coords[1];
 		index = 1;
 	}
-	if (tmp < coords[2])
+	if (tmp < _coords[2])
 		index = 2;
 	return index;
 }
 
 int Vector3::index_min_abs_coord() const {
 	int index = 0;
-	double tmp = fabs(coords[0]);
-	if (tmp > fabs(coords[1])) {
-		tmp = fabs(coords[1]);
+	double tmp = fabs(_coords[0]);
+	if (tmp > fabs(_coords[1])) {
+		tmp = fabs(_coords[1]);
 		index = 1;
 	}
-	if (tmp > fabs(coords[2]))
+	if (tmp > fabs(_coords[2]))
 		index = 2;
 	return index;
 }
 
 int Vector3::index_max_abs_coord() const {
 	int index = 0;
-	double tmp = fabs(coords[0]);
-	if (tmp < fabs(coords[1])) {
-		tmp = fabs(coords[1]);
+	double tmp = fabs(_coords[0]);
+	if (tmp < fabs(_coords[1])) {
+		tmp = fabs(_coords[1]);
 		index = 1;
 	}
-	if (tmp < fabs(coords[2]))
+	if (tmp < fabs(_coords[2]))
 		index = 2;
 	return index;
 }
@@ -248,5 +248,5 @@ std::ostream& operator<<(std::ostream &os, const Vector3 &v) {
 }
 
 std::istream& operator>>(std::istream &is, Vector3 &v) {
-	return is >> v.coords[0] >> v.coords[1] >> v.coords[2];
+	return is >> v._coords[0] >> v._coords[1] >> v._coords[2];
 }

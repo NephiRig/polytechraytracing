@@ -8,7 +8,7 @@ class Vector3 {
 public:
 	//the 3 coordinates
 	// [0] = x, [1] = y, [2]=z
-	double coords[3];
+	double _coords[3];
 
 	Vector3(double x = 0, double y = 0, double z = 0);
 	Vector3(const Vector3 &v1);

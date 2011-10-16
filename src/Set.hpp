@@ -4,40 +4,40 @@ template<class T>
 Set<T>::Set(int _size/*= 4*/) {
 	if (_size < 0)
 		_size = 1;
-	sz = _size;
-	data = new T[sz];
-	used = 0;
+	_sz = _size;
+	_data = new T[_sz];
+	_used = 0;
 }
 
 template<class T>
 Set<T>::~Set() {
-	delete[] data;
+	delete[] _data;
 }
 
 template<class T>
 bool Set<T>::add(T item) { // always added to the end
-	if (used >= sz) {
-		sz *= 2;
-		T* temp = data;
-		if (!(data = new T[sz]))
+	if (_used >= _sz) {
+		_sz *= 2;
+		T* temp = _data;
+		if (!(_data = new T[_sz]))
 			return false;
-		for (int i = 0; i < used; ++i)
-			data[i] = temp[i];
+		for (int i = 0; i < _used; ++i)
+			_data[i] = temp[i];
 		delete[] temp;
 	}
-	data[used++] = item;
+	_data[_used++] = item;
 	return true;
 }
 
 template<class T>
-bool Set<T>::truncate() { // make sz = used
-	if (used != sz) {
-		T* temp = data;
-		sz = used;
-		if (!(data = new T[sz]))
+bool Set<T>::truncate() { // make _sz = _used
+	if (_used != _sz) {
+		T* temp = _data;
+		_sz = _used;
+		if (!(_data = new T[_sz]))
 			return false;
-		for (int i = 0; i < used; ++i)
-			data[i] = temp[i];
+		for (int i = 0; i < _used; ++i)
+			_data[i] = temp[i];
 		delete[] temp;
 	}
 	return true;
@@ -45,36 +45,36 @@ bool Set<T>::truncate() { // make sz = used
 
 template<class T>
 void Set<T>::clear() {
-	used = 0;
+	_used = 0;
 }
 
 template<class T>
 int Set<T>::length() {
-	return used;
+	return _used;
 }
 
 
 template<class T>
 int Set<T>::size() {
-	return used;
+	return _used;
 }
 
 template<class T>
 bool Set<T>::empty() {
-	return used == 0;
+	return _used == 0;
 }
 
 template<class T>
 T Set<T>::operator[](int i) const {
-	return data[i];
+	return _data[i];
 }
 
 template<class T>
 T Set<T>::get(int i) const {
-	return data[i];
+	return _data[i];
 }
 
 template<class T>
 T& Set<T>::operator[](const int &i) {
-	return data[i];
+	return _data[i];
 }

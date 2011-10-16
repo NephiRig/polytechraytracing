@@ -8,9 +8,9 @@ Draughtboard::Draughtboard(const Color &color, const Material &material, const C
 Draughtboard::~Draughtboard() {
 }
 
-Color Draughtboard::getColor(const Vector3 &pt) {
-	if ((int) floor( fabs((pt / _caseSize)[0])+.5 ) % 2 == (int) floor( fabs((pt / _caseSize)[2])+.5 ) % 2) {
-		return Shape::_color;
+Color Draughtboard::getColor(const Vector3 &ptIntersect) {
+	if ((int) floor( fabs((ptIntersect / _caseSize)[0])+.5 ) % 2 == (int) floor( fabs((ptIntersect / _caseSize)[2])+.5 ) % 2) {
+		return _color;
 	} else {
 		return _colorD;
 	}

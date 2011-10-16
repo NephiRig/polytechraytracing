@@ -3,7 +3,6 @@
 
 #include "Shape.h"
 #include "Material.h"
-#include "Vector3.h"
 
 class Sphere : public Shape {
 public:
@@ -13,10 +12,9 @@ public:
 	Sphere (const Color &color = 0, const Material &material = 0, const Vector3 &center = 0, double radius = 0);
 	virtual ~Sphere();
 
-	void setMaterial(const Material &material);
-
-	virtual Set<double> intersect (const Ray& ray) const;
-	virtual Vector3 normal (const Vector3& pointIntersection) const;
+	virtual Set<double> ensIntersect(const Ray &rayon) const;
+	virtual Vector3 normal(const Vector3 &ptIntersect) const;
+	virtual bool belongsTo(const Vector3 &ptIntersect) const;
 };
 
 #endif /* SPHERE_H_ */

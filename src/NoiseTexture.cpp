@@ -13,6 +13,6 @@ NoiseTexture::~NoiseTexture() {
 }
 
 Color NoiseTexture::value(const Vector2 &uv, const Vector3 &p) const {
-	float t = (1.0f + _solideNoise.noise(p * _scale)) / 2.0f;
+	float t = (1.0f + _solidNoise.noise(p * _scale)) / 2.0f;
 	return t * _c0 + (1.0f - t) * _c1;
 }

@@ -85,7 +85,7 @@ Color RayTracer::calculateColor(Ray &r, int recursions) {
 	r[1].normalize();
 	Ray r_moved = Ray(r.getPoint(1), r.getDirection());
 	for (int i = 0; i < _scene._shapes->length(); i++) {
-		Set<double> intersections = _scene._shapes->get(i)->intersect(r_moved);
+		Set<double> intersections = _scene._shapes->get(i)->ensIntersect(r_moved);
 
 		if (!hasIntersection && !intersections.empty()) {
 			closestShape = _scene._shapes->get(i);
@@ -167,7 +167,7 @@ bool RayTracer::isHidden(LightSource* lightSource, Vector3 &point) {
 	bool hasIntersection = false;
 
 	for (int i = 0; i < _scene._shapes->length(); i++) {
-		Set<double> intersections = _scene._shapes->get(i)->intersect(ray);
+		Set<double> intersections = _scene._shapes->get(i)->ensIntersect(ray);
 
 		if (!hasIntersection && !intersections.empty()) {
 			closestShape = _scene._shapes->get(i);
