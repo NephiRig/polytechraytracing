@@ -8,14 +8,14 @@ namespace nsUtil {
 class Timer {
 protected:
 	//The clock time when the timer started
-	int startTicks;
+	int _startTicks;
 
 	//The ticks stored when the timer was paused
-	int pausedTicks;
+	int _pausedTicks;
 
 	//The timer status
-	bool paused;
-	bool started;
+	bool _paused;
+	bool _started;
 
 public:
 	Timer(void);

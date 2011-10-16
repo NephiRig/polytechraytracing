@@ -16,7 +16,7 @@
 
 class ImageTexture : public Texture {
 public:
-	Image *image;	/*!<  */
+	Image *_image;	/*!<  */
 
 	ImageTexture(std::string file_name);
 	virtual ~ImageTexture();

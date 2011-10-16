@@ -10,7 +10,7 @@ class Ray {
 public:
 	// coords[0] is the origin point of the vector
 	// coords[1] is the vector's direction from its origin
-	Vector3 coords[2];
+	Vector3 _coords[2];
 
 	Ray(const Vector3 &origin = Vector3(), const Vector3 &direction = Vector3());
 	Ray(const Ray &r);

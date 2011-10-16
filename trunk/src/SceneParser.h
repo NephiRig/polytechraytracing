@@ -16,6 +16,7 @@
 
 #include "tinyxml.h"
 
+#include "Cylindre.h"
 #include "Draughtboard.h"
 #include "ImageTexture.h"
 #include "LightSource.h"

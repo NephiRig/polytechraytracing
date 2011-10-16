@@ -135,7 +135,19 @@ Shape* SceneParser::parseShape(TiXmlElement *elem) {
 				s = new Draughtboard(color, material, colorD, normAndPoint, height, width, caseSize);
 			}
 		}
-	} else {
+	}/* else if (shapeType == "cylindre") {
+		Vector3 origin;
+		Vector3 height;
+		double radius;
+		elem->FirstChildElement("origin")->QueryDoubleAttribute("x", &origin[0]);
+		elem->FirstChildElement("origin")->QueryDoubleAttribute("y", &origin[1]);
+		elem->FirstChildElement("origin")->QueryDoubleAttribute("z", &origin[2]);
+		elem->FirstChildElement("height")->QueryDoubleAttribute("x", &height[0]);
+		elem->FirstChildElement("height")->QueryDoubleAttribute("y", &height[1]);
+		elem->FirstChildElement("height")->QueryDoubleAttribute("z", &height[2]);
+		elem->FirstChildElement("radius")->QueryDoubleAttribute("value", &radius);
+		s = new Cylindre(color, material, origin, height, radius);
+	}*/ else {
 		cerr << "Invalid description: " << shapeType << " does not exist.\nPlease, check the spelling and try again." << endl;
 		exit(-1);
 	}
