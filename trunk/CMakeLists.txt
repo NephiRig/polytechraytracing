@@ -56,10 +56,13 @@ set(CMAKE_RUNTIME_OUTPUT_DIRECTORY    ${CMAKE_BINARY_DIR}/${RUNTIME_OUTPUT_DIREC
 ## #################################################################
 ## Resolve dependencies
 ## #################################################################
-find_package(ITPP REQUIRED)
-if(ITPP_FOUND)
-    include_directories(${ITPP_INCLUDE_DIR})
-endif(ITPP_FOUND)
+
+## Library ITPP
+
+#find_package(ITPP REQUIRED)
+#if(ITPP_FOUND)
+#    include_directories(${ITPP_INCLUDE_DIR})
+#endif(ITPP_FOUND)
 
 find_package(SDL REQUIRED)
 if(SDL_FOUND)
