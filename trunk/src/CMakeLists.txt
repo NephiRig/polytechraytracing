@@ -27,7 +27,7 @@ project(appGui)
 
 set(${PROJECT_NAME}_HEADERS
     Color.h
-    #Cylindre.h
+    Cylindre.h
     Draughtboard.h
     Image.h
     ImageTexture.h
@@ -65,7 +65,7 @@ set(${PROJECT_NAME}_HEADERS
 
 set(${PROJECT_NAME}_SOURCES
     Color.cpp
-    #Cylindre.cpp
+    Cylindre.cpp
     Draughtboard.cpp
     Image.cpp
     ImageTexture.cpp
